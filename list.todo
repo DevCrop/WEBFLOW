@@ -1,0 +1,79 @@
+나중 작업
+1. 기존 사이트 색인하여 FIGMA MCP 연동하여 CONTENTS SECTION에 컨텐츠 내용만 넣어주기
+2. 1번 내용을 와이어프레임으로 FIGMA MCP 연동하여 페이지에 만들기 이건 내가 URL 줄 예정.
+
+
+
+[최초 프로세스 ]
+1. 피그마 변수 등록된거 삭제
+2. 다시 내 프로젝트에 맞도록 WEBFLOW 기준으로 변수 재등록 
+3. 해당 변수를 베이스로 피그마 URL에 있는 공통 컴포넌트, 페이지 SECTION 등에 요소에 매핑하기.
+4. 4번을 바탕으로 WEBFLOW에서 컴포넌트 및 페이지 생성 
+
+
+[시안컨펌전 할 수 있는 작업]
+1. CMS 연결 
+2. FORM 연동
+3. 뉴스레터 연동법
+4. ICON 폰트어썸 , SVG 등 업로드 방법
+5. 변수 및 타이포 컬러 등 완벽 설정.
+
+
+변수는 아래와 같이 설정한다.
+
+1. COLORS 브랜드가이드보고
+2. CONTAINER 2xl xl lg md sm 
+3. SPACING 4xl 2xl xl lg md sm xs 2xs 4xs로
+4. TYPO display-1 ~5  ~ body-1 ~5
+5. VAIABLES
+
+SPAING => GAP으로 변경.
+
+그리고 SPAING-NARROW => GAP-XL 이렇게 이중 선언하지말고
+
+그냥 GAP-XL LG 이런식으로 하나로만 처리.
+
+
+=>
+
+1. COLORS 브랜드가이드보고
+2. CONTAINER 2xl xl lg md sm 
+3. GAP 4xl 2xl xl lg md sm xs 2xs 4xs로
+4. TYPO display-1 ~5  ~ body-1 ~5
+5. VAIABLES
+
+TYPO안에는 아래가 포함되어야한다.
+1. FONT-SIZE
+2. FONT-WEIGJHT
+3. LEFTTER-SPACING
+4. LINE-HEIGTT
+
+지금처럼 사이즈만 있으면 안된다.
+
+웹플로우 작업 시 구조는 아래와 같다.
+
+SECTION
+  CONTAINER
+    INNER
+      TITLE
+        H태그
+        P태그 있다면
+      CONTENTS
+        UL.. 등 커스텀 코드 
+
+
+SECTION
+  CONTAINER
+    INNER
+      TITLE
+        H태그
+        P태그 있다면
+      CONTENTS
+        UL.. 등 커스텀 코드 
+
+
+
+섹션이 모여 하나의 페이지를 이룬다.
+
+공통적인건 컴포넌트로 만들어서 일괄 관리한다
+EX) HEADER ,FOOTER, SUB-VISUAL 등..
