@@ -27,7 +27,9 @@ Create: `space-1` through `space-12`, then `section-pad-y-*`, `container-*` from
 
 ### Step 4 — Typography Size Variables
 Tool: `variable_tool`
-Create: `font-size-xs` through `font-size-display` from `rules/webflow.md` §2.
+Create: fluid `font-size-xs` through `font-size-display` from
+`rules/webflow.md` section 2. Use the documented `clamp()` values; do not
+recreate these as fixed `px` values.
 
 ### Step 5 — Create Home Page
 Tool: `data_pages_tool`
@@ -42,7 +44,8 @@ nav → section-hero → section-about → section-services → section-cases �
 ### Step 7 — Bind Styles to Variables
 Tool: `style_tool`
 Bind variable references as defined in `rules/webflow.md` §4 (element-by-element).
-Do NOT hardcode any color or size value that has a variable equivalent.
+Do NOT hardcode any color or size value that has a variable equivalent. Map
+default body text through Body or `f-body`, bound to `Type/Size/Base`.
 
 ### Step 8 — Report
 After completion, output a summary block:

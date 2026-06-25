@@ -35,7 +35,6 @@
 | 검색            | 사이트 내 검색 기능                                                       |
 | SEO             | 페이지별 메타 (키워드·설명 고객 제공), hreflang, 글로벌 URL 전략          |
 | 추적코드        | GA4 + GTM + DataLayer, 카카오·페이스북 픽셀 (고객이 코드 전달 예정)       |
-| 인터랙션        | 고도화된 인터랙션 필수 (클라이언트 최우선 요구사항), Figma 프로토타입 컨펌 |
 | 교육/매뉴얼    | 오픈 시 웹플로우 편집 교육 + 매뉴얼 제작 필요                             |
 
 ### Sitemap Notes (as of 04.28 meeting)
@@ -53,7 +52,6 @@
 
 | Phase                  | 기간                      | 내용                                              |
 |------------------------|---------------------------|---------------------------------------------------|
-| 시안 (Figma)           | 04/09 ~ 04/20 (8일)       | 메인×2 · 서브×2 · 인터랙션 프로토타입            |
 | 시안 컨펌·수정         | 04/21 ~ 04/27 (5일)       |                                                   |
 | 웹플로우 제작          | 04/28 ~ 05/07 (7일)       | 기존 사이트 기준 20페이지                         |
 | 웹플로우 컨펌·수정     | 05/08 ~ 05/14 (5일)       |                                                   |
@@ -69,9 +67,6 @@
 | 26.04.21 | 착수자료 수신. 브랜드 에셋 Google Drive, 기존 사이트 URL, 사이트맵 변경사항, 콘텐츠 수정사항, 이용약관·개인정보처리방침 전달. |
 | 26.04.24 | 고객 진행상황 문의 수신. 가이드라인 유선 안내 예정. 착수자료 회신 문서 작성 중. |
 | 26.04.28 | 오전 10시 미팅. 솔루션 메뉴 미확정, 루미넌스 신규 페이지, 릴리스 노트 게시판, 영문 게시판, CTA 개선 논의. |
-| 26.05.11 | 와이어프레임(스토리보드) Figma 공유 링크 전달. 메인 2타입. 컨셉 확인 용도. |
-| 26.05.12 | Figma 링크 메일 발송 완료. 고객 피드백 작성 중. |
-| 26.05.13 | (현재) 고객이 와이어프레임에 Figma 코멘트 작성 중. |
 
 ### Key Constraints for Claude
 
@@ -128,10 +123,11 @@ Upload in this order. Use exact font-family names as shown.
 ## 3. Global Styles (Designer → All Elements / Body)
 
 Apply to Body:
-- Font-family: `font-family/sans` variable (KR mode → Pretendard, EN mode → Inter)
-- Font-size: `body/3/font-size` (16px)
-- Line-height: `body/3/line-height` (24px)
-- Color: `color/black` (or `color/gray-dark` if softer text preferred)
+- Font-family: `Pretendard, Inter, sans-serif`
+- Font-size: `Type/Size/Base` fluid variable, normally through Body or
+  `f-body`
+- Line-height: `1.5` (`line-height-normal`)
+- Color: `color-text-primary` (variable)
 
 Apply to All Elements (`*`) selector:
 - Box-sizing: `border-box`
@@ -139,19 +135,14 @@ Apply to All Elements (`*`) selector:
 
 ---
 
-## 4. Variable System Status ✅ Done 2026-05-15
+## 4. Variable Creation Order (Designer → Variables)
 
-Variables already created — see [webflow.md §"Variable Index — Confirmed & Live"](webflow.md) for the canonical 88-variable index across 5 collections (COLORS / CONTAINER / GAP / TYPO / VARIABLES).
+Run in this sequence — Color first, then sizes.
 
-| Collection | Count | Modes | Naming examples |
-|---|---|---|---|
-| COLORS | 10 | default | `color/navy`, `color/gray-dark`, `color/ivory` |
-| CONTAINER | 5 | default | `container/2xl` (1664), `container/lg` (1024) |
-| GAP | 9 | default | `gap/xs` (8), `gap/xl` (48), `gap/4xl` (96) |
-| TYPO | 60 (15 levels × 4 props) | default | `display/1/font-size`, `body/3/line-height` |
-| VARIABLES | 4 | **KR / EN** | `font-family/display`, `input-height` |
-
-Both Figma (file `xPtU89prtaV0S6pDVjyck5`) and Webflow (site `6634a73e3b63bc49b6f08e3d`) are synced 1:1.
+1. **Color variables** (14 tokens) → fill [TODO] hex values from brand guide before this step
+2. **Spacing / size variables** (`space-1` through `section-pad-y-lg`, `container-*`)
+3. **Typography size variables** (`font-size-xs` through `font-size-display`)
+   as fluid `clamp()` values from `webflow.md`
 
 Full token definitions → `webflow.md` §1–3.
 Tool: `variable_tool`

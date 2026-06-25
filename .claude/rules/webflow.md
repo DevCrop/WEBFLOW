@@ -9,16 +9,13 @@
 **ALL style properties MUST use variables via `variable_as_value`. No exceptions.**
 
 Rules:
-- Color → always bind a `color/*` variable from COLORS collection. Never pass a raw hex.
-- Font family → always bind a `font-family/*` variable from VARIABLES collection.
-- Font size → always bind a `display/*/font-size`, `heading/*/font-size`, or `body/*/font-size` from TYPO.
-- Line height → always bind a `*/line-height` from TYPO.
-- Letter spacing → always bind a `*/letter-spacing` from TYPO.
-- Font weight → always bind a `*/font-weight` from TYPO.
-- Padding / margin / gap → always bind a `gap/*` from GAP collection.
-- Container width → always bind a `container/*` from CONTAINER collection.
-- Heights (input/header) → always bind `input-height` / `header-height` from VARIABLES.
-- Hardcoded values are only allowed for one-off decorative values with zero reuse probability.
+- Color → always bind a `Color/*` variable. Never pass a raw hex.
+- Font family → always bind a `Font/*` variable.
+- Font size → always bind a `Type/Size/*` variable.
+- Line height → always bind a `Type/Line/*` variable.
+- Letter spacing → always bind a `Type/Track/*` variable.
+- Padding / margin / gap / width / height → always bind a `Space/*` or `Layout/*` variable when one exists.
+- Hardcoded values are only allowed for: one-off decorative values with zero reuse probability (e.g. a single pixel border, a 100% width).
 
 When calling `style_tool > update_style`, always use:
 ```json
@@ -26,147 +23,237 @@ When calling `style_tool > update_style`, always use:
 ```
 not `{ "value": "..." }`.
 
-**No semantic aliasing** — Use raw token directly (`gap/xl`), not aliased semantic names (~~`spacing-section → gap/xl`~~). Per list.todo rule (line 32-34).
+Variable collection ID (Base): `collection-d70de15e-1039-6b8c-cd06-e42e3988e8ca`
 
 ---
 
-## Variable Index — Confirmed & Live (2026-05-15)
+## Variable Index — Confirmed & Live (2026-05-14)
 
-**5 collections / 88 variables. Figma ↔ Webflow 1:1 sync. Group hierarchy via slash naming.**
+### Color Variables
 
-### Collection IDs (Webflow)
+| Designer Name         | CSS Variable                    | Value     | Variable ID |
+|-----------------------|---------------------------------|-----------|-------------|
+| Color/Brand/Navy      | `--color-brand-navy`            | `#0E253C` | `variable-cb42717e-6dbd-b2e8-cbef-8929c75cd220` |
+| Color/Brand/Navy Dark | `--color-brand-navy-dark`       | `#07182A` | `variable-cfc35e0d-e26d-6e2a-bffb-38b232dd358c` |
+| Color/Brand/Navy Light| `--color-brand-navy-light`      | `#1E4268` | `variable-8295a7d7-d7f9-8159-45ab-8fa60871dc46` |
+| Color/Neutral/White   | `--color-neutral-white`         | `#FFFFFF` | `variable-b9f6c931-e84e-de33-119d-e3cf492b33ef` |
+| Color/Neutral/Black   | `--color-neutral-black`         | `#000000` | `variable-ac159bf7-ce79-7950-0ff4-e07b7251fe18` |
+| Color/Neutral/Light Gray | `--color-neutral-light-gray` | `#DADADA` | `variable-d2a4288a-6e30-7e7c-97c4-55003c69dd08` |
+| Color/Neutral/Mid Gray | `--color-neutral-mid-gray`    | `#999999` | `variable-f2ea73d6-eb3b-0084-0179-ef3a935106ef` |
+| Color/Neutral/Silver  | `--color-neutral-silver`        | `#B8B8B8` | `variable-31a5d22c-1373-148b-807a-cc57c488cb0e` |
+| Color/Text/Primary    | `--color-text-primary`          | `#111418` | `variable-55693976-d8b5-fd2a-9975-816ff0fb5dee` |
+| Color/Text/Secondary  | `--color-text-secondary`        | `#606476` | `variable-2292e556-ebc9-783b-022a-3d16f1eb4b10` |
+| Color/Text/Inverse    | `--color-text-inverse`          | `#FFFFFF` | `variable-c396fa31-99e5-7073-b045-8ee65c34fdaa` |
+| Color/BG/Primary      | `--color-bg-primary`            | `#FFFFFF` | `variable-54ab76e0-a47b-ad2e-d17e-0cf605851fd2` |
+| Color/BG/Dark         | `--color-bg-dark`               | `#0E253C` | `variable-01d0beda-7370-e9fd-75e9-8fe2dd6e4da4` |
+| Color/BG/Subtle       | `--color-bg-subtle`             | `#F5F7FA` | `variable-7e1fa62c-e5b1-4cc5-4223-228aaa916316` |
 
-| Collection | ID | Modes |
-|---|---|---|
-| COLORS | `collection-748e9712-1f35-7262-2827-9a99d120564f` | default |
-| CONTAINER | `collection-fb52e24e-4359-71cc-6ebd-e541c3593adb` | default |
-| GAP | `collection-17e5d53a-ade1-4340-6795-f114f9bae80c` | default |
-| TYPO | `collection-62eb7c12-ce89-d036-d693-4494563da8a7` | default |
-| VARIABLES | `collection-77a13f90-3338-4274-6b80-2c45eefc891a` | KR (`mode-c00fca94-da28-c9bb-c674-0159a6e7ccf1`) / EN (`mode-cbe5bd0d-dc3a-bdc7-c350-bba7fded5193`) |
+> Navy `#0E253C` extracted from official logo PNG. Navy Dark/Light are derived — update if client provides exact hex.
 
-### Collection IDs (Figma — file `xPtU89prtaV0S6pDVjyck5`)
+### Font Family Variables
 
-| Collection | ID |
-|---|---|
-| COLORS | `VariableCollectionId:36302:1617` |
-| CONTAINER | `VariableCollectionId:36302:1628` |
-| GAP | `VariableCollectionId:36302:1634` |
-| TYPO | `VariableCollectionId:36302:1644` |
-| VARIABLES | `VariableCollectionId:36302:1660` (modes: KR `36302:4`, EN `36302:5`) |
+| Designer Name       | CSS Variable          | Value           | Variable ID |
+|---------------------|-----------------------|-----------------|-------------|
+| Font/Pretendard     | `--font-pretendard`   | `Pretendard`    | `variable-2a9ad757-6dfe-3c12-0a7b-0d6a68ad5bd1` |
+| Font/Inter          | `--font-inter`        | `Inter`         | `variable-e24148c6-1d26-f1c5-3651-691366dc1331` |
+| Font/Noto Serif KR  | `--font-noto-serif-kr`| `Noto Serif KR` | `variable-cdcc2c56-5f0d-8376-1379-80977b929cbb` |
+| Font/EB Garamond    | `--font-eb-garamond`  | `EB Garamond`   | `variable-317aaeb8-6d40-5101-8962-407fe113697c` |
 
-### COLORS (10) — Type: Color
+### Typography Size Variables
 
-| Name | Value | Webflow Variable ID | Figma Variable ID |
-|---|---|---|---|
-| `color/navy` | `#00263b` | `variable-b674bd9e-dedb-4676-d47f-ea2525f1ef11` | `VariableID:36302:1618` |
-| `color/blue` | `#00109e` | `variable-c665c94d-c706-4839-f4e1-3ed1a5722de5` | `VariableID:36302:1619` |
-| `color/purple` | `#512944` | `variable-b30412b7-9072-6786-2140-56a59e2ff96c` | `VariableID:36302:1620` |
-| `color/black` | `#000000` | `variable-64950201-4d23-36e1-aa56-382ec2ace921` | `VariableID:36302:1621` |
-| `color/white` | `#ffffff` | `variable-b3cce01a-0406-e9a4-048d-87f0a2d6d11d` | `VariableID:36302:1622` |
-| `color/gray-dark` | `#666666` | `variable-525f1107-f89c-ad4e-6046-c0fc058cff63` | `VariableID:36302:1623` |
-| `color/gray-mid` | `#999999` | `variable-28f8c914-35e2-df32-dc27-b9ab303074ae` | `VariableID:36302:1624` |
-| `color/gray-light` | `#dadada` | `variable-b4ae000f-2de3-0112-d108-858ab5e41007` | `VariableID:36302:1625` |
-| `color/ivory` | `#efe5d9` | `variable-edebc614-ce08-a362-c282-d95c8f700830` | `VariableID:36302:1626` |
-| `color/silver` | `#d2d4d4` | `variable-7bc3e8a9-a65c-846d-1892-18e26c5f5ebd` | `VariableID:36302:1627` |
+All `Type/Size/*` variables use fluid `clamp()` values from `375px` to
+`1920px`. The historic fixed sizes are treated as max values at `1920px`.
 
-### CONTAINER (5) — Type: Size (px)
+| Designer Name      | CSS Variable          | Value | Variable ID |
+|--------------------|-----------------------|-------|-------------|
+| Type/Size/XS       | `--font-size-xs`      | `clamp(11px, calc(11px + 1 * ((100vw - 375px) / 1545)), 12px)` | `variable-1a6865f4-513d-1178-567d-0eeb82ef6740` |
+| Type/Size/SM       | `--font-size-sm`      | `clamp(13px, calc(13px + 1 * ((100vw - 375px) / 1545)), 14px)` | `variable-1d9dc520-ea8b-0070-d48b-05efec5640df` |
+| Type/Size/Base     | `--font-size-base`    | `clamp(15px, calc(15px + 1 * ((100vw - 375px) / 1545)), 16px)` | `variable-63f1e5d5-ba05-6841-1784-14f4d98b1ae7` |
+| Type/Size/MD       | `--font-size-md`      | `clamp(16px, calc(16px + 2 * ((100vw - 375px) / 1545)), 18px)` | `variable-5c4b3007-09e7-3e9a-1203-00fa9b446bae` |
+| Type/Size/LG       | `--font-size-lg`      | `clamp(18px, calc(18px + 2 * ((100vw - 375px) / 1545)), 20px)` | `variable-98e4a649-5c21-37c7-5bf7-3dac358783b3` |
+| Type/Size/XL       | `--font-size-xl`      | `clamp(20px, calc(20px + 4 * ((100vw - 375px) / 1545)), 24px)` | `variable-5ee12ed6-164e-4f49-5ed6-1d2f3d4c1656` |
+| Type/Size/2XL      | `--font-size-2xl`     | `clamp(24px, calc(24px + 8 * ((100vw - 375px) / 1545)), 32px)` | `variable-69e4856d-018b-9f5e-3357-09f241402df1` |
+| Type/Size/3XL      | `--font-size-3xl`     | `clamp(28px, calc(28px + 12 * ((100vw - 375px) / 1545)), 40px)` | `variable-198bf2d1-02b7-f56d-ea6d-30aacbef4e2b` |
+| Type/Size/4XL      | `--font-size-4xl`     | `clamp(36px, calc(36px + 20 * ((100vw - 375px) / 1545)), 56px)` | `variable-b84712b2-ed6d-a8b7-f814-a01469875d2c` |
+| Type/Size/Display  | `--font-size-display` | `clamp(44px, calc(44px + 28 * ((100vw - 375px) / 1545)), 72px)` | `variable-3d3d2bee-ab12-9dd5-e6e8-df37a97b5f76` |
 
-| Name | Value | Webflow Variable ID | Figma Variable ID |
-|---|---|---|---|
-| `container/2xl` | 1664px | `variable-8380067a-f28a-1453-e76e-a8de02b4a365` | `VariableID:36302:1629` |
-| `container/xl` | 1440px | `variable-f4006cb1-334f-f4ee-cda3-f27ceab80de0` | `VariableID:36302:1630` |
-| `container/lg` | 1024px | `variable-5f0c4c67-9ce7-ddc4-bf86-79dedcede099` | `VariableID:36302:1631` |
-| `container/md` | 768px | `variable-3e935183-dd46-e83d-8486-a7a944bc4962` | `VariableID:36302:1632` |
-| `container/sm` | 544px | `variable-941842f9-fe31-0167-2afd-b681bebecf0a` | `VariableID:36302:1633` |
+### Line Height Variables
 
-### GAP (9) — Type: Size (px)
+| Designer Name      | CSS Variable             | Value | Variable ID |
+|--------------------|--------------------------|-------|-------------|
+| Type/Line/Tight    | `--line-height-tight`    | 1.2   | `variable-ef5565ea-8f57-5bb0-e501-0c4183b2e37d` |
+| Type/Line/Snug     | `--line-height-snug`     | 1.35  | `variable-e6b3a095-9f1d-f341-6f1b-831bec01dc20` |
+| Type/Line/Normal   | `--line-height-normal`   | 1.5   | `variable-68227083-bfb2-48a9-e420-f588e56443f1` |
+| Type/Line/Relaxed  | `--line-height-relaxed`  | 1.65  | `variable-8f8cf887-2c4f-5813-e728-e64f63ef8672` |
+| Type/Line/Loose    | `--line-height-loose`    | 1.8   | `variable-6dd17088-22a9-bb3c-9f64-03701f39f2dd` |
 
-| Name | Value | Webflow Variable ID | Figma Variable ID |
-|---|---|---|---|
-| `gap/4xs` | 2px | `variable-7802501e-d2bd-e453-339e-e4c0cee9f123` | `VariableID:36302:1635` |
-| `gap/2xs` | 4px | `variable-2e630f2c-9874-4d81-08c9-21238abb49a7` | `VariableID:36302:1636` |
-| `gap/xs` | 8px | `variable-0e73e5c5-dadd-3502-8b4c-0875dbde08b2` | `VariableID:36302:1637` |
-| `gap/sm` | 16px | `variable-fc466f01-6d44-816e-4289-7563ef8a305a` | `VariableID:36302:1638` |
-| `gap/md` | 24px | `variable-a8f01f3a-64c4-169a-3d06-8ca9adc76b18` | `VariableID:36302:1639` |
-| `gap/lg` | 32px | `variable-2705b393-9ddc-9edb-525d-85dfffdfc98a` | `VariableID:36302:1640` |
-| `gap/xl` | 48px | `variable-5e8c9a77-ae94-7d7b-f9c6-a9809cbf0f10` | `VariableID:36302:1641` |
-| `gap/2xl` | 64px | `variable-8884ee5a-be71-4564-320e-efc5fc5d2515` | `VariableID:36302:1642` |
-| `gap/4xl` | 96px | `variable-94197a1d-d205-cbea-32df-5b25436e3c44` | `VariableID:36302:1643` |
+### Letter Spacing Variables
 
-### TYPO (60) — 15 levels × 4 properties
+| Designer Name      | CSS Variable         | Value   | Variable ID |
+|--------------------|----------------------|---------|-------------|
+| Type/Track/Tight   | `--tracking-tight`   | -0.02   | `variable-52a1923c-2f5c-f402-1dcf-85df36b9ba5a` |
+| Type/Track/Normal  | `--tracking-normal`  | 0em     | `variable-a1ac8ba5-20ce-d0be-711d-b10a6be01255` |
+| Type/Track/Wide    | `--tracking-wide`    | 0.04em  | `variable-573526e9-119e-2357-5bbd-cc5655f895bc` |
+| Type/Track/Wider   | `--tracking-wider`   | 0.08em  | `variable-d583897d-2540-b932-dc17-00d3f6f67e95` |
 
-**font-size: Size(px) · line-height: Size(px) · letter-spacing: Number · font-weight: Number**
+### Spacing Variables
 
-| Level | font-size | line-height | letter-spacing | font-weight |
-|---|---|---|---|---|
-| `display/1` | 288px | 288px | -10 | 700 |
-| `display/2` | 188px | 188px | -10 | 700 |
-| `display/3` | 128px | 128px | -10 | 700 |
-| `display/4` | 96px | 96px | -10 | 700 |
-| `display/5` | 72px | 72px | -10 | 700 |
-| `heading/1` | 64px | 72px | -10 | 700 |
-| `heading/2` | 48px | 56px | -10 | 700 |
-| `heading/3` | 36px | 40px | -10 | 600 |
-| `heading/4` | 28px | 36px | -10 | 600 |
-| `heading/5` | 24px | 32px | -10 | 600 |
-| `body/1` | 20px | 28px | -16 | 400 |
-| `body/2` | 18px | 28px | -16 | 400 |
-| `body/3` | 16px | 24px | -16 | 400 |
-| `body/4` | 14px | 20px | -16 | 400 |
-| `body/5` | 12px | 18px | -16 | 400 |
+| Designer Name  | CSS Variable       | Value  | Variable ID |
+|----------------|--------------------|--------|-------------|
+| Space/01       | `--space-1`        | 4px    | `variable-72521fb8-5b2e-7e8f-2d8c-a16575ba3750` |
+| Space/02       | `--space-2`        | 8px    | `variable-31ad8530-4824-008c-a594-96ae63c3396c` |
+| Space/03       | `--space-3`        | 12px   | `variable-bcc6e108-36ba-6e77-3eab-cba6317dcae0` |
+| Space/04       | `--space-4`        | 16px   | `variable-e8e2da92-e9c8-00b2-9ca0-ab1a885249f6` |
+| Space/05       | `--space-5`        | 24px   | `variable-65f8979e-81e1-e6c3-0005-b98045fab52e` |
+| Space/06       | `--space-6`        | 32px   | `variable-1f39ed9e-e004-78ab-e045-eee6bb127169` |
+| Space/07       | `--space-7`        | 48px   | `variable-541e2201-c881-bb46-e872-4edaa97142d5` |
+| Space/08       | `--space-8`        | 64px   | `variable-28b8226c-a70a-4132-5393-d19bca09c9d2` |
+| Space/09       | `--space-9`        | 80px   | `variable-6285991b-57bd-5af1-dbd6-a4893bfff426` |
+| Space/10       | `--space-10`       | 96px   | `variable-505681f2-9cb7-f4c9-0277-1a1e61464574` |
+| Space/11       | `--space-11`       | 128px  | `variable-93c77371-5b9f-6dc1-bada-c5fc37dc19ee` |
+| Space/12       | `--space-12`       | 160px  | `variable-3919ddab-0be6-8f4e-d35e-d66cb4365c42` |
 
-> Full per-variable Webflow/Figma IDs available via `variable_tool > get_variables` on the TYPO collection. letter-spacing values are unitless Number — interpret as percent at apply-time (Figma default behavior) or convert manually when binding to CSS letter-spacing.
+### Layout Variables
 
-### VARIABLES (4, KR/EN modes)
+| Designer Name               | CSS Variable               | Value  | Variable ID |
+|-----------------------------|----------------------------|--------|-------------|
+| Layout/Section Pad Y SM     | `--section-pad-y-sm`       | 64px   | `variable-a2483d42-16ae-d12f-2ae5-ae82f70482a4` |
+| Layout/Section Pad Y MD     | `--section-pad-y-md`       | 96px   | `variable-993c5d1a-26c9-e277-0c6a-efcfce0d931d` |
+| Layout/Section Pad Y LG     | `--section-pad-y-lg`       | 128px  | `variable-20c815bd-ddba-3b49-1010-a5bc990f1046` |
+| Layout/Container Max Width  | `--container-max-width`    | 1280px | `variable-344013b9-5d31-3f9b-1934-9933315bd8a1` |
+| Layout/Container Pad X      | `--container-pad-x`        | 40px   | `variable-d8ab2e61-8230-a428-3972-1f7666474ec5` |
+| Layout/Container Pad X Mobile | `--container-pad-x-mobile` | 20px | `variable-553b78b1-96f6-7c7c-a897-485f06844b70` |
 
-| Name | Type | KR | EN | Webflow Variable ID |
-|---|---|---|---|---|
-| `font-family/display` | FontFamily | Noto Serif KR | EB Garamond | `variable-f5e0235c-54cf-540a-8d79-ccf3c481c16b` |
-| `font-family/sans` | FontFamily | Pretendard | Inter | `variable-3e280973-0a5f-529d-a7c4-5fd246396cf1` |
-| `input-height` | Size (px) | 48 | 48 | `variable-372c3af6-3c93-81ae-885b-5ff9a1db7399` |
-| `header-height` | Size (px) | 80 | 80 | `variable-d2b75010-b3a4-9fae-b86e-69e701a18e91` |
-
-### CSS naming convention (Webflow auto-prefixed)
-
-Webflow generates CSS variable names from `{collection}/{path}` as `--_{collection-lowercase}---{path-with-slash-as-double-dash}`.
-
-Examples:
-- `color/navy` → `--_colors---color--navy`
-- `gap/xl` → `--_gap---gap--xl`
-- `display/1/font-size` → `--_typo---display--1--font-size`
-- `font-family/display` → `--_variables---font-family--display`
-
-### Legacy variables (Base collection) — to be ignored
-
-Site still contains 95 legacy variables in `Base collection` (`collection-d70de15e-1039-6b8c-cd06-e42e3988e8ca`) from the previous design system attempt. Names differ (e.g. `color-brand-navy` vs the new `color/navy`) so no functional conflict. **Do not bind to or reference these.** Can be cleaned up manually in Designer when convenient — MCP delete is BETA-broken.
+> PENDING (Designer only — MCP rename/delete BETA not functional):
+> - Rename variables from `color-brand-navy` → `Color/Brand/Navy` format in Variables panel
+> - Delete legacy variables: Green/*, Neutral/*, Orange/*, Red/*, Violet/*, brand-primary, brand-bg, brand-text, brand-accent, font-heading, font-body, size-hero-title, size-hero-sub
 
 ---
 
 ## Execution Order
 
-1. ~~Create Variables~~ ✅ Done 2026-05-15 — 5 collections / 88 variables live in both Figma and Webflow
-2. Map Figma layer styles to variables (Step 3 of list.todo)
-3. Apply global styles in Webflow (bind variables to Body / All Elements)
-4. Create pages and build structure in Webflow
+1. ~~Create Variables~~ ✅ Done 2026-05-14 — all 55 variables live
+2. Apply global styles (bind variables to Body / All Elements)
+3. Create pages and build structure
 
 ---
 
-## 2. Font Files (Webflow Site Settings → Custom Fonts)
+## 2. Typography Variables
 
-Variable definitions live in §"Variable Index — Confirmed & Live" above. Below is the **font file upload requirement** — the variable values (e.g. `Noto Serif KR`) only render if the file is uploaded.
+### Font Families
 
-| Role | KR (Korean) | EN (English) | Format | Weights to upload |
-|---|---|---|---|---|
-| display (serif) | Noto Serif KR | EB Garamond | TTF | Regular 400 · SemiBold 600 · Bold 700 |
-| sans (body/UI) | Pretendard | Inter | OTF/TTF | Regular 400 · Medium 500 · SemiBold 600 · Bold 700 |
+Upload to Webflow Site Settings → Custom Fonts before use.
+
+| Language        | Font Family    | Format       | Weights Available                                     | Use Case             |
+|-----------------|----------------|--------------|-------------------------------------------------------|----------------------|
+| Korean (sans)   | Pretendard     | OTF / TTF    | Thin 100 – Black 900                                  | Primary body + UI    |
+| Korean (serif)  | Noto Serif KR  | TTF          | ExtraLight 200 – Black 900                            | Display / headings   |
+| English (sans)  | Inter          | TTF          | Thin 100 – Black 900                                  | UI, captions, data   |
+| English (serif) | EB Garamond    | TTF          | Regular 400, Medium 500, SemiBold 600, Bold 700, ExtraBold 800 (+ Italics) | Display, pull-quotes |
+| Chinese (sans)  | Noto Sans TC   | TTF          | Thin 100 – Black 900                                  | CN body text         |
+| Chinese (serif) | Noto Serif TC  | TTF          | ExtraLight 200 – Black 900                            | CN display           |
 
 Font files location: `docs/2026 Intellectual Data_Brand Assets-*/3. Font/`
 
-**Rule**: Max 4 weights per family. Each extra weight = extra HTTP request → bigger CLS/LCP hit.
+### Type Scale — Size Variables
+
+Create as Size variables in Webflow using the shared fluid formula:
+
+```css
+clamp(min, calc(min + (max - min) * ((100vw - 375px) / 1545)), max)
+```
+
+Map default body text through Body or `f-body`, bound to `Type/Size/Base`.
+Map labels and eyebrow text through a label style such as `f-label`, bound to
+`Type/Size/SM` unless the design clearly requires `Type/Size/XS`.
+Every typography role must resolve to a fluid `Type/Size/*` variable:
+headings, display, body, lead, label, eyebrow, caption, button, nav, chip, card,
+form, stat, and CMS text.
+Map non-fluid legacy font-size values to the nearest `Type/Size/*` token
+before creating a new token.
+
+| Variable Name    | Fluid Value | Usage                    |
+|------------------|-------------|--------------------------|
+| font-size-xs     | `clamp(11px, calc(11px + 1 * ((100vw - 375px) / 1545)), 12px)` | Caption, footnote        |
+| font-size-sm     | `clamp(13px, calc(13px + 1 * ((100vw - 375px) / 1545)), 14px)` | Small body, label        |
+| font-size-base   | `clamp(15px, calc(15px + 1 * ((100vw - 375px) / 1545)), 16px)` | Body text, `f-body`      |
+| font-size-md     | `clamp(16px, calc(16px + 2 * ((100vw - 375px) / 1545)), 18px)` | Large body               |
+| font-size-lg     | `clamp(18px, calc(18px + 2 * ((100vw - 375px) / 1545)), 20px)` | Lead paragraph           |
+| font-size-xl     | `clamp(20px, calc(20px + 4 * ((100vw - 375px) / 1545)), 24px)` | H4 / subheading          |
+| font-size-2xl    | `clamp(24px, calc(24px + 8 * ((100vw - 375px) / 1545)), 32px)` | H3                       |
+| font-size-3xl    | `clamp(28px, calc(28px + 12 * ((100vw - 375px) / 1545)), 40px)` | H2                       |
+| font-size-4xl    | `clamp(36px, calc(36px + 20 * ((100vw - 375px) / 1545)), 56px)` | H1                       |
+| font-size-display| `clamp(44px, calc(44px + 28 * ((100vw - 375px) / 1545)), 72px)` | Hero title               |
+
+Recommended typography role mapping:
+
+| Role or class | Type size variable | Notes |
+|---------------|--------------------|-------|
+| `f-display`, hero title | `Type/Size/Display` | Largest first-viewport headline |
+| `f-h1`, page H1 | `Type/Size/4XL` | Standard page headline |
+| `f-h2`, section H2 | `Type/Size/3XL` | Main section headline |
+| `f-h3`, card group heading | `Type/Size/2XL` | Subsection headline |
+| `f-h4`, card title | `Type/Size/XL` | Card and compact heading |
+| `f-lead`, intro paragraph | `Type/Size/LG` | Lead copy and hero supporting text |
+| `f-body-lg` | `Type/Size/MD` | Large body copy |
+| `f-body`, Body text, CMS rich text | `Type/Size/Base` | Default paragraph text |
+| `f-label`, eyebrow, section label, button, nav | `Type/Size/SM` | UI labels and short controls |
+| `f-caption`, footnote, metadata, tag | `Type/Size/XS` | Small supporting text |
+
+### Line Height Variables
+
+| Variable Name         | Value |
+|-----------------------|-------|
+| line-height-tight     | 1.2   |
+| line-height-snug      | 1.35  |
+| line-height-normal    | 1.5   |
+| line-height-relaxed   | 1.65  |
+| line-height-loose     | 1.8   |
+
+### Letter Spacing Variables
+
+| Variable Name    | Value    |
+|------------------|----------|
+| tracking-tight   | -0.02em  |
+| tracking-normal  | 0em      |
+| tracking-wide    | 0.04em   |
+| tracking-wider   | 0.08em   |
 
 ---
 
-## 3. Home Page
+## 3. Spacing Variables
+
+Based on 8px grid.
+
+| Variable Name       | Value  | Label  |
+|---------------------|--------|--------|
+| space-1             | 4px    | Micro  |
+| space-2             | 8px    | XS     |
+| space-3             | 12px   | S      |
+| space-4             | 16px   | Base   |
+| space-5             | 24px   | M      |
+| space-6             | 32px   | L      |
+| space-7             | 48px   | XL     |
+| space-8             | 64px   | 2XL    |
+| space-9             | 80px   | 3XL    |
+| space-10            | 96px   | 4XL    |
+| space-11            | 128px  | 5XL    |
+| space-12            | 160px  | Section|
+
+### Section & Layout Variables
+
+| Variable Name          | Value   |
+|------------------------|---------|
+| section-pad-y-sm       | 64px    |
+| section-pad-y-md       | 96px    |
+| section-pad-y-lg       | 128px   |
+| container-max-width    | 1280px  |
+| container-pad-x        | 40px    |
+| container-pad-x-mobile | 20px    |
+
+---
+
+## 4. Home Page
 
 ### Page Info
 
@@ -178,93 +265,91 @@ Font files location: `docs/2026 Intellectual Data_Brand Assets-*/3. Font/`
 
 ### Section Structure
 
-> All variable refs below use the **new 5-collection naming** (see Variable Index above). Section padding falls back to `gap/4xl` (96px) since the simplified GAP set has no 128px slot.
-
-#### 3.1 Navigation
+#### 4.1 Navigation
 
 - Element tag: `nav`
 - Class: `nav`
 - Layout: Flexbox, `justify-between`, `align-center`
 - Position: Fixed, top 0, full width
-- Background: `color/white` (transparent on scroll toggle optional)
+- Background: `color-bg-primary` (or transparent with scroll-based toggle)
 - Children:
   - Logo image (left) — link to `/`
   - Nav links (center): About · Service · Cases · Contact
   - CTA button (right): label "문의하기", link to `#contact`
 
-#### 3.2 Hero Section
+#### 4.2 Hero Section
 
 - Element tag: `section`
 - Class: `section-hero`
 - Layout: Flexbox column, `align-center`, `justify-center`
 - Min-height: 100vh
-- Background: `color/navy`
+- Background: `color-bg-dark` (Navy)
 - Children:
-  - Eyebrow label — `body/5/font-size`, `color/white`
-  - H1 heading — `display/5/font-size` (72px), `font-family/display`, `color/white`
-  - Subheading paragraph — `body/1/font-size` (20px), `color/white`
+  - Eyebrow label — small caps, `tracking-wider`, `color-text-inverse`
+  - H1 heading — `font-size-display`, Noto Serif KR or EB Garamond, `color-text-inverse`
+  - Subheading paragraph — `font-size-lg`, `line-height-relaxed`, `color-text-inverse`
   - CTA button group:
-    - Primary button: `color/white` bg, `color/navy` text
-    - Secondary button: outline `color/white`
-  - Background layer: KV image `[IntellectualData]KV(3840x2160).png` or pattern overlay
+    - Primary button: solid, `color-brand-navy` bg → invert on dark
+    - Secondary button: outline, `color-text-inverse` border
+  - Background layer: KV image `[IntellectualData]KV(3840x2160).png` or Pattern overlay
 
-#### 3.3 About / Mission Section
+#### 4.3 About / Mission Section
 
 - Class: `section-about`
 - Layout: 2-column CSS Grid (text left, visual/stat right)
-- Padding: `gap/4xl` (96px vertical)
-- Background: `color/white`
+- Padding: `section-pad-y-lg`
+- Background: `color-bg-primary`
 - Children:
-  - Section label — `body/4/font-size`, `color/navy`
-  - H2 heading — `heading/2/font-size` (48px)
-  - Body paragraph — `body/3/font-size` (16px)
-  - Stats row — 3 key numbers + descriptions
+  - Section label — `font-size-sm`, `tracking-wider`, `color-brand-navy`
+  - H2 heading — `font-size-3xl`, `line-height-snug`
+  - Body paragraph — `font-size-base`, `line-height-relaxed`
+  - Stats row — 3 key numbers (number + description label each)
 
-#### 3.4 Services Section
+#### 4.4 Services Section
 
 - Class: `section-services`
 - Layout: CSS Grid, 3 columns on desktop / 1 column on mobile
-- Padding: `gap/4xl`
-- Background: `color/ivory` (subtle backdrop)
+- Padding: `section-pad-y-md`
+- Background: `color-bg-subtle`
 - Children:
   - Section header (label + H2)
   - Service cards × 3:
     - Icon (from `docs/.../7. Icon/PNG/1.Navy/`)
-    - Card title — `heading/5/font-size` (24px)
-    - Description — `body/3/font-size`
+    - Card title — `font-size-xl`
+    - Description — `font-size-base`, `line-height-relaxed`
 
-#### 3.5 Cases / Portfolio Section
+#### 4.5 Cases / Portfolio Section
 
 - Class: `section-cases`
-- Layout: CSS Grid, 2-column (horizontal scroll on mobile)
-- Padding: `gap/4xl`
-- Background: `color/white`
+- Layout: CSS Grid, 2-column (or horizontal scroll on mobile)
+- Padding: `section-pad-y-md`
+- Background: `color-bg-primary`
 - Children:
   - Section header (label + H2 + "전체 보기" link)
   - Case cards × 4:
     - Thumbnail image
     - Tag chip
-    - Card title — `heading/5/font-size`
+    - Card title — `font-size-xl`
     - Arrow link
 
-#### 3.6 Contact CTA Section
+#### 4.6 Contact CTA Section
 
 - Class: `section-cta`
 - Layout: Flexbox column, `align-center`
-- Padding: `gap/4xl`
-- Background: `color/navy`
+- Padding: `section-pad-y-lg`
+- Background: `color-brand-navy`
 - Children:
-  - H2 heading — `color/white`, `heading/2/font-size`
-  - Description — `color/white`, `body/2/font-size`
-  - CTA button: label "문의하기", `color/white` fill
+  - H2 heading — `color-text-inverse`, `font-size-3xl`
+  - Description — `color-text-inverse`, `font-size-md`
+  - CTA button: label "문의하기", white fill
 
-#### 3.7 Footer
+#### 4.7 Footer
 
 - Element tag: `footer`
 - Class: `footer`
-- Layout: CSS Grid, 4 columns desktop / 2 tablet / 1 mobile
-- Padding: `gap/2xl` (64px vertical)
-- Background: `color/black`
+- Layout: CSS Grid, 4 columns on desktop / 2 on tablet / 1 on mobile
+- Padding: `section-pad-y-sm`
+- Background: `color-neutral-black`
 - Children:
   - Logo (white variant from `docs/.../2. Logo/PNG/3_White/`)
   - Nav group × 3 (About / Service / Legal)
@@ -273,21 +358,20 @@ Font files location: `docs/2026 Intellectual Data_Brand Assets-*/3. Font/`
 
 ---
 
-## 4. Claude Execution Instructions
+## 5. Claude Execution Instructions
 
-### Step 1 — Variables ✅ Done 2026-05-15
-
-5 collections (COLORS / CONTAINER / GAP / TYPO / VARIABLES) / 88 variables in both Figma and Webflow. Variable Index above is canonical.
-
-### Step 2 — Map Figma layer styles to variables
+### Step 1 — Create Variables
 
 ```
-Tool: mcp__claude_ai_Figma__use_figma
-Action: walk all layers in the Figma URL, replace raw hex/px with variable bindings
-Rule: list.todo step 3. No double-declaration — bind directly to color/navy, gap/xl, etc.
+Tool: variable_tool
+Action: create
+Collection: Base
+Order: Color variables → Size variables → Typography variables
+Rule: Use semantic names exactly as listed in sections 1–3.
+      Mark [TODO] values as placeholder strings until brand guide values are confirmed.
 ```
 
-### Step 3 — Create Page in Webflow
+### Step 2 — Create Page
 
 ```
 Tool: data_pages_tool
@@ -297,47 +381,54 @@ Slug: "/"
 SEO title: "Intellectual Data"
 ```
 
-### Step 4 — Build Page Structure
+### Step 3 — Build Page Structure
 
 ```
 Tool: element_tool
-Action: create elements in order matching §3 structure (nav → hero → about → services → cases → cta → footer)
-Rule: Webflow Div Block for layout. Apply class names exactly as listed in §3.
+Action: create elements in order
+Order:
+  1. nav (Navigation)
+  2. section.section-hero
+  3. section.section-about
+  4. section.section-services
+  5. section.section-cases
+  6. section.section-cta
+  7. footer.footer
+Rule: Use Webflow Div Block for layout containers.
+      Apply class names exactly as listed in section 4.
 ```
 
-### Step 5 — Apply Styles
+### Step 4 — Apply Styles
 
 ```
-Tool: style_tool > update_style
-Action: bind variable references via variable_as_value
-Rule: Use variable_as_value whenever a variable exists. Do not hardcode any value that has a variable equivalent.
+Tool: style_tool
+Action: bind variable references to element styles
+Rule: Use variable_as_value whenever a variable exists for the property.
+      Do not hardcode hex colors or px values that have a variable equivalent.
 ```
 
 ---
 
-## 5. Forbidden Patterns
+## 6. Forbidden Patterns
+
+These patterns are **never allowed** regardless of context.
 
 | Forbidden | Correct alternative |
 |-----------|---------------------|
-| Hardcoded color hex (`color: #1A2B4C`) | `variable_as_value` → `color/navy` |
+| Hardcoded color hex (`color: #1A2B4C`) | `variable_as_value` → `color-brand-navy` |
 | Google Fonts `@import` or `<link>` | Uploaded custom fonts only (Pretendard · Inter · Noto Serif KR · EB Garamond) |
-| Hardcoded font-size px (`font-size: 40px`) | `heading/*/font-size` or `body/*/font-size` or `display/*/font-size` |
-| Hardcoded line-height px | `*/line-height` from TYPO |
-| Hardcoded letter-spacing | `*/letter-spacing` from TYPO |
-| Hardcoded font-weight | `*/font-weight` from TYPO |
-| Hardcoded spacing px | `gap/*` from GAP collection |
-| Hardcoded container width px | `container/*` from CONTAINER collection |
-| Semantic alias variables (`spacing-section → gap/3xl`) | Bind raw token directly (`gap/4xl`) — no double-declaration (list.todo line 32-34) |
-| Generic class names: `wrapper1`, `div2`, `block-copy`, `text-area` | BEM-lite names (see §6) |
+| Hardcoded font-size px (`font-size: 40px`) | Fluid `font-size-3xl` variable via `variable_as_value` |
+| Hardcoded spacing px on elements that have a variable | `space-*` / `section-pad-y-*` variable |
+| Generic class names: `wrapper1`, `div2`, `block-copy`, `text-area` | BEM-lite names (see §7) |
 | THREE.js in global Site embed | Per-page only via Page Settings → Custom Code |
 | Lottie or any JSON animation player | GSAP `svg-draw` or CSS `@keyframes` (see `custom.md`) |
 | `publish_site` without user confirmation | Use `safe-publish` skill |
 | Webflow API token in client-side `<script>` | Webhook → Make / Zapier / n8n → CMS API |
-| Creating variables outside the 5-collection Variable Index | Add only to existing 5 collections, name matching Figma 1:1 |
+| Creating variables with different names than listed in §1–3 | Use exact names from §1–3 |
 
 ---
 
-## 6. CSS Class Naming — BEM-lite
+## 7. CSS Class Naming — BEM-lite
 
 Pattern: `block`, `block__element`, `block--modifier`, `block__element--modifier`
 
@@ -365,6 +456,153 @@ Pattern: `block`, `block__element`, `block--modifier`, `block__element--modifier
 | Section inner     | `section__inner`        |
 | Section header    | `section__header`       |
 
+### Flexible Section BEM Structure
+
+Build content sections with a stable structural spine and flexible role zones.
+The invariant is hierarchy and role clarity, not identical DOM in every section.
+
+```text
+section.section-[name]
+  div.container
+    div.section-[name]__inner
+      [role zones...]
+```
+
+Required spine:
+
+- `section.section-[name]`
+- `div.container`
+- `div.section-[name]__inner`
+
+Allowed role zones inside `section-[name]__inner`:
+
+| Role zone | Use |
+|-----------|-----|
+| `section-[name]__head` | Intro/header zone: eyebrow, title, summary |
+| `section-[name]__txt` | Text zone when the section is split or text-led |
+| `section-[name]__cnt` | Main content zone |
+| `section-[name]__media` | Image, video, visual, canvas, or embed |
+| `section-[name]__list` | Repeated content wrapper, preferably `ul` |
+| `section-[name]__item` | Repeated item, preferably `li` |
+| `section-[name]__actions` | CTA buttons and text links |
+| `section-[name]__foot` | Footer note, secondary CTA, legal, or metadata |
+
+Optional text-zone children:
+
+```text
+div.section-[name]__txt
+  div.section-[name]__title
+    h2/h3/h4/h5/h6.section-[name]__heading.[live-typography-class]
+  div.section-[name]__desc
+    p.section-[name]__body.[live-body-class]
+    span.section-[name]__note.[live-caption-class]
+```
+
+- Use `section-[name]__title` when the text zone needs one or more headings.
+  Choose the heading tag by document outline, not by visual size.
+- Use `section-[name]__desc` for supporting copy, multiple paragraphs, inline
+  spans, notes, or mixed text fragments.
+- Give text elements both a section-owned BEM class and the closest live
+  Webflow typography class or typography variable. Do not assume names such as
+  `f-body-1`, `f-h2`, or `f-label`; inspect the live Webflow styles and
+  variables first, then attach the actual declared class or variable.
+- `__txt` may contain a direct heading and paragraph for very simple sections,
+  but prefer `__title` and `__desc` when the section has more than one text
+  child or needs clearer Navigator editing.
+- `__head` may use the same internal `__title` and `__desc` pattern when a
+  header zone needs explicit heading/copy groups.
+- `section-[name]__cnt` should default to `margin-top: Space/08` (`64px`)
+  when it follows `__head` or `__txt`. Bind the margin through the spacing
+  variable, not a raw `64px` value.
+- The `__cnt` margin is a default rhythm, not a lock. Override it per section
+  with a section modifier, a more specific section-owned class, or breakpoint
+  styles when the design needs tighter or looser spacing.
+
+Default class stacks for component templates:
+
+| Element | Section-owned class | Live typography binding |
+|---------|-----------------|--------------------------|
+| Eyebrow/label | `section-[name]__eyebrow` | Inspect live label/eyebrow class or variable |
+| Main heading | `section-[name]__heading` | Inspect live heading/title class or variable |
+| Subheading | `section-[name]__heading` | Inspect live subtitle/card-title class or variable |
+| Body copy | `section-[name]__body` | Inspect live body class or variable |
+| Lead copy | `section-[name]__body` | Inspect live lead/intro class or variable |
+| Note/meta | `section-[name]__note` | Inspect live caption/meta class or variable |
+| Content zone | `section-[name]__cnt` | `margin-top: Space/08` default |
+
+Recommended variants:
+
+```text
+// Text-only
+section.section-[name]
+  div.container
+    div.section-[name]__inner
+      div.section-[name]__head
+
+// Split
+section.section-[name]
+  div.container
+    div.section-[name]__inner
+      div.section-[name]__txt
+        div.section-[name]__title
+          h2.section-[name]__heading.[live-heading-class]
+        div.section-[name]__desc
+          p.section-[name]__body.[live-body-class]
+      div.section-[name]__cnt
+
+// Content-first split
+section.section-[name]
+  div.container
+    div.section-[name]__inner
+      div.section-[name]__cnt
+      div.section-[name]__txt
+
+// Header plus grid/list
+section.section-[name]
+  div.container
+    div.section-[name]__inner
+      div.section-[name]__head
+      ul.section-[name]__list
+        li.section-[name]__item
+
+// Header plus media and actions
+section.section-[name]
+  div.container
+    div.section-[name]__inner
+      div.section-[name]__head
+      div.section-[name]__media
+      div.section-[name]__actions
+```
+
+Rules:
+
+- Use `section-[name]` as the block class for page sections.
+- Use section-owned BEM for page-specific children: `__inner`, `__head`,
+  `__txt`, `__cnt`, `__media`, `__list`, `__item`, `__actions`, and `__foot`.
+- `container` constrains max width and horizontal padding only. Put layout,
+  grid, flex, gap, alignment, and ordering on `section-[name]__inner`.
+- Visual order can change per breakpoint, but Navigator hierarchy should stay
+  understandable.
+- Use semantic `ul`/`li` for repeated content unless CMS or another Webflow
+  native element is required.
+- Avoid generic names: `wrapper`, `content`, `box`, `left`, `right`, `area`,
+  `group`, `div-copy`, and `text-area`.
+
+### Component Structure Rules
+
+- Do not componentize full page sections unless the same structure is reused on
+  multiple pages.
+- Componentize repeated inner pieces by default: cards, tabs, stats, badges,
+  logo items, media units, accordion items, form rows, and CTA/button groups.
+- A section component may own `section > container > inner` only when section
+  reuse is real.
+- A content component goes inside `section-[name]__cnt`.
+- A card or item component goes inside `section-[name]__item`.
+- A CTA or button component goes inside `section-[name]__actions`.
+- Prefer Webflow component slots only when inner content changes often but the
+  wrapper must remain reusable.
+- Avoid deep component nesting beyond section > list/item > atom or molecule.
+
 ### Component Classes
 
 | Component         | Block          | Elements                              |
@@ -376,31 +614,20 @@ Pattern: `block`, `block__element`, `block--modifier`, `block__element--modifier
 
 ---
 
-## 7. Brand Guide Cross-Check
+## 8. TODO — Confirm from Brand Guide PDF
 
-Variables are seeded from the existing Figma file values (designer-set, presumed sourced from brand guide). One-time confirmation pass against:
-`docs/2026 Intellectual Data_Brand Assets-.../1. Brand Guide/[IntellectualData]BrandGuide.pdf`
+Open `docs/2026 Intellectual Data_Brand Assets-.../1. Brand Guide/[IntellectualData]BrandGuide.pdf`
+and fill in the following before running variables:
 
-Cross-check the following values against the brand guide PDF. Update both Figma and Webflow if any mismatch — name stays the same, value updates via `update_color_variable` / `update_size_variable`.
-
-- [ ] `color/navy` = `#00263b` (current — confirm against brand)
-- [ ] `color/blue` = `#00109e`
-- [ ] `color/purple` = `#512944`
-- [ ] `color/ivory` = `#efe5d9`
-- [ ] `color/silver` = `#d2d4d4`
-- [ ] `color/gray-dark` = `#666666`
-- [ ] `color/gray-mid` = `#999999`
-- [ ] `color/gray-light` = `#dadada`
-- [ ] Confirm TYPO scale (288/188/128/96/72 / 64/48/36/28/24 / 20/18/16/14/12) matches brand guide if it specifies
-- [ ] Confirm CONTAINER widths (1664/1440/1024/768/544) are correct
-- [ ] Confirm GAP scale (2/4/8/16/24/32/48/64/96) is correct
-
-## 8. Implementation Status
-
-| Phase | Status | Date |
-|---|---|---|
-| Figma variable rebuild (5 collections / 88 vars) | ✅ Done | 2026-05-15 |
-| Webflow variable rebuild (mirror) | ✅ Done | 2026-05-15 |
-| Figma layer mapping to new variables | ⏳ Pending | — |
-| Webflow page/component build | ⏳ Pending | — |
-| CMS · FORM · 뉴스레터 · ICON 통합 | ⏸ 보류 (시안컨펌 후) | — |
+- [ ] `color-brand-navy` — exact hex
+- [ ] `color-brand-navy-dark` — exact hex
+- [ ] `color-brand-navy-light` — exact hex
+- [ ] `color-neutral-light-gray` — exact hex
+- [ ] `color-neutral-mid-gray` — exact hex
+- [ ] `color-neutral-silver` — exact hex
+- [ ] `color-text-primary` — exact hex
+- [ ] `color-text-secondary` — exact hex
+- [ ] `color-bg-dark` — exact hex (likely same as `color-brand-navy`)
+- [ ] `color-bg-subtle` — exact hex
+- [ ] Confirm official type scale values if brand guide specifies them
+- [ ] Confirm official spacing values if brand guide specifies them

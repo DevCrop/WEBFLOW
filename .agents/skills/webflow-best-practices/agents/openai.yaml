@@ -1,0 +1,20 @@
+interface:
+  display_name: "Webflow Best Practices"
+  short_description: "Guide Intellectual Data Webflow work safely with lightweight Figma reference support"
+  default_prompt: "Use $webflow-best-practices for this Webflow task."
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "webflow"
+      description: "Webflow MCP server for Designer, CMS, assets, pages, forms, scripts, publishing, and Analyze"
+      transport: "streamable_http"
+      url: "https://mcp.webflow.com/mcp"
+    - type: "mcp"
+      value: "figma"
+      description: "Figma remote MCP server for optional read-only design context, variables, and screenshots"
+      transport: "streamable_http"
+      url: "https://mcp.figma.com/mcp"

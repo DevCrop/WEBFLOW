@@ -15,7 +15,6 @@ Full project history, milestone, and requirements → `rules/init.md` §0
 @.claude/rules/custom.md        — GSAP · AOS · THREE.js · SVG animation patterns · library load order
 @.claude/rules/performance.md   — CWV targets · image/font/script optimization · pre-publish checklist
 @.claude/rules/cms.md           — CMS collection schemas: Insight · Newsroom · Release Notes · Contact · Newsletter
-@.claude/rules/figma-sync.md    — Figma ↔ Webflow 100% parity guide · variable/typography/layout/component mapping · MCP workflow · verification ritual
 
 ## Non-Negotiable Constraints
 
