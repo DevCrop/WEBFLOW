@@ -1,0 +1,3 @@
+[submodule "vendor/webflow-skills"]
+	path = vendor/webflow-skills
+	url = https://github.com/webflow/webflow-skills.git
