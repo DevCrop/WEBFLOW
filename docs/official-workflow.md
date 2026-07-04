@@ -11,7 +11,6 @@ agent skills. It is not the exported Webflow site source.
 Use this repository to:
 
 - Plan and document Webflow site work.
-- Keep Codex and Claude-compatible agent guidance aligned.
 - Track official Webflow skills through the `vendor/webflow-skills` submodule.
 - Coordinate Figma-to-Webflow, CMS, Designer, audit, and publish workflows.
 
@@ -84,13 +83,6 @@ Route those writes through server-side automation or an approved integration.
 Publishing is never automatic. Use the `safe-publish` skill or ask the user for
 explicit confirmation before calling any publish action.
 
-## Legacy Notes Policy
-
-The `.claude/` directory contains prior planning notes. Use it only as historical
-context. If it conflicts with this document, `AGENTS.md`, Webflow official docs,
-or Codex official docs, update the workflow from the official source before
-acting.
-
 ## Official Sources
 
 - Codex AGENTS.md guidance:
@@ -111,4 +103,3 @@ acting.
   https://developers.webflow.com/data/reference
 - Official Webflow skills repository:
   https://github.com/webflow/webflow-skills
-

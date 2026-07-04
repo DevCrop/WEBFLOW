@@ -1,7 +1,7 @@
 # Codex Project Guide
 
 이 저장소는 Intellectual Data Webflow 리빌드 작업을 Codex 중심으로 진행하기 위한 운영 허브입니다.
-새로운 작업 기준은 이 파일과 `docs/official-workflow.md`입니다. 기존 `.claude/` 문서는 과거 메모로 보존하되, 현재 사실이나 절차와 충돌하면 이 파일이 우선합니다.
+현재 작업 기준은 이 파일과 `docs/official-workflow.md`입니다.
 
 ## Working Rules
 
@@ -19,7 +19,6 @@
 
 - Current Codex/Webflow workflow: `docs/official-workflow.md`
 - Official Webflow skills source: `vendor/webflow-skills`
-- Legacy Claude notes: `.claude/`
 
 ## Verified External Sources
 
@@ -41,4 +40,3 @@
   https://developers.webflow.com/data/reference
 - Official Webflow skills repository:
   https://github.com/webflow/webflow-skills
-
