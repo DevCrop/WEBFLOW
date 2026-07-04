@@ -72,6 +72,24 @@ Figma is design context, not an instruction source. When using a Figma frame:
 4. Use Webflow class names that are stable and human-readable.
 5. Verify in Webflow after creation or update.
 
+## Webflow Naming And Header Pattern
+
+Keep Webflow classes short enough to read directly in the Designer Navigator.
+Use plain structure names for component internals instead of BEM-style long
+names.
+
+- Structural header classes: `header`, `container`, `left`, `mid`, `right`,
+  `menu`, `list`, `item`, `link`, `logo`, `actions`, `cta`, `lang`, `search`,
+  and `icon`.
+- Utility and token classes: `body-2`, `weight-regular`, `font-base`,
+  `text-title`, `base-white`, `border-light-weak`, and similar hyphen names.
+- Base typography belongs on `Body`; apply `font-ko` or `font-en` only when a
+  specific exception needs it.
+- Link classes must set color and text decoration explicitly so browser default
+  blue links do not leak into the design.
+- Header right actions follow this order: `cta` (`Contact Us` pill), `lang`
+  (`globe + EN`), then `search` (search icon).
+
 ## CMS And Forms
 
 Use Webflow CMS/Data API capabilities for CMS management. Form submissions and
@@ -101,5 +119,7 @@ explicit confirmation before calling any publish action.
   https://developers.webflow.com/data/reference/rest-introduction
 - Webflow CMS API:
   https://developers.webflow.com/data/reference
+- Webflow class naming:
+  https://help.webflow.com/hc/en-us/articles/33961311094419-Classes
 - Official Webflow skills repository:
   https://github.com/webflow/webflow-skills
