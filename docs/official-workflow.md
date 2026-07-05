@@ -81,10 +81,23 @@ names.
 - Structural header classes: `header`, `container`, `left`, `mid`, `right`,
   `menu`, `list`, `item`, `link`, `logo`, `actions`, `cta`, `lang`, `search`,
   and `icon`.
+- Reusable section structure should stay generic: `section`, `container`,
+  `inner`, `txt`, `title`, `cnt`, `list`, `item`, `card`, `card-txt`, `media`,
+  `svg`, `btn`, and `dot`.
+- Reusable grid utilities should describe the layout, not the content:
+  `grid-2`, `grid-3`, and `grid-4` for equal columns; `grid-3-9`, `grid-2-10`,
+  `grid-4-8`, and `grid-6-6` for 12-column ratios.
+- Avoid purpose-specific layout classes such as `card-list-3`,
+  `feature-card-icon`, or `service-card-grid` when a short structural class or
+  grid utility already covers the behavior.
 - Utility and token classes: `body-2`, `weight-regular`, `font-base`,
   `text-title`, `base-white`, `border-light-weak`, and similar hyphen names.
 - Base typography belongs on `Body`; apply `font-ko` or `font-en` only when a
   specific exception needs it.
+- Text size and hierarchy should come from existing typography classes such as
+  `heading-1`, `heading-3`, `heading-6`, `body-2`, `body-4`, `text-title`,
+  `text-desc`, and weight classes. Do not add one-off section or card font
+  sizes when an existing hierarchy token fits.
 - Link classes must set color and text decoration explicitly so browser default
   blue links do not leak into the design.
 - Header right actions follow this order: `cta` (`Contact Us` pill), `lang`

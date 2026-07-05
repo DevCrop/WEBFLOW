@@ -27,6 +27,12 @@ site source tree.
 - Component structure classes stay short and match the Navigator hierarchy,
   such as `header`, `container`, `left`, `mid`, `right`, `menu`, `list`,
   `item`, `link`, `logo`, `lang`, `search`, and `cta`.
+- Reusable grids use layout-first names such as `grid-2`, `grid-3`, `grid-4`,
+  `grid-3-9`, `grid-2-10`, `grid-4-8`, and `grid-6-6`; avoid content-specific
+  names such as `card-list-3`.
+- Typography uses existing hierarchy/token classes (`heading-*`, `body-*`,
+  `text-title`, `text-desc`, `font-ko`, `font-en`, and weight classes) rather
+  than one-off section or card font sizes.
 - Avoid BEM-style long names for Webflow structure classes.
 - The header right action group is `cta` (`Contact Us`), `lang` (`globe + EN`),
   and `search` (search icon), styled from existing variables.

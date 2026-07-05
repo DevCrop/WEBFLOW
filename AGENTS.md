@@ -17,6 +17,21 @@
 
 ## Webflow Class Naming
 
+- Prefer existing classes before creating new ones. Inspect the current page
+  classes first, then reuse the shortest class that already fits.
+- Keep structural classes short and generic: `section`, `container`, `inner`,
+  `txt`, `title`, `cnt`, `list`, `item`, `card`, `card-txt`, `media`, `svg`,
+  `btn`, and `dot`.
+- Use layout utilities for repeatable grid behavior: `grid-2`, `grid-3`,
+  `grid-4`, `grid-3-9`, `grid-2-10`, `grid-4-8`, and `grid-6-6`.
+- Do not create purpose-specific layout names such as `card-list-3`,
+  `feature-card-icon`, or `service-card-grid` when a generic utility class
+  can describe the structure.
+- Typography must use existing hierarchy classes such as `heading-1`,
+  `heading-3`, `heading-6`, `body-2`, `body-4`, `text-title`, `text-desc`,
+  `font-ko`, `font-en`, and weight classes. Do not hard-code one-off font
+  sizes for sections or cards.
+
 - 변수 기반 범용 클래스는 Webflow Designer에서 직접 관리하기 쉽도록 `layout-container`, `font-base`, `text-title`처럼 영문 소문자와 하이픈을 사용합니다.
 - 숫자 스케일은 `heading-1`, `body-3`, `display-2`처럼 그룹명 뒤에 하이픈과 숫자를 붙입니다.
 - 상태나 강도가 있는 토큰은 `border-light-weak`, `border-dark-strong`처럼 의미 단위를 하이픈으로 나눕니다.
