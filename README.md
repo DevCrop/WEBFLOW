@@ -10,6 +10,8 @@ site source tree.
 
 - `AGENTS.md` - Codex project guidance.
 - `docs/official-workflow.md` - official Codex + Webflow operating workflow.
+- `docs/webflow-design-system.md` - target class/variable/component rules (지향점).
+- `docs/webflow-implementation-status.md` - **measured current site state (현재 사실). AI 에이전트가 먼저 읽을 문서.**
 - `vendor/webflow-skills` - official Webflow skills repository as a submodule.
 - `.gitattributes` - UTF-8 text handling for durable instruction files.
 

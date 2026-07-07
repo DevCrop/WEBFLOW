@@ -397,6 +397,20 @@ solution-list item
 
 단독 전역 `item`, `list`, `link`, `txt`, `cnt`, `left`, `mid`, `right`는 만들지 않는다.
 
+## Scope-Specific Class Rule (구현 학습 반영)
+
+일부 클래스는 특정 섹션 전용이다. 다른 섹션에서 재사용하지 않는다.
+
+- `hero-arrow` (position:absolute; bottom:80px) 는 **Hero 섹션 전용**이다. 다른 섹션의
+  인너 세로 정렬에는 쓰지 않는다. 대신 `inner` + `flex-center` + `flex-col` + `gap-*` 조합을 쓴다.
+- `data_element_builder` / `whtml_builder` 로 새 요소를 만들 때 인접 요소의 클래스(특히 `hero-arrow`)가
+  복사되어 붙는 경우가 있다. 빌드 직후 `set_style` 로 의도한 클래스만 남기도록 클린업한다.
+- 겹치는 원형 레이아웃 등 폭 계산이 중요한 배치는 `transform` 대신 음수 `margin` 을 써서
+  실제 레이아웃 폭을 줄인다(컨테이너 넘침 + 겹침 동시 해결). 자세한 값은
+  `webflow-implementation-status.md` 3.5 Consulting 참고.
+
+실제 구현 상태·변수 실측·컴포넌트 제약은 `docs/webflow-implementation-status.md` 를 우선 참조한다.
+
 ## Do Not Use
 
 - `legacy-*`
