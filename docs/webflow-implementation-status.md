@@ -280,7 +280,8 @@ Docusign pageId `6a48b6aa23d56c4e126d23d2`의 `sub-nav` 바로 아래에 제품 
 - 검증: page scripts 재조회 완료(`docusign_product_tabs` footer 연결), freeform head/footer 공백 확인, element tree depth 8에서 dummy content 3개 확인, snapshot에서 IAM panel만 표시 확인.
 - 공식 기준: Webflow Tabs는 native responsive tabbed content용 요소다. MCP로 native Tabs 생성이 불가능할 때만 fallback script를 사용한다.
 - 공식 기준: Webflow custom code 효과는 preview mode에서 확인 가능하지만 live site에는 publish 전까지 반영되지 않는다.
-- Webflow page publish는 하지 않았다.
+- URL 상태 확인: Docusign page slug/publishedPath는 `/page-docusign`이 맞지만 `draft:true` 상태라 `https://intellectualdata.webflow.io/page-docusign`은 404가 정상이다.
+- Webflow page publish는 하지 않았다. live URL 테스트는 Docusign page를 draft 해제하고 publish한 뒤 진행한다.
 
 ---
 
@@ -435,7 +436,7 @@ Breakpoint prefix 매핑:
 - [ ] 모바일 반응형: Consulting 원 452 고정(좁은 화면 처리) / Insights 슬라이드 폭 등 브레이크포인트.
 - [ ] backdrop-filter(blur) / Swiper / 글로브 등 임베드는 **퍼블리시 후 라이브에서만 렌더** — 스테이징 확인.
 - [ ] BlockContainer 폭 제한 이슈(5-7) 정리 여부 결정.
-- [ ] Docusign product tabs footer script를 Webflow Preview에서 클릭 테스트하고, 실제 컨텐츠 확정 시 `product-tab-demo-*` 더미 데이터를 교체.
+- [ ] Docusign product tabs script를 Webflow Preview에서 클릭 테스트하고, live URL 테스트는 draft 해제/publish 후 진행한다. 실제 컨텐츠 확정 시 `product-tab-demo-*` 더미 데이터를 교체.
 
 ---
 
