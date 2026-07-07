@@ -268,13 +268,16 @@ Docusign pageId `6a48b6aa23d56c4e126d23d2`의 `sub-nav` 바로 아래에 제품 
   - IAM: `TEST DATA · IAM`, Identity Proofing / Adaptive Verification / Audit Trail Ready / Risk Signal Check
   - eSignature: `TEST DATA · eSignature`, Reusable Template / Recipient Routing / Mobile Signing / Completion Notice
   - CLM: `TEST DATA · CLM`, Clause Library / Review Workflow / Approval Matrix / Repository Sync
-- Docusign page footer custom code에 tab toggle script를 추가했다.
+- Docusign page script에 tab toggle script를 추가했다.
+  - registered script: `docusign_product_tabs` v`1.0.0`
+  - location: page footer
   - trigger: `[data-product-tab-trigger]`
   - pane: `[data-product-tab-panel]`
   - active classes: `product-tab-active`, `product-tabs-panel-active`
   - `aria-selected`도 함께 토글한다.
+- 재점검에서 `set_page_freeform_code`에 순수 JS만 저장된 상태는 버튼 클릭이 실행되지 않을 수 있어 제거했다. page-level fallback JS는 `register_inline_script` 후 `set_page_scripts`로 연결한다.
 - script fallback은 MCP로 native Tabs 생성이 불가능한 현 상태의 제한된 fallback이다. Webflow Designer에서 native Tabs를 직접 만들 수 있으면 향후 해당 구조로 교체한다.
-- 검증: page footer custom code 재조회 완료, element tree depth 8에서 dummy content 3개 확인, snapshot에서 IAM panel만 표시 확인.
+- 검증: page scripts 재조회 완료(`docusign_product_tabs` footer 연결), freeform head/footer 공백 확인, element tree depth 8에서 dummy content 3개 확인, snapshot에서 IAM panel만 표시 확인.
 - 공식 기준: Webflow Tabs는 native responsive tabbed content용 요소다. MCP로 native Tabs 생성이 불가능할 때만 fallback script를 사용한다.
 - 공식 기준: Webflow custom code 효과는 preview mode에서 확인 가능하지만 live site에는 publish 전까지 반영되지 않는다.
 - Webflow page publish는 하지 않았다.

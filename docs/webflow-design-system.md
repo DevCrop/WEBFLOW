@@ -348,7 +348,8 @@ Product Tabs:
 - 제품 상세 안의 하위 탭은 `product-tabs > product-tabs-inner > product-tabs-menu / product-tabs-content` 구조를 쓴다.
 - tab trigger는 `product-tab-link`, active trigger는 `product-tab-active`를 쓴다.
 - content pane은 `product-tabs-panel`을 기본으로 숨기고, 현재 pane에만 `product-tabs-panel-active`를 추가해 보인다.
-- MCP로 Webflow native Tabs element 생성이 불가능할 때만 page-level footer script fallback을 허용한다.
+- MCP로 Webflow native Tabs element 생성이 불가능할 때만 registered page-level footer script fallback을 허용한다.
+- fallback script는 `register_inline_script` + `set_page_scripts`로 등록한다. `set_page_freeform_code`에 순수 JS를 넣지 않는다.
 - fallback script는 trigger의 `data-product-tab-trigger`와 pane의 `data-product-tab-panel`만 토글해야 하며 publish 전 문서에 기록한다.
 - fallback을 쓰는 경우 dummy/test content는 실제 content로 교체하기 전까지 `product-tab-demo-*` scope class 안에만 둔다.
 
