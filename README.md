@@ -1,6 +1,6 @@
-# Intellectual Data Webflow Workflow
+# Intellectual Data Webflow Agent Workflow
 
-Codex-first operating hub for the Intellectual Data Webflow rebuild.
+Codex + Claude operating hub for the Intellectual Data Webflow rebuild.
 
 This repository stores current project instructions, official-source workflow
 rules, and the official Webflow skills submodule. It is not an exported Webflow
@@ -8,7 +8,9 @@ site source tree.
 
 ## Current Files
 
-- `AGENTS.md` - Codex project guidance.
+- `AGENTS.md` - shared project guidance and the source of truth for coding agents.
+- `CLAUDE.md` - Claude Code bridge that imports `AGENTS.md`.
+- `.claude/settings.json` - shared Claude Code project settings for sensitive-file read denials.
 - `docs/official-workflow.md` - official Codex + Webflow operating workflow.
 - `docs/webflow-design-system.md` - target class/variable/component rules (지향점).
 - `docs/webflow-implementation-status.md` - **measured current site state (현재 사실). AI 에이전트가 먼저 읽을 문서.**
@@ -17,8 +19,8 @@ site source tree.
 
 ## Quick Start
 
-1. Open this repository in Codex.
-2. Read `AGENTS.md`.
+1. Open this repository in Codex or Claude Code.
+2. Codex reads `AGENTS.md`; Claude Code reads `CLAUDE.md`, which imports `AGENTS.md`.
 3. For Webflow work, use Webflow MCP and the Webflow skills.
 4. Confirm before CMS bulk changes, destructive actions, or publishing.
 
@@ -41,8 +43,14 @@ site source tree.
 
 ## Official Sources
 
-- Codex customization:
-  https://developers.openai.com/codex/concepts/customization
+- Codex AGENTS.md:
+  https://developers.openai.com/codex/guides/agents-md
+- Codex skills:
+  https://developers.openai.com/codex/skills
+- Claude Code memory / CLAUDE.md:
+  https://code.claude.com/docs/en/memory
+- Claude Code settings:
+  https://code.claude.com/docs/en/settings
 - Webflow class naming:
   https://help.webflow.com/hc/en-us/articles/33961311094419-Classes
 - Webflow MCP:

@@ -1,7 +1,17 @@
-# Codex Project Guide
+# Agent Project Guide
 
-이 저장소는 Intellectual Data Webflow 리빌드 작업을 Codex 중심으로 진행하기 위한 운영 허브입니다.
-현재 작업 기준은 이 파일, `docs/official-workflow.md`, `docs/webflow-design-system.md`입니다.
+이 저장소는 Intellectual Data Webflow 리빌드 작업을 Codex와 Claude Code가 같은 규칙으로 진행하기 위한 운영 허브입니다.
+Codex는 이 파일을 직접 읽고, Claude Code는 `CLAUDE.md`에서 이 파일을 import합니다.
+현재 작업 기준은 이 파일, `docs/official-workflow.md`, `docs/webflow-design-system.md`,
+`docs/webflow-implementation-status.md`입니다.
+
+## Agent Loading
+
+- `AGENTS.md`는 공유 프로젝트 규칙의 원본입니다.
+- `CLAUDE.md`는 Claude Code용 브리지이며 `@AGENTS.md`를 import합니다. 공유 규칙을 중복해서 복사하지 않습니다.
+- Claude 개인 선호는 `CLAUDE.local.md`에 둡니다. 이 파일은 gitignore 대상입니다.
+- Claude project settings는 `.claude/settings.json`에 둡니다. 개인 실험 설정은 `.claude/settings.local.json`에 둡니다.
+- Codex/Claude 모두 긴 절차는 이 파일에 늘리지 말고 `docs/` 또는 skill로 분리합니다.
 
 ## Working Rules
 
@@ -9,6 +19,7 @@
 - 편집 전 `git status --porcelain=v1`로 dirty tree를 확인합니다.
 - 프로젝트 파일은 이 저장소 범위 안에서만 수정합니다.
 - Webflow 운영 작업은 Webflow MCP와 Webflow skills를 우선 사용합니다.
+- Webflow UI/interaction은 native 기능을 우선 사용합니다. Slider/Dropdown/Navbar/Tabs/Form/CMS List/Component 등 Webflow 기본 기능으로 표현 가능한 것은 임의 div, custom JS, HtmlEmbed로 새로 만들지 않습니다.
 - Webflow Designer를 직접 바꾸는 작업은 대상 site/page/element ID를 확인하고, 변경 전 계획과 영향 범위를 보고합니다.
 - CMS 대량 변경, 삭제, publish는 사전 확인 없이 실행하지 않습니다.
 - production publish는 반드시 `safe-publish` 절차 또는 사용자의 명시 확인 후 진행합니다.
@@ -20,6 +31,8 @@
 이 저장소의 Webflow 작업은 범용 디자인 시스템을 기준으로 진행합니다.
 기존 레거시 클래스나 임시 클래스에 맞춰 확장하지 않습니다.
 
+- Slider, Dropdown, Navbar, Tabs, Form, CMS Collection/List, Component/variant/property처럼 Webflow가 제공하는 native element와 feature가 있으면 그것을 먼저 씁니다.
+- native 기능으로 요구사항을 충족할 수 없을 때만 custom code/HtmlEmbed/직접 구현을 쓰고, 이유와 element ID를 `docs/webflow-implementation-status.md`에 기록합니다.
 - Webflow 페이지는 `Section > container > inner > section-title / contents` 구조를 기본으로 만듭니다.
 - 클래스는 짧고 규칙적으로 작성합니다.
 - 변수 scale은 소문자만 씁니다: `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`.
@@ -104,20 +117,36 @@ Banner:
 - 카탈로그 슬롯은 `data-component-slot`, `data-button-slot`, `data-card-slot`, `data-banner-slot` 속성으로 찾고, 해당 슬롯 안에 실제 Webflow Component instance를 렌더합니다.
 - 버튼, 카드, 배너처럼 variant가 있는 컴포넌트는 base 인스턴스만 두지 말고 대표 variant를 모두 렌더합니다.
 
+## Documentation Sync Rule
+
+- Webflow 변수, style selector, 컴포넌트, variant, page structure, CMS schema/content를 변경하면 같은 작업 안에서 `docs/webflow-implementation-status.md`를 갱신합니다.
+- 오래 유지될 규칙이 바뀌면 `docs/webflow-design-system.md`와 이 파일에도 반영합니다.
+- 컴포넌트 변경은 같은 작업 안에서 draft-only `/components` 카탈로그도 갱신합니다.
+- `.codex/hooks.json`의 PostToolUse hook은 Webflow MCP 변경 후 문서 싱크 알림을 추가 컨텍스트로 제공합니다. hook 알림은 보조 장치이며, 최종 책임은 작업 에이전트에게 있습니다.
+
 ## Source Of Truth
 
 - Current Codex/Webflow workflow: `docs/official-workflow.md`
 - Webflow design system rules: `docs/webflow-design-system.md`
+- Measured live Webflow state: `docs/webflow-implementation-status.md`
 - Official Webflow skills source: `vendor/webflow-skills`
 
 ## Verified External Sources
 
 - Codex AGENTS.md and customization:
-  https://developers.openai.com/codex/concepts/customization#agents-guidance
+  https://developers.openai.com/codex/guides/agents-md
 - Codex skills:
-  https://developers.openai.com/codex/concepts/customization#skills
+  https://developers.openai.com/codex/skills
 - Codex MCP:
-  https://developers.openai.com/codex/concepts/customization#mcp
+  https://developers.openai.com/codex/mcp
+- Codex hooks:
+  https://developers.openai.com/codex/hooks
+- Codex advanced configuration:
+  https://developers.openai.com/codex/config-advanced
+- Claude Code CLAUDE.md and memory:
+  https://code.claude.com/docs/en/memory
+- Claude Code settings:
+  https://code.claude.com/docs/en/settings
 - Webflow MCP getting started:
   https://developers.webflow.com/mcp/reference/getting-started
 - Webflow MCP how it works:
@@ -130,5 +159,15 @@ Banner:
   https://developers.webflow.com/data/reference
 - Webflow class naming:
   https://help.webflow.com/hc/en-us/articles/33961311094419-Classes
+- Webflow Slider:
+  https://help.webflow.com/hc/en-us/articles/33961317173139-Slider
+- Webflow accessible elements:
+  https://help.webflow.com/hc/en-us/articles/33961346219923-Accessible-elements-in-Webflow
+- Webflow Components overview:
+  https://help.webflow.com/hc/en-us/articles/33961303934611-Components-overview
+- Webflow variables:
+  https://developers.webflow.com/designer/reference/variables-overview
+- Webflow styles:
+  https://developers.webflow.com/designer/reference/styles-overview
 - Official Webflow skills repository:
   https://github.com/webflow/webflow-skills

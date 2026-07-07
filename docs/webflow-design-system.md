@@ -8,7 +8,21 @@
 - 섹션은 같은 골격으로 반복한다.
 - 섹션 고유 스타일은 전역 클래스로 흩뿌리지 않고 scope combo로 제한한다.
 - 폰트, spacing, grid, color, border는 변수와 유틸리티로 관리한다.
+- Webflow native element와 feature를 먼저 쓴다.
 - 기존 레거시 이름은 사용하지 않는다.
+
+## Native First Rule
+
+Webflow가 제공하는 native element와 feature가 있으면 그것을 먼저 사용한다. native 기능은 Designer에서 구조와 설정을 읽기 쉽고, 접근성/상태/반응형 관리가 custom code보다 안전하다.
+
+- slider/carousel: Webflow `Slider`를 먼저 사용한다.
+- navigation/menu: `Navbar`, `Dropdown`, link block, component variant/property를 먼저 사용한다.
+- tabs/accordion 성격의 전환 UI: `Tabs` 또는 Webflow interaction이 적합한지 먼저 검토한다.
+- form/newsletter/contact: Webflow `Form` element를 먼저 사용하고, 외부 저장이나 API write가 필요하면 서버 사이드 연동으로 분리한다.
+- 반복 콘텐츠: CMS Collection/List 또는 Component instance를 먼저 사용한다.
+- 재사용 UI: 실제 Webflow `Component`와 variant/property를 먼저 만든다.
+
+임의 `Div Block` 조합, custom JS, HtmlEmbed는 native 기능으로 요구사항을 충족할 수 없을 때만 쓴다. fallback을 쓰면 이유, 대상 page/element ID, 대체 불가 조건을 `docs/webflow-implementation-status.md`에 남긴다.
 
 ## Standard Section
 
@@ -170,10 +184,17 @@ Webflow에서 `section` 이름 생성이 충돌하면 현재 시스템의 `Secti
 - `grid-2`
 - `grid-3`
 - `grid-4`
-- `grid-6-6`
-- `grid-4-8`
-- `grid-3-9`
+- `grid-12`
 - `grid-2-10`
+- `grid-3-9`
+- `grid-4-8`
+- `grid-5-7`
+- `grid-6-6`
+- `grid-7-5`
+- `grid-8-4`
+- `grid-9-3`
+- `grid-10-2`
+- `span-1` through `span-12`
 - `flex`
 - `flex-row`
 - `flex-col`
@@ -183,15 +204,55 @@ Webflow에서 `section` 이름 생성이 충돌하면 현재 시스템의 `Secti
 - `flex-end`
 - `flex-wrap`
 
+Grid rule:
+
+- `grid-*` and `grid-*-*` are parent layout utilities.
+- `grid-12` creates a 12-column parent grid. Use child `span-1` through `span-12` for column placement.
+- ratio grids such as `grid-3-9`, `grid-4-8`, `grid-7-5` are two-column parent grids and use `fr` ratios directly.
+- spacing between grid items is controlled separately with `gap-*`; grid classes should not carry gap by default.
+
 ### Responsive
+
+Breakpoint prefixes:
+
+- `lg-*`: Webflow `medium` breakpoint, max 991px.
+- `md-*`: Webflow `small` breakpoint, max 767px.
+- `sm-*`: Webflow `tiny` breakpoint, max 479px.
 
 - `md-grid-1`
 - `md-grid-2`
 - `md-grid-3`
+- `md-grid-4`
+- `md-grid-12`
+- `md-grid-2-10`
 - `md-grid-3-9`
+- `md-grid-4-8`
+- `md-grid-5-7`
 - `md-grid-6-6`
+- `md-grid-7-5`
+- `md-grid-8-4`
+- `md-grid-9-3`
+- `md-grid-10-2`
 - `sm-grid-1`
 - `sm-grid-2`
+- `sm-grid-3`
+- `sm-grid-4`
+- `sm-grid-12`
+- `sm-grid-2-10`
+- `sm-grid-3-9`
+- `sm-grid-4-8`
+- `sm-grid-5-7`
+- `sm-grid-6-6`
+- `sm-grid-7-5`
+- `sm-grid-8-4`
+- `sm-grid-9-3`
+- `sm-grid-10-2`
+- `lg-grid-1` through `lg-grid-4`
+- `lg-grid-12`
+- `lg-grid-2-10`, `lg-grid-3-9`, `lg-grid-4-8`, `lg-grid-5-7`, `lg-grid-6-6`, `lg-grid-7-5`, `lg-grid-8-4`, `lg-grid-9-3`, `lg-grid-10-2`
+- `lg-span-1` through `lg-span-12`
+- `md-span-1` through `md-span-12`
+- `sm-span-1` through `sm-span-12`
 - `md-flex-col`
 - `md-flex-row`
 - `sm-flex-col`
@@ -204,6 +265,12 @@ Webflow에서 `section` 이름 생성이 충돌하면 현재 시스템의 `Secti
 - `sm-text-right`
 - `md-padding-y-lg`
 - `sm-padding-y-md`
+
+Responsive grid rule:
+
+- responsive grid/span utilities should only define values at their target breakpoint.
+- desktop layout stays on the base class, then `lg-*`, `md-*`, `sm-*` progressively override at narrower breakpoints.
+- example: `grid-12 md-grid-6-6 sm-grid-1` on the parent, `span-7 md-span-6 sm-span-12` on a child.
 
 ### Text And Color
 
@@ -260,6 +327,30 @@ Webflow에서 `section` 이름 생성이 충돌하면 현재 시스템의 `Secti
 - `banner-title`
 - `banner-desc`
 - `banner-actions`
+
+Breadcrumb:
+
+- `breadcrumb`는 위치/정렬 wrapper다.
+- depth별 선택 메뉴는 custom hover CSS나 HtmlEmbed가 아니라 Webflow native `Dropdown`을 먼저 사용한다.
+- 내부 클래스는 `breadcrumb-item`, `breadcrumb-trigger`, `breadcrumb-arrow`, `breadcrumb-list`, `breadcrumb-link`까지만 허용한다.
+- 현재 페이지 leaf는 dropdown 없이 `breadcrumb-trigger`를 적용한 TextLink/TextBlock으로 둔다.
+
+Sub Nav:
+
+- `sub-nav`는 같은 depth의 형제 페이지를 이동하는 horizontal local navigation이다.
+- 구조는 native `nav > sub-nav-inner > Link`로 만든다. HtmlEmbed나 custom JS를 쓰지 않는다.
+- 클래스는 `sub-nav`, `sub-nav-inner`, `sub-nav-link`, `sub-nav-active`까지만 허용한다.
+- 현재 페이지 링크에만 `sub-nav-active`를 추가한다.
+- 모바일에서는 줄바꿈 대신 horizontal scroll을 허용한다.
+
+Product Tabs:
+
+- 제품 상세 안의 하위 탭은 `product-tabs > product-tabs-inner > product-tabs-menu / product-tabs-content` 구조를 쓴다.
+- tab trigger는 `product-tab-link`, active trigger는 `product-tab-active`를 쓴다.
+- content pane은 `product-tabs-panel`을 기본으로 숨기고, 현재 pane에만 `product-tabs-panel-active`를 추가해 보인다.
+- MCP로 Webflow native Tabs element 생성이 불가능할 때만 page-level footer script fallback을 허용한다.
+- fallback script는 trigger의 `data-product-tab-trigger`와 pane의 `data-product-tab-panel`만 토글해야 하며 publish 전 문서에 기록한다.
+- fallback을 쓰는 경우 dummy/test content는 실제 content로 교체하기 전까지 `product-tab-demo-*` scope class 안에만 둔다.
 
 Variant/state:
 
@@ -410,6 +501,17 @@ solution-list item
   `webflow-implementation-status.md` 3.5 Consulting 참고.
 
 실제 구현 상태·변수 실측·컴포넌트 제약은 `docs/webflow-implementation-status.md` 를 우선 참조한다.
+
+## Documentation Update Rule
+
+Webflow 변수, style selector, 컴포넌트, variant, page structure, CMS schema/content가 바뀌면 같은 작업 안에서 문서를 갱신한다.
+
+- 실측 상태와 변경 이력: `docs/webflow-implementation-status.md`
+- 유지할 디자인 시스템 규칙: `docs/webflow-design-system.md`
+- 에이전트 공통 운영 규칙: `AGENTS.md`
+- 컴포넌트 생성/삭제/variant/property 변경: draft-only `/components` 카탈로그
+
+Codex 작업에서는 `.codex/hooks.json`의 PostToolUse hook이 Webflow MCP 변경 후 문서 싱크 알림을 추가 컨텍스트로 제공한다. hook은 알림 장치일 뿐이며, 문서 갱신은 작업의 일부로 완료한다.
 
 ## Do Not Use
 

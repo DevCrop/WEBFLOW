@@ -18,7 +18,7 @@
 | 변수 컬렉션 | `Base collection` (단일 모드 `Base mode`), 66개 |
 | 주 폰트 | Pretendard (`--font--base`) |
 | 컨테이너 max-width | `no-container-xl` = **1664px** (gutter 24px) |
-| 로케일 | primary English(en) / secondary Korean(ko, disabled). 로컬라이제이션 add-on 미구매 |
+| 로케일 | primary Korean(ko, disabled) / secondary English(en, disabled). 로컬라이제이션 add-on 미구매 |
 
 **작업 원칙 (반드시 지킬 것):**
 1. 사용자가 이미 만든 섹션 골격이 있으면 **새로 만들지 말고** 그 안만 채운다.
@@ -27,7 +27,7 @@
 2. 텍스트/뱃지/보더는 전용 클래스를 만들지 않고 **범용 클래스 + 컴포넌트**로 처리한다.
    - 타이틀 → `heading-*` / 본문 → `body-*` / 색 → `text-*`
    - 뱃지 → `badge` 컴포넌트 / 버튼 → `button` 컴포넌트
-   - 보더 → `border` + `border-strong`
+   - 보더 → `border` + `border-strong` / `border-weak` / `border-inverse`
 3. 커스텀은 **레이아웃/포지셔닝에 한해서만** 전용 클래스(`service-*`,`global-*`,`insights-*`,`circle-*`)로 신설한다.
 4. 카드/슬라이드 배경은 `<img>`가 아니라 `service-bg` 배경 레이어로 처리한다(비워두고 Designer에서 채움).
 5. 카드/오피스/슬라이드는 `<a>`(LinkBlock)로 만들어 서브페이지 이동을 지원한다.
@@ -36,6 +36,9 @@
    `inner` + `flex-center` + `flex-col` + `gap-*` 조합을 쓴다.
 8. `data_element_builder`/`whtml_builder`가 `hero-arrow` 같은 잔여 클래스를 붙이는 경우가 있으니
    빌드 직후 `set_style`로 클린업한다.
+9. 슬라이더/메뉴/탭/폼/반복 콘텐츠/재사용 UI는 Webflow native 기능을 먼저 쓴다.
+   Slider/Dropdown/Navbar/Tabs/Form/CMS List/Component로 가능한 작업은 임의 div, custom JS, HtmlEmbed로 새로 만들지 않는다.
+   fallback을 쓰면 이유와 page/element ID를 이 문서에 기록한다.
 
 ---
 
@@ -87,7 +90,8 @@ Body 01~04 = 24 / 20 / 18 / 16px. letter-spacing -0.02em. 클래스: `display-1.
 | `banner` | `dd757598-1c8a-df83-fe4e-f8deec6f96f6` | `Variant` | 구조 완성 |
 | `badge` | `6620c6f6-ff10-459f-2fb3-f5e6a74e6bba` | `Label`(textContent) | 구조 채움 |
 | `section-title` | `9b4fc63d-3bda-d34d-302e-3b45259e7312` | eyebrow/title/desc/align/theme | 프롭만 |
-| header/footer/breadcrumb/sub-visual | — | 각 props | 프롭만 |
+| header/footer/sub-visual | — | 각 props | 프롭만 |
+| `breadcrumb` | `84385bf9-d4a6-fc2b-fa2a-df2d53263570` | — | foundation. About Us는 현재 page-level native Dropdown 구조로 렌더 |
 | content-split/media-block/card-grid, accordion/tab/pagination/tag/icon-box, form 계열 | — | 없음 | 빈 foundation |
 
 ### 2.1 `button` 컴포넌트
@@ -194,6 +198,87 @@ Section .h-full "Main CTA"
 ```
 - 뒤 배경 이미지는 사용자가 별도 처리(건드리지 않음). 앞 텍스트 + CTA 버튼 구조만 잡음.
 
+### 3.7 About Us Sub Visual Breadcrumb
+
+About Us pageId `6a3c82d462d1516e899d7fec`의 첫 `sub-visual`에 breadcrumb를 렌더했다.
+
+```text
+.sub-visual-container.no-container
+  .inner.sub-visual-inner(position:relative)
+    .sub-visual-title-box
+    .breadcrumb (d5b74433-21c2-4595-0096-83ec53df6991)
+      DropdownWrapper.breadcrumb-item "Company" (10e0660a-5426-1f66-8dd0-8ac4f4ceba67)
+        DropdownToggle.breadcrumb-trigger
+        DropdownList.breadcrumb-list > 5 links
+      DropdownWrapper.breadcrumb-item "About" (facac10a-4bb6-f7c6-5c75-f5d7f8f6be9f)
+        DropdownToggle.breadcrumb-trigger
+        DropdownList.breadcrumb-list > 5 links
+      TextLink.breadcrumb-trigger "About Us" (b7cdc914-ca8e-2f27-6ccb-e93e33c4fabf)
+```
+
+- 위치: `position:absolute; top:50%; right:0; transform:translateY(-50%)`.
+- 현재 About Us hierarchy: `Company > About > About Us`.
+- 구조는 3단계 breadcrumb까지 확장 가능하다. 예: `Company > About > About Us`, `Solutions > Data Security > Page`.
+- Dropdown은 Webflow native `Dropdown` element를 사용한다. `data-hover="true"`와 `data-delay="0"` attributes를 wrapper에 설정했다.
+- 기본 Dropdown icon은 snapshot에서 깨진 박스로 보여 visibility false 처리하고, `breadcrumb-arrow` 텍스트 caret을 toggle 안에 별도 추가했다.
+- 전용 클래스는 breadcrumb 범위로만 제한: `breadcrumb`, `breadcrumb-item`, `breadcrumb-trigger`, `breadcrumb-arrow`, `breadcrumb-list`, `breadcrumb-link`.
+
+### 3.8 Docusign Product Sub Nav
+
+Docusign pageId `6a48b6aa23d56c4e126d23d2`의 `sub-visual-container` 앞에 제품군 sub-nav를 렌더했다.
+
+```text
+.sub-nav (nav)
+  .sub-nav-inner
+    Link.sub-nav-link.sub-nav-active "Docusign®" -> /page-docusign
+    Link.sub-nav-link "Legal System" -> /page-legal-system
+    Link.sub-nav-link "Luminance" -> /page-luminance
+    Link.sub-nav-link "Litera" -> /page-litera
+    Link.sub-nav-link "Kiteworks®" -> /page-kiteworks
+    Link.sub-nav-link "ESG Management®" -> /page-esg-management
+```
+
+- Code Embed/HtmlEmbed가 아니라 native `nav` + Webflow `Link` 요소로 구성했다.
+- style selector는 `sub-nav`, `sub-nav-inner`, `sub-nav-link`, `sub-nav-active` 4개만 추가했다.
+- 현재 페이지 active underline은 `sub-nav-active`로 처리한다.
+- 아직 Webflow Component로 승격하지 않았다. Legal System/Luminance/Litera/Kiteworks/ESG 페이지에 반복 적용할 때 component/variant 또는 active property로 전환 검토.
+- Webflow page publish는 하지 않았다.
+
+### 3.9 Docusign Product Tabs
+
+Docusign pageId `6a48b6aa23d56c4e126d23d2`의 `sub-nav` 바로 아래에 제품 하위 탭 구조를 렌더했다.
+
+```text
+.product-tabs (section)
+  .product-tabs-inner
+    .product-tabs-menu
+      Button.product-tab-link.product-tab-active [data-product-tab-trigger="docusign-iam"] "Docusign IAM"
+      Button.product-tab-link [data-product-tab-trigger="docusign-esignature"] "Docusign eSignature"
+      Button.product-tab-link [data-product-tab-trigger="docusign-clm"] "Docusign CLM"
+    .product-tabs-content
+      .product-tabs-panel.product-tabs-panel-active [data-product-tab-panel="docusign-iam"]
+      .product-tabs-panel [data-product-tab-panel="docusign-esignature"]
+      .product-tabs-panel [data-product-tab-panel="docusign-clm"]
+```
+
+- 초기 상태는 IAM pane만 `display:block`, eSignature/CLM pane은 `display:none`이다.
+- MCP WHTML로 Webflow native `Tabs` 호환 마크업을 시도했지만 Designer가 native Tabs로 승격하지 않아 pane 3개가 모두 보였다. 해당 블록은 삭제했다.
+- CSS-only radio 방식도 시도했지만 WHTML CSS validation이 nested/sibling selector를 거부해 삽입되지 않았다.
+- 각 pane에 테스트용 dummy content를 추가했다.
+  - IAM: `TEST DATA · IAM`, Identity Proofing / Adaptive Verification / Audit Trail Ready / Risk Signal Check
+  - eSignature: `TEST DATA · eSignature`, Reusable Template / Recipient Routing / Mobile Signing / Completion Notice
+  - CLM: `TEST DATA · CLM`, Clause Library / Review Workflow / Approval Matrix / Repository Sync
+- Docusign page footer custom code에 tab toggle script를 추가했다.
+  - trigger: `[data-product-tab-trigger]`
+  - pane: `[data-product-tab-panel]`
+  - active classes: `product-tab-active`, `product-tabs-panel-active`
+  - `aria-selected`도 함께 토글한다.
+- script fallback은 MCP로 native Tabs 생성이 불가능한 현 상태의 제한된 fallback이다. Webflow Designer에서 native Tabs를 직접 만들 수 있으면 향후 해당 구조로 교체한다.
+- 검증: page footer custom code 재조회 완료, element tree depth 8에서 dummy content 3개 확인, snapshot에서 IAM panel만 표시 확인.
+- 공식 기준: Webflow Tabs는 native responsive tabbed content용 요소다. MCP로 native Tabs 생성이 불가능할 때만 fallback script를 사용한다.
+- 공식 기준: Webflow custom code 효과는 preview mode에서 확인 가능하지만 live site에는 publish 전까지 반영되지 않는다.
+- Webflow page publish는 하지 않았다.
+
 ---
 
 ## 4. 이 프로젝트에서 만든 레이아웃 전용 클래스
@@ -207,12 +292,108 @@ Section .h-full "Main CTA"
 | `insights-prev/-next` + `swiper/-wrapper/-slide/-pagination` | Swiper JS 훅 클래스 |
 | `circle-list/-item/-bg/-body` + `.circle-arrow`(css) | Consulting 원형 리스트(겹침) |
 | `main-services-icon-box` | (사용자 제작) Services 카드 아이콘 영역 100%×380 |
+| `breadcrumb/-item/-trigger/-arrow/-list/-link` | About Us sub-visual breadcrumb |
+| `sub-nav/-inner/-link/-active` | Product sibling page local navigation |
+| `product-tabs/-inner/-menu/-content`, `product-tab-link/-active`, `product-tabs-panel/-active` | Docusign product tab shell |
 
 ### 정리 이력
 - Services 버튼: 커스텀 LinkBlock → `button` 컴포넌트(outline-white). Main CTA: `button`(fill-black) 추가.
 - `Div Block` 전역 클래스 삭제. Core Services 전용 텍스트 클래스 삭제.
 - 중복 생성했던 Global/Insights 섹션 삭제(사용자 골격만 사용).
 - 슬라이드/원형/CTA 인너에 딸려붙은 `hero-arrow` 잔여 클래스 제거(→ hero 전용 규칙 확정).
+
+### 4.1 Style Selector 유틸리티 정리 (2026-07-08)
+
+2026-07-08 재확인 결과 일부 utility selector가 삭제되어 있었고, 아래 selector를 현재 토큰 기준으로 복구했다.
+
+복구/확인된 alias selector:
+
+| 클래스 | 현재 id | 상태 | 토큰 |
+| --- | --- | --- | --- |
+| `text-title` | `ecdaa0d1-eae3-bf9d-c032-b4597ac1831e` | 삭제 후 복구 | `--color--text--title` |
+| `text-body` | `3f657b69-1d65-2ea4-c31e-373238442deb` | 삭제 후 복구 | `--color--text--primary` |
+| `text-desc` | `c51938f7-f3fa-72f3-5e7d-feb70b947e12` | 삭제 후 복구 | `--color--text--desc` |
+| `border-weak` | `2269225d-5f23-bfc4-231f-7b382ad7ad98` | 삭제 후 복구 | `--color--border--dark-weak` |
+
+복구/보정한 배경·표면·보더 selector:
+
+| 클래스 | 보정 내용 |
+| --- | --- |
+| `bg-secondary` | 삭제 후 복구. `--color--bg--secondary` 연결 |
+| `surface-primary` | 삭제 후 복구. `--color--bg--primary` 연결 |
+| `surface-secondary` | 삭제 후 복구. `--color--bg--secondary` 연결 |
+| `surface-elevated` | 삭제 후 복구. `--color--gray--secondary` 연결 |
+| `border-inverse` | 삭제 후 복구. `--color--border--light-strong` 연결 |
+| `text-muted` | `--color--text--desc` 연결 |
+| `border` | `border-style: solid`, `border-width: 1px` 확인. 기존 `border-color: #24495c`는 MCP 단일 property 삭제 수단 미확인으로 남아 있음 |
+| `border-strong` | `--color--border--dark-strong` 연결 |
+
+주의:
+- `text-primary`, `text-secondary`, `text-inverse`, `bg-primary`, `bg-inverse`는 같은 selector 이름의 global/duplicate combo가 공존한다.
+  `update_style(style_name)`은 일부 항목에서 combo selector를 먼저 잡고, `style_id`를 함께 넘겨도 global을 타깃하지 못했다.
+  해당 global selector 토큰 상태는 별도 정밀 정리가 필요하다.
+- 이번 복구 작업은 selector 생성/보정만 수행했다. 기존 페이지 element 구조와 publish 상태는 변경하지 않았다.
+- 검증용 임시 selector `__schema_probe_do_not_create__`는 MCP payload 확인 후 삭제했다.
+
+### 4.2 Grid utility 확장 (2026-07-08)
+
+Grid parent utility와 child span utility를 Webflow Style Selector에 추가했다.
+
+Breakpoint prefix 매핑:
+
+| Prefix | Webflow breakpoint | 조건 |
+| --- | --- | --- |
+| `lg-*` | `medium` | max 991px |
+| `md-*` | `small` | max 767px |
+| `sm-*` | `tiny` | max 479px |
+
+생성/확인한 base grid selector:
+
+- `grid-12`
+- `grid-2-10`, `grid-3-9`, `grid-4-8`, `grid-5-7`, `grid-6-6`, `grid-7-5`, `grid-8-4`, `grid-9-3`, `grid-10-2`
+- `span-1` through `span-12`
+
+생성/보정한 responsive grid selector:
+
+- `lg-grid-1` through `lg-grid-4`, `lg-grid-12`
+- `lg-grid-2-10`, `lg-grid-3-9`, `lg-grid-4-8`, `lg-grid-5-7`, `lg-grid-6-6`, `lg-grid-7-5`, `lg-grid-8-4`, `lg-grid-9-3`, `lg-grid-10-2`
+- `md-grid-1` through `md-grid-4`, `md-grid-12`
+- `md-grid-2-10`, `md-grid-3-9`, `md-grid-4-8`, `md-grid-5-7`, `md-grid-6-6`, `md-grid-7-5`, `md-grid-8-4`, `md-grid-9-3`, `md-grid-10-2`
+- `sm-grid-1` through `sm-grid-4`, `sm-grid-12`
+- `sm-grid-2-10`, `sm-grid-3-9`, `sm-grid-4-8`, `sm-grid-5-7`, `sm-grid-6-6`, `sm-grid-7-5`, `sm-grid-8-4`, `sm-grid-9-3`, `sm-grid-10-2`
+- `lg-span-1` through `lg-span-12`
+- `md-span-1` through `md-span-12`
+- `sm-span-1` through `sm-span-12`
+
+처리 메모:
+
+- `grid-12`는 parent 12-column grid, `span-*`는 child `grid-column: span n / span n` 전용이다.
+- ratio grid는 parent에서 `fr` 비율을 직접 지정한다. 예: `grid-3-9`, `grid-7-5`.
+- responsive selector는 base 값을 비워 두고 대상 breakpoint에만 값을 넣었다.
+- 기존 `sm-grid-1`은 재사용하고 `tiny` breakpoint 값을 보정했다.
+- 동작 확인용 임시 selector `__grid_probe_delete__`, `__grid_empty_probe_delete__`는 삭제 완료했다.
+- Webflow page structure와 publish 상태는 변경하지 않았다.
+
+### 4.3 Native-first 및 문서 싱크 자동화 (2026-07-08)
+
+- Webflow 작업 원칙을 native-first로 확정했다. slider/carousel은 Webflow `Slider`, 메뉴는 `Navbar`/`Dropdown`, tab UI는 `Tabs`, form은 `Form`, 반복 콘텐츠는 CMS Collection/List, 재사용 UI는 Webflow `Component`/variant/property를 먼저 사용한다.
+- custom code, HtmlEmbed, 직접 JS 구현은 native 기능으로 충족할 수 없을 때만 fallback으로 사용한다.
+- Codex repo hook `.codex/hooks.json` + `.codex/hooks/webflow_doc_sync.ps1`을 추가했다.
+  - `mcp__webflow*` PostToolUse에서 mutation action(`create/update/set/remove/delete/rename/insert/move/publish` 등)을 감지한다.
+  - mutation 감지 시 `docs/webflow-implementation-status.md`, `docs/webflow-design-system.md`, `AGENTS.md`, `/components` 카탈로그 갱신 알림을 Codex 추가 컨텍스트로 반환한다.
+  - read-only action(`get/list/read/search/audit` 등)은 알림 없이 통과한다.
+- 검증: `hooks.json` JSON 파싱 완료. `update_style` payload는 알림 JSON 반환, `get_styles` payload는 무출력 통과.
+
+삭제/리팩터 후보:
+
+| 구분 | 클래스 | 처리 |
+| --- | --- | --- |
+| 즉시 삭제 후보 | `Div Block*`, `txt`, `cnt`, `link`, `mid`, `legacy-*`, `deprecated-*`, `deprecate-*`, `delete-*` | 홈 depth 검사 및 style 목록 기준 즉시 삭제할 대상 없음. 사이트 전체 사용처 확정 전 삭제 보류 |
+| 교체 후 삭제 후보 | `right` | 홈 Global 섹션에서 1개 사용 중. `global-right` 또는 `global canvas-wrap`로 교체 후 삭제 |
+| 교체/확인 후보 | `Mobile Margin Top 10`, `Button Primary`, `Nav Link`, `Heading 7`, `Section 2`, `conte`, `flex-co` | 자동/오타/레거시 후보. 전체 사용처 확인 후 0-use면 삭제, 사용 중이면 대체 selector로 교체 |
+| 유지 | `hero-arrow` | Hero 전용이면 유지 |
+| 유지 | `number-item`, `circle-list`, `circle-item` | 금지어 부분 문자열과 겹치지만 scoped 클래스라 유지 |
+| 유지 | `service-*`, `global-*`, `insights-*`, `circle-*` | 현재 구현 전용 레이아웃 클래스라 유지 |
 
 ---
 
@@ -226,6 +407,7 @@ Section .h-full "Main CTA"
 6. 자동 생성 전역 `Section`(100vh) / (삭제 전)`Div Block`.
 7. **일부 섹션 래퍼가 `BlockContainer` 타입** (Consulting `63c74e49`, Main CTA `d7d4a723`).
    BlockContainer는 Webflow 기본 max-width가 있어 폭을 제한할 수 있음. 폭 이슈 시 일반 Block으로 통일 검토.
+8. 일부 utility 이름은 global과 combo가 중복된다. MCP `update_style(style_name)`은 이름 중복 시 combo를 먼저 잡을 수 있어 global만 정확히 타깃하기 어렵다.
 
 ---
 
@@ -233,6 +415,8 @@ Section .h-full "Main CTA"
 
 - `button-label`은 Span → textContent 바인딩 불가 → 인스턴스 라벨 API로 못 바꿈(Designer 수정).
 - `create_style`이 `-webkit-line-clamp` 등 일부 벤더 프로퍼티 거부.
+- Breadcrumb 같은 메뉴 UI는 custom hover CSS/HtmlEmbed보다 native `Dropdown`을 우선 사용한다.
+- `data_whtml_builder`는 nested selector(`.breadcrumb-item:hover .breadcrumb-list`)를 거부했고, 인증도 406으로 실패한 전례 있음.
 - `set_style`/`update_style` pseudo는 `first-child`,`last-child`,`odd`,`even`만 지원. `nth-child(2)` 등 특정 숫자 불가.
 - 컴포넌트 인스턴스에는 클래스를 직접 못 붙임(`set_style` 실패). 위치 조정은 감싸는 래퍼에서.
 - `data_element_builder`가 새 div에 인접 요소 클래스를 복사해오는 경우 있음 → 빌드 후 클린업 필수.
@@ -248,6 +432,7 @@ Section .h-full "Main CTA"
 - [ ] 모바일 반응형: Consulting 원 452 고정(좁은 화면 처리) / Insights 슬라이드 폭 등 브레이크포인트.
 - [ ] backdrop-filter(blur) / Swiper / 글로브 등 임베드는 **퍼블리시 후 라이브에서만 렌더** — 스테이징 확인.
 - [ ] BlockContainer 폭 제한 이슈(5-7) 정리 여부 결정.
+- [ ] Docusign product tabs footer script를 Webflow Preview에서 클릭 테스트하고, 실제 컨텐츠 확정 시 `product-tab-demo-*` 더미 데이터를 교체.
 
 ---
 
@@ -260,5 +445,14 @@ Section .h-full "Main CTA"
 - 공식 Webflow skills: https://github.com/webflow/webflow-skills
 - Webflow 로컬라이제이션: https://help.webflow.com/hc/en-us/articles/33961358401555-Localization
 - Webflow 커스텀 코드/임베드: https://help.webflow.com/hc/en-us/articles/33961347731347-Custom-code-embed
+- Webflow custom code head/footer: https://help.webflow.com/hc/en-us/articles/33961357265299-Custom-code-in-head-and-body-tags
+- Webflow Tabs: https://help.webflow.com/hc/en-us/articles/33961243010195-Tabs
+- Webflow Slider: https://help.webflow.com/hc/en-us/articles/33961317173139-Slider
+- Webflow accessible elements: https://help.webflow.com/hc/en-us/articles/33961346219923-Accessible-elements-in-Webflow
+- Webflow Components overview: https://help.webflow.com/hc/en-us/articles/33961303934611-Components-overview
+- Webflow variables: https://developers.webflow.com/designer/reference/variables-overview
+- Webflow styles: https://developers.webflow.com/designer/reference/styles-overview
+- Codex hooks: https://developers.openai.com/codex/hooks
+- Codex advanced configuration: https://developers.openai.com/codex/config-advanced
 - Swiper: https://swiperjs.com/get-started
-- Codex customization: https://developers.openai.com/codex/concepts/customization
+- Codex AGENTS.md: https://developers.openai.com/codex/guides/agents-md

@@ -33,6 +33,7 @@ yarn-error.log*
 .claude/cache/
 .claude/.credentials*
 .claude/settings.local.json
+CLAUDE.local.md
 
 # Brand assets — too large for GitHub (kept locally only)
 .claude/docs/
