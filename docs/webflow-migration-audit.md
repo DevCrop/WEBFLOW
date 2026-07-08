@@ -347,6 +347,42 @@ Migration direction:
 - Replace title/body/invert combinations with section-owned classes.
 - Keep `card-num` as shared.
 
+2026-07-08 scoped BEM correction pass:
+
+- Designer current page was confirmed as `Docusign®` (`6a48b6aa23d56c4e126d23d2`), not the main page, even though the visible Navigator still showed several main-prefixed or generic legacy structures.
+- Page-wide `get_all_elements` timed out with HTTP 504, so cleanup proceeded section by section with scoped reads and read-backs.
+- `sub-visual` first viewport cleanup:
+  - `Section 2` -> `sub-visual`.
+  - `sub-visual-container no-container` -> `sub-visual__container`.
+  - `sub-visual-title-box` -> `sub-visual__title-box`.
+  - `flex flex-col` -> `sub-visual__title-stack`.
+  - Remaining issue: `sub-visual__inner` still resolves as `inner sub-visual__inner` because Webflow stores the old inner-based combo. This needs a combo cleanup pass before deletion.
+- `product-tabs` cleanup:
+  - `product-tabs-inner` -> `product-tabs__inner`.
+  - `tab-container no-container` -> `product-tabs__container`.
+  - `product-tabs-menu` -> `product-tabs__menu`.
+  - `product-tabs-content` -> `product-tabs__content`.
+  - `product-tabs-panel` -> `product-tabs__panel`.
+  - `product-tabs-panel-active` was renamed to `product-tabs__panel--active` and reapplied to the active panel.
+- `sub-intro` cleanup:
+  - `sub-intro padding-y-xl` -> `sub-intro`.
+  - `no-container` -> `sub-intro__container`.
+  - `inner` -> `sub-intro__inner`.
+  - `sub-section-headline` -> `sub-intro__headline`.
+  - `sub-section-txt-title` -> `sub-intro__title`.
+  - `sub-section-headline-body` -> `sub-intro__body`.
+  - `contents` -> `sub-intro__contents`.
+- Selected Docusign Iris feature section cleanup:
+  - `no-container` -> `sub-feature__container`.
+  - `inner` -> `sub-feature__inner`.
+  - `section-title text-center` -> `sub-feature__head`.
+  - `body-1 text-body` -> `body-1`.
+  - `contents` -> `sub-feature__contents`.
+  - `sub-feature-grid` -> `sub-feature__grid`.
+  - `feature-card` -> `sub-feature__card`.
+  - `feature-number` spans -> shared `card-num`.
+- New rule reinforced: when MCP reads time out, process one selected section or `scope_element_id` at a time and do not report page completion until every target section is read back.
+
 ### Legal System
 
 Page ID: `6a48b6abc9c50156728b3e4e`
@@ -367,9 +403,11 @@ Migration direction:
 
 1. Create or confirm missing semantic variables.
 2. For each target page, add or update role classes with equivalent layout, spacing, typography, color, and responsive values.
-3. Move page elements from utility combinations to role classes.
-4. Read back page structure after each page.
-5. Update `/components` catalog.
-6. Present duplicate and unused style delete list.
-7. Delete only after explicit user confirmation.
-8. Publish only after explicit user confirmation.
+3. If a full-page read times out, switch immediately to one section or selected subtree at a time.
+4. Move one scoped section from utility combinations to role classes.
+5. Read back that same section before moving to the next section.
+6. Repeat until every target section has a verified read-back.
+7. Update `/components` catalog.
+8. Present duplicate and unused style delete list.
+9. Delete only after explicit user confirmation or when the active task explicitly includes deletion and zero usage is proven.
+10. Publish only after explicit user confirmation.

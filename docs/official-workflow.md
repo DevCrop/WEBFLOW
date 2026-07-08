@@ -39,6 +39,7 @@ After mutation work:
 1. Report every touched site/page/component/style/variable/element ID that the MCP tools returned.
 2. Explain how to verify the result in Webflow Designer or CMS.
 3. Run a relevant read-back or audit when the change is user-visible.
+4. If a page-wide read times out, switch to one section or selected subtree at a time. Finish one scoped read-back and cleanup before moving to the next section. Do not claim the page is complete from a partial read.
 
 ## Required Audit Before Class Work
 
@@ -79,6 +80,7 @@ The active Webflow convention is One-Class First.
 - General elements should have one role class whenever possible.
 - Every `section` must have a representative role class before any shared spacing class. A section with only `section`, `padding-y-xl`, `bg-primary`, or `h-full` is a migration defect.
 - Section-specific classes are allowed and preferred when the layout is unique. Do not reuse another section's class just to avoid creating a new class.
+- A section's internal classes must match the section block. For example, `sub-feature` uses `sub-feature__container`, `sub-feature__inner`, `sub-feature__head`, and `sub-feature__grid`; it must not keep `inner`, `contents`, `section-title`, or another section's internal class.
 - Promote a shared class only when structure and visual behavior are truly identical across sections or pages.
 - Main page classes use readable BEM names such as `main-hero__container`, `main-core-service__grid`, and `main-cta__inner`.
 - Shared exceptions are limited to stable repeated patterns such as `container`, `container-xl`, `section-padding`, `section-padding-sm`, `section-padding-lg`, `section-inner`, `section-contents`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, and `card-num`.

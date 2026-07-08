@@ -13,6 +13,7 @@
 - 섹션 고유 레이아웃은 섹션 역할 클래스 내부로 흡수한다. 예: `main-core-section-title { display:flex; justify-content:space-between; }`.
 - 다른 섹션의 inner/head/title 클래스를 재사용하지 않는다. 예: main CTA 내부는 `main-hero-inner`가 아니라 `main-cta-inner`를 쓴다.
 - 의미가 다른 구조는 새 역할 클래스를 만든다. 클래스 남발 금지는 고유 섹션 클래스를 금지한다는 뜻이 아니다.
+- 섹션 내부 클래스는 섹션 block과 반드시 매칭한다. 예: `sub-feature` 내부는 `sub-feature__container`, `sub-feature__inner`, `sub-feature__head`, `sub-feature__grid`로 정리하고 `inner`, `contents`, `section-title`, 다른 섹션의 내부 클래스를 남기지 않는다.
 - 완전히 같은 구조와 스타일만 공통 클래스로 승격한다. 예: 여러 sub page의 동일 제목 블록은 `sub-section-title`을 고려할 수 있다.
 - main page는 BEM 표기를 쓴다. 예: `main-hero__container`, `main-core-service__grid`, `main-cta__inner`.
 - 변수는 값 목록이다. `space/main/*`, `type/main/*`, `space/docusign/*`처럼 페이지나 섹션 의미가 들어간 변수는 만들지 않는다.
@@ -62,6 +63,7 @@
 
 `inner`, `head`, `title`, `desc`, `content` 같은 단어는 단독 전역 클래스로 남발하지 않는다.
 반복 wrapper는 `section-inner`, `section-contents`까지만 공통으로 허용하고, 나머지는 BEM element class로 작성한다.
+단, 특정 섹션의 유지보수가 더 중요하거나 사용자가 섹션 매칭을 요구한 경우 `section-inner`, `section-contents`보다 `section-block__inner`, `section-block__contents`를 우선한다.
 
 메인 예시:
 
