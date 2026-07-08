@@ -14,16 +14,24 @@
 - 다른 섹션의 inner/head/title 클래스를 재사용하지 않는다. 예: main CTA 내부는 `main-hero-inner`가 아니라 `main-cta-inner`를 쓴다.
 - 의미가 다른 구조는 새 역할 클래스를 만든다. 클래스 남발 금지는 고유 섹션 클래스를 금지한다는 뜻이 아니다.
 - 완전히 같은 구조와 스타일만 공통 클래스로 승격한다. 예: 여러 sub page의 동일 제목 블록은 `sub-section-title`을 고려할 수 있다.
-- `grid-*`, `gap-*`, `flex-*`, `heading-*`, `body-*`, `text-*`, `padding-*`, `margin-*`, weight utility를 페이지 요소에 직접 조합하지 않는다.
-- 기존 utility 조합은 마이그레이션 과정에서 각 역할 클래스로 흡수한다.
+- main page는 BEM 표기를 쓴다. 예: `main-hero__container`, `main-core-service__grid`, `main-cta__inner`.
+- 변수는 값 목록이다. `space/main/*`, `type/main/*`, `space/docusign/*`처럼 페이지나 섹션 의미가 들어간 변수는 만들지 않는다.
+- 클래스가 범용 변수 scale에서 값을 선택한다. 의미는 변수가 아니라 클래스가 가진다.
+- 텍스트 leaf는 `display-*`, `heading-*`, `body-*`만 사용한다. 색상, 정렬, 간격, invert는 section 또는 wrapper class에서 처리한다.
+- `grid-*`, `gap-*`, `flex-*`, `text-*`, `padding-*`, `margin-*`, weight utility를 페이지 요소에 직접 조합하지 않는다.
+- `heading-*`, `body-*`, `display-*`는 텍스트 leaf의 typography class로만 허용한다. `heading-1 regular text-center`처럼 layout/color/weight와 섞지 않는다.
+- 기존 utility 조합은 마이그레이션 과정에서 각 역할 클래스 또는 허용된 typography leaf 구조로 흡수한다.
 - 반복 섹션 여백처럼 완전히 동일한 패턴만 공통 클래스로 허용한다.
 
 허용되는 공통 예외:
 
 - `container`
+- `container-xl`
 - `section-padding`
 - `section-padding-sm`
 - `section-padding-lg`
+- `section-inner`
+- `section-contents`
 - `placeholder`
 - `header`
 - `footer`
@@ -52,7 +60,32 @@
 </section>
 ```
 
-`inner`, `head`, `title`, `desc`, `content` 같은 단어는 단독 전역 클래스로 남발하지 않는다. 섹션에 귀속된 역할 클래스로 작성한다.
+`inner`, `head`, `title`, `desc`, `content` 같은 단어는 단독 전역 클래스로 남발하지 않는다.
+반복 wrapper는 `section-inner`, `section-contents`까지만 공통으로 허용하고, 나머지는 BEM element class로 작성한다.
+
+메인 예시:
+
+```html
+<section class="main-core-service section-padding">
+  <div class="container-xl">
+    <div class="section-inner">
+      <div class="main-section-title">
+        <h2 class="heading-1"></h2>
+      </div>
+      <div class="section-contents">
+        <div class="main-core-service__grid">
+          <article class="main-core-service__card">
+            <div class="main-core-service__card-body">
+              <h4 class="heading-6"></h4>
+              <p class="body-2"></p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+```
 
 ## Media Placeholder Rule
 

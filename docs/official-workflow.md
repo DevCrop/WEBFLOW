@@ -65,7 +65,10 @@ Before changing Webflow classes or variables:
    - unused
    - direct-value replacement needed
 
-Deletion is not part of audit. Delete only after explicit user confirmation.
+Deletion is not part of audit by default. When the user explicitly asks for
+cleanup, delete only after read-back proves the style or variable has zero
+remaining usage. If zero usage cannot be proven, record the candidate and the
+reason it was deferred.
 
 Record the current findings in `docs/webflow-migration-audit.md` during the same task, including target page IDs, observed utility combinations, duplicate/generated classes, variable gaps, and delete candidates.
 
@@ -77,11 +80,14 @@ The active Webflow convention is One-Class First.
 - Every `section` must have a representative role class before any shared spacing class. A section with only `section`, `padding-y-xl`, `bg-primary`, or `h-full` is a migration defect.
 - Section-specific classes are allowed and preferred when the layout is unique. Do not reuse another section's class just to avoid creating a new class.
 - Promote a shared class only when structure and visual behavior are truly identical across sections or pages.
-- Shared exceptions are limited to stable repeated patterns such as `container`, `section-padding`, `section-padding-sm`, `section-padding-lg`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, and `card-num`.
+- Main page classes use readable BEM names such as `main-hero__container`, `main-core-service__grid`, and `main-cta__inner`.
+- Shared exceptions are limited to stable repeated patterns such as `container`, `container-xl`, `section-padding`, `section-padding-sm`, `section-padding-lg`, `section-inner`, `section-contents`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, and `card-num`.
 - Utility-heavy combinations are migration targets, not new-work patterns.
-- Absorb `grid-*`, `gap-*`, `flex-*`, `heading-*`, `body-*`, `text-*`, `padding-*`, `margin-*`, and weight utility classes into page or component role classes.
+- Absorb `grid-*`, `gap-*`, `flex-*`, `text-*`, `padding-*`, `margin-*`, and weight utility classes into page or component role classes.
+- Allow `display-*`, `heading-*`, and `body-*` only as the single typography class on text leaf elements. Color, alignment, spacing, and invert states belong on the section or wrapper.
 - Each role class owns its desktop, tablet, and mobile values.
 - Every style value should reference Webflow Variables.
+- Variables are generic value lists. Do not create page or section scoped variables such as `space/main/*`, `type/main/*`, or `space/docusign/*`; the class chooses values from generic `space/*`, `size/*`, `type/*`, and `color/*` scales.
 
 ## Figma To Webflow
 

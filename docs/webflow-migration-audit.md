@@ -260,6 +260,40 @@ Migration direction:
 - Replaced confirmed `global-office border border-strong Section padding-y-xl bg-primary` and `global-office border border-strong` with `main-office-feature` and `main-office-card`.
 - Residual risk: large MCP reads timed out, so deeper elements outside the confirmed IDs still need another smaller scoped pass before calling main fully complete.
 
+2026-07-08 BEM migration pass:
+
+- Adopted main BEM naming for newly migrated main sections and wrappers.
+- Renamed main-only styles:
+  - `main-hero-container` -> `main-hero__container`
+  - `main-hero-txt` -> `main-hero__content`
+  - `main-hero-arrow-container` -> `main-hero__scroll`
+  - `main-service-grid` -> `main-core-service__grid`
+  - `main-why-card` -> `main-core-service__card`
+  - `main-why-icon-box` -> `main-core-service__icon`
+  - `main-cta-inner` -> `main-cta__inner`
+- Created shared wrappers: `container-xl`, `section-inner`, `main-section-title`, `main-section-desc`.
+- Applied BEM/shared wrappers to confirmed main sections:
+  - hero
+  - core service
+  - business proof
+  - solution stats
+  - services
+  - office/global infrastructure
+  - clients
+  - insights
+  - CTA
+- Corrected section naming:
+  - the `Core Services` list section now uses `main-services`
+  - the `Global Infrastructure` section now uses `main-office`
+- Preserved Swiper runtime classes as functional exceptions: `swiper`, `swiper-wrapper`, `swiper-slide`.
+- Deletion status:
+  - Old renamed class names no longer exist as active style names.
+  - `no-container`, `no-container-xl`, `inner`, `contents`, `flex-*`, `grid-*`, `gap-*`, `text-*`, `bg-*`, and typography combo classes were not globally deleted because remaining usage could not be proven zero across all pages and the news section timed out.
+- Residual issue:
+  - `heading-1`, `body-2`, and `display-1` have duplicate combo/global naming conflicts. The Webflow MCP resolves some typography-only assignments back to combo stacks such as `text-center heading-1`, `sub-solution-table-body-list-desc body-2`, or `fm-ko display-1`.
+  - A later typography cleanup pass should remove or rename these duplicate combo classes, then recreate/verify the global typography classes.
+  - The main news section still needs a scoped pass; even `limit: 8` timed out through MCP.
+
 ### About
 
 Page ID: `6a3c82d462d1516e899d7fec`

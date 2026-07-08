@@ -26,10 +26,15 @@
 - 섹션 고유 레이아웃은 해당 섹션 역할 클래스로 만듭니다. 예: `main-core-section-title`, `main-cta-inner`, `about-hero-title-box`.
 - 기존 클래스를 억지로 재사용하지 않습니다. 다른 섹션의 구조를 빌리면 유지보수가 어려워지므로, 의미가 다르면 새 역할 클래스를 만듭니다.
 - 완전히 동일한 구조와 스타일만 공통 클래스로 승격합니다. 예: 여러 sub page에서 같은 제목 블록이면 `sub-section-title`을 고려합니다.
+- 메인 페이지는 BEM 표기를 사용합니다. 예: `main-hero__container`, `main-core-service__grid`, `main-cta__inner`.
+- 변수는 페이지/섹션 의미를 갖지 않는 값 목록입니다. `space/main/*`, `type/main/*` 같은 페이지 전용 변수는 만들지 않습니다.
+- 클래스가 변수 목록에서 값을 선택합니다. 변수는 `space/*`, `size/*`, `type/*`, `color/*`처럼 범용 scale로 유지합니다.
+- 텍스트 leaf는 `display-*`, `heading-*`, `body-*` 같은 typography class만 사용하고, 색상/정렬/간격은 section 또는 wrapper class에서 처리합니다.
 - 반복 섹션 여백처럼 완전히 동일한 패턴만 `section-padding`, `section-padding-sm`, `section-padding-lg` 같은 공통 클래스로 허용합니다.
-- 유지 가능한 공통 예외는 `container`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, `card-num`입니다.
-- `grid-*`, `gap-*`, `flex-*`, `heading-*`, `body-*`, `text-*`, `padding-*`, `margin-*`, weight utility를 새 페이지 요소에 직접 조합하지 않습니다.
-- 기존 utility 조합은 main, about, docusign, legal system 마이그레이션 과정에서 역할 클래스로 흡수합니다.
+- 유지 가능한 공통 예외는 `container`, `container-xl`, `section-padding`, `section-inner`, `section-contents`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, `card-num`입니다.
+- `grid-*`, `gap-*`, `flex-*`, `text-*`, `padding-*`, `margin-*`, weight utility를 새 페이지 요소에 직접 조합하지 않습니다.
+- `heading-*`, `body-*`, `display-*`는 텍스트 leaf의 typography class로만 허용합니다. `heading-1 regular text-center`처럼 layout/color/weight와 섞지 않습니다.
+- 기존 utility 조합은 main, about, docusign, legal system 마이그레이션 과정에서 역할 클래스 또는 허용된 typography leaf 구조로 흡수합니다.
 - 모든 스타일 값은 Webflow Variables를 우선 사용합니다. 직접 hex, 임의 px, 임의 shadow, 임의 radius를 넣지 않습니다.
 - desktop, tablet, mobile 값은 각 역할 클래스 내부에 포함합니다.
 - 사용자가 이미지, SVG, 그래픽, 일러스트, 아이콘 제작/삽입을 명시하기 전까지 모든 시각 자료 영역은 실제 asset이 아니라 일반 placeholder 구조로 처리합니다.

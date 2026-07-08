@@ -26,9 +26,12 @@ site source tree.
 The current convention is One-Class First.
 
 - General elements should have one role class whenever possible.
-- Repeated section spacing may use shared classes such as `section-padding`.
-- `container`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, and `card-num` are allowed shared exceptions.
-- Utility combinations such as `grid-3 gap-lg`, `flex-col`, `heading-*`, `body-*`, `text-*`, `padding-*`, and `margin-*` should be absorbed into role classes during migration.
+- Repeated section spacing may use shared classes such as `section-padding`, but every section still needs its own representative role class.
+- `container`, `container-xl`, `section-inner`, `section-contents`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, and `card-num` are allowed shared exceptions.
+- Main uses readable BEM names such as `main-hero__container`, `main-core-service__grid`, and `main-cta__inner`.
+- Utility combinations such as `grid-3 gap-lg`, `flex-col`, `text-*`, `padding-*`, and `margin-*` should be absorbed into role classes during migration.
+- `display-*`, `heading-*`, and `body-*` are allowed only as the single typography class on text leaf elements.
+- Variables stay generic value lists such as `space/*`, `size/*`, `type/*`, and `color/*`; page-scoped variables such as `space/main/*` are not allowed.
 - Header and footer use component-owned classes such as `header-container`, `header-logo`, `footer-container`, and `footer-meta`; do not use generic `left`, `mid`, `right`, `item`, `list`, `link`, `cta`, or `lang`.
 - Images, SVGs, graphics, illustrations, icons, and background assets stay as placeholders unless the user explicitly asks to insert or create them.
 - All visual values should reference Webflow Variables.
