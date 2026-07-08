@@ -294,6 +294,25 @@ Migration direction:
   - A later typography cleanup pass should remove or rename these duplicate combo classes, then recreate/verify the global typography classes.
   - The main news section still needs a scoped pass; even `limit: 8` timed out through MCP.
 
+2026-07-08 main services scoped correction:
+
+- Target section: `main-services` (`b303c173-4385-802a-62b7-ffcbd631a929`) on main page `6a38f3a0e95d43bbdbe5c758`.
+- Problem confirmed: section internals used mismatched legacy/service names such as `section-contents`, `service-col`, `main-core-service-card`, `main-core-service-card-bg`, `service-arrow`, `main-core-service-card-body`, `main-core-service-card-title-wrap`, and card utility combos.
+- Renamed style families so the section owns its internals:
+  - `service-col` -> `main-services__col`
+  - `main-core-service-card` -> `main-services__card`
+  - `main-core-service-card-bg` -> `main-services__card-bg`
+  - `service-arrow` -> `main-services__card-arrow`
+  - `main-core-service-card-body` -> `main-services__card-body`
+  - `main-core-service-card-title-wrap` -> `main-services__card-title`
+- Applied section-matched wrappers:
+  - `main-section-title` -> `main-services__head`
+  - `section-contents` -> `main-services__contents`
+- Removed visible utility combos from the scoped section:
+  - service cards now use only `main-services__card`
+  - service descriptions now use only `body-4`
+- Read-back confirmed no `main-client-*`, `main-core-service-*`, `service-col`, `service-arrow`, `border`, `border-strong`, `text-primary`, `text-secondary`, or multi-body text combo remains inside the scoped `main-services` section.
+
 ### About
 
 Page ID: `6a3c82d462d1516e899d7fec`
