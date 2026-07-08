@@ -31,6 +31,7 @@
 - `section-padding`
 - `section-padding-sm`
 - `section-padding-lg`
+- `section-contents`
 - `placeholder`
 - `header`
 - `footer`
@@ -60,8 +61,9 @@
 ```
 
 `inner`, `head`, `title`, `desc`, `content` 같은 단어는 단독 전역 클래스로 남발하지 않는다.
-마이그레이션된 섹션 내부 wrapper는 섹션 block과 반드시 매칭한다. 예: `main-why` 내부는 `main-why__inner`, `main-why__head`, `main-why__contents`를 사용하고 `section-inner`, `section-contents`, 다른 섹션의 내부 class를 남기지 않는다.
-`section-inner`, `section-contents`는 레거시/전환 후보로만 기록하고 새 작업이나 마이그레이션 완료 섹션에는 사용하지 않는다.
+마이그레이션된 섹션 내부 wrapper는 섹션 block과 매칭하는 것을 기본으로 한다. 단, 여러 섹션에서 동일하게 반복되는 contents 영역 wrapper는 공통 `section-contents`를 사용한다.
+`section-inner`는 레거시/전환 후보로만 기록하고 새 작업이나 마이그레이션 완료 섹션에는 사용하지 않는다.
+섹션 고유 class는 `head`, `grid`, `card`, `media`, `actions`처럼 섹션별 레이아웃 의미가 있는 곳에 만든다.
 
 메인 예시:
 
@@ -71,7 +73,7 @@
     <div class="main-core__head">
         <h2 class="heading-1"></h2>
     </div>
-    <div class="main-core__contents">
+    <div class="section-contents">
         <div class="main-core__grid">
           <article class="main-core__card">
             <div class="main-core__card-body">

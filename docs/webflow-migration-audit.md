@@ -342,7 +342,17 @@ Migration direction:
   - `main-core-service__card-body` -> `main-why__card-body`
   - `text-center heading-1` title lines -> `main-why__title-line`
   - `sub-solution-table-body-list-desc body-2` descriptions -> `main-why__card-desc`
-- Read-back confirmed no `main-core-service__*`, `section-inner`, `main-section-title`, `section-contents`, `text-center`, or `sub-solution-table-body-list-desc` remains inside the scoped `main-why` section.
+- Read-back at that point confirmed no `main-core-service__*`, `section-inner`, `main-section-title`, `text-center`, or `sub-solution-table-body-list-desc` remained inside the scoped `main-why` section. `section-contents` was later restored as a shared contents-area wrapper in the correction below.
+
+2026-07-08 main contents common correction:
+
+- User correction: `section-contents` is a shared contents-area wrapper, not a section-owned BEM element.
+- Applied on the main page:
+  - `main-core__contents` -> `section-contents`
+  - `main-why__contents` -> `section-contents`
+- Read-back confirmed `main-core` and `main-why` now use common `section-contents` while keeping section-owned `head`, `grid`, `card`, `card-bg`, `card-body`, and related layout classes.
+- Attempted to rename `main-cta-title` -> `main-consulting__title`, but Webflow reported style `main-cta-title` was not found in the style registry.
+- `main-core__card-bg` is valid inside `main-core`; if it appears inside `main-insights`, it must be replaced on those specific insight elements only. Do not rename the global `main-core__card-bg` style because that would break the legitimate Core Services cards.
 
 ### About
 

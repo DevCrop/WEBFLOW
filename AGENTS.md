@@ -31,7 +31,8 @@
 - 클래스가 변수 목록에서 값을 선택합니다. 변수는 `space/*`, `size/*`, `type/*`, `color/*`처럼 범용 scale로 유지합니다.
 - 텍스트 leaf는 `display-*`, `heading-*`, `body-*` 같은 typography class만 사용하고, 색상/정렬/간격은 section 또는 wrapper class에서 처리합니다.
 - 반복 섹션 여백처럼 완전히 동일한 패턴만 `section-padding`, `section-padding-sm`, `section-padding-lg` 같은 공통 클래스로 허용합니다.
-- 유지 가능한 공통 예외는 `container`, `container-xl`, `section-padding`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, `card-num`입니다.
+- 유지 가능한 공통 예외는 `container`, `container-xl`, `section-padding`, `section-contents`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, `card-num`입니다.
+- `section-contents`는 여러 섹션에서 동일하게 반복되는 contents 영역 wrapper입니다. 섹션별 contents class를 따로 만들지 않습니다.
 - `grid-*`, `gap-*`, `flex-*`, `text-*`, `padding-*`, `margin-*`, weight utility를 새 페이지 요소에 직접 조합하지 않습니다.
 - `heading-*`, `body-*`, `display-*`는 텍스트 leaf의 typography class로만 허용합니다. `heading-1 regular text-center`처럼 layout/color/weight와 섞지 않습니다.
 - 기존 utility 조합은 main, about, docusign, legal system 마이그레이션 과정에서 역할 클래스 또는 허용된 typography leaf 구조로 흡수합니다.

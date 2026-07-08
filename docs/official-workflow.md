@@ -83,7 +83,8 @@ The active Webflow convention is One-Class First.
 - A section's internal classes must match the section block. For example, `sub-feature` uses `sub-feature__container`, `sub-feature__inner`, `sub-feature__head`, and `sub-feature__grid`; it must not keep `inner`, `contents`, `section-title`, or another section's internal class.
 - Promote a shared class only when structure and visual behavior are truly identical across sections or pages.
 - Main page classes use readable BEM names such as `main-hero__container`, `main-core__grid`, and `main-cta__inner`.
-- Shared exceptions are limited to stable repeated patterns such as `container`, `container-xl`, `section-padding`, `section-padding-sm`, `section-padding-lg`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, and `card-num`.
+- Shared exceptions are limited to stable repeated patterns such as `container`, `container-xl`, `section-padding`, `section-padding-sm`, `section-padding-lg`, `section-contents`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, and `card-num`.
+- `section-contents` is the shared contents-area wrapper. Do not create section-owned variants such as `main-core__contents` when the contents wrapper behavior is identical.
 - Utility-heavy combinations are migration targets, not new-work patterns.
 - Absorb `grid-*`, `gap-*`, `flex-*`, `text-*`, `padding-*`, `margin-*`, and weight utility classes into page or component role classes.
 - Allow `display-*`, `heading-*`, and `body-*` only as the single typography class on text leaf elements. Color, alignment, spacing, and invert states belong on the section or wrapper.
