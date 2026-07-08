@@ -249,6 +249,17 @@ Migration direction:
 - Replace heading/body utility combinations with `main-*-title` and `main-*-desc`.
 - Replace `right` with a component-owned or section-owned role class.
 
+2026-07-08 detail correction pass:
+
+- Confirmed section elements still used only `h-full`, `padding-y-xl`, or `Section padding-y-xl`.
+- Applied representative section classes: `main-hero`, `main-core-service`, `main-business`, `main-solution`, `main-office`, `main-value`, `main-clients`, `main-insights`, `main-news`, `main-cta`.
+- Renamed generic Core Service styles: `service-bg` -> `main-core-service-card-bg`, `service-card` -> `main-core-service-card`, `service-text` -> `main-core-service-card-body`, `service-text-title` -> `main-core-service-card-title-wrap`.
+- Replaced `section-title flex-between` with `main-core-section-title`.
+- Replaced the CTA inner reuse of `main-hero-inner` with `main-cta-inner`.
+- Replaced confirmed Core Service H4 `heading-6` usage with `main-core-service-card-title`.
+- Replaced confirmed `global-office border border-strong Section padding-y-xl bg-primary` and `global-office border border-strong` with `main-office-feature` and `main-office-card`.
+- Residual risk: large MCP reads timed out, so deeper elements outside the confirmed IDs still need another smaller scoped pass before calling main fully complete.
+
 ### About
 
 Page ID: `6a3c82d462d1516e899d7fec`
@@ -270,6 +281,13 @@ Migration direction:
 - Absorb `value-card-list grid-3 gap-lg` into `about-value-grid`.
 - Absorb `about-standard-item` into `about-overview-*`, `about-value-card`, or the exact section role after structure confirmation.
 - Replace heading/body combinations with `about-*-title` and `about-*-desc`.
+
+2026-07-08 detail correction pass:
+
+- Confirmed first visible About section still had `Section 2`, `sub-visual-container no-container`, `inner sub-visual-inner regular regu`, `flex flex-col`, and `heading-6`.
+- Applied role classes: `about-hero`, `about-visual-container`, `about-visual-inner`, `about-hero-kicker-box`, `about-hero-title-box`, `about-hero-eyebrow`, `about-hero-lead`.
+- Replaced the visible sub navigation `no-container` with `sub-nav-container`.
+- Residual risk: About has 323 elements and large MCP reads timed out, so remaining sections need smaller scoped passes before claiming full page completion.
 
 ### Docusign
 

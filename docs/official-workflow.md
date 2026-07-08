@@ -74,6 +74,9 @@ Record the current findings in `docs/webflow-migration-audit.md` during the same
 The active Webflow convention is One-Class First.
 
 - General elements should have one role class whenever possible.
+- Every `section` must have a representative role class before any shared spacing class. A section with only `section`, `padding-y-xl`, `bg-primary`, or `h-full` is a migration defect.
+- Section-specific classes are allowed and preferred when the layout is unique. Do not reuse another section's class just to avoid creating a new class.
+- Promote a shared class only when structure and visual behavior are truly identical across sections or pages.
 - Shared exceptions are limited to stable repeated patterns such as `container`, `section-padding`, `section-padding-sm`, `section-padding-lg`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, and `card-num`.
 - Utility-heavy combinations are migration targets, not new-work patterns.
 - Absorb `grid-*`, `gap-*`, `flex-*`, `heading-*`, `body-*`, `text-*`, `padding-*`, `margin-*`, and weight utility classes into page or component role classes.

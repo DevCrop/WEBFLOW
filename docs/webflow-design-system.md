@@ -8,6 +8,12 @@
 
 - 일반 요소는 가능한 한 클래스 하나만 가진다.
 - 섹션과 컴포넌트의 스타일은 역할 클래스 내부에 포함한다.
+- 모든 `section` 요소는 반드시 해당 섹션을 식별할 수 있는 대표 클래스를 가진다.
+- `section`, `padding-y-xl`, `bg-primary`, `h-full`처럼 범용/utility 클래스만 붙은 섹션은 마이그레이션 대상이다.
+- 섹션 고유 레이아웃은 섹션 역할 클래스 내부로 흡수한다. 예: `main-core-section-title { display:flex; justify-content:space-between; }`.
+- 다른 섹션의 inner/head/title 클래스를 재사용하지 않는다. 예: main CTA 내부는 `main-hero-inner`가 아니라 `main-cta-inner`를 쓴다.
+- 의미가 다른 구조는 새 역할 클래스를 만든다. 클래스 남발 금지는 고유 섹션 클래스를 금지한다는 뜻이 아니다.
+- 완전히 같은 구조와 스타일만 공통 클래스로 승격한다. 예: 여러 sub page의 동일 제목 블록은 `sub-section-title`을 고려할 수 있다.
 - `grid-*`, `gap-*`, `flex-*`, `heading-*`, `body-*`, `text-*`, `padding-*`, `margin-*`, weight utility를 페이지 요소에 직접 조합하지 않는다.
 - 기존 utility 조합은 마이그레이션 과정에서 각 역할 클래스로 흡수한다.
 - 반복 섹션 여백처럼 완전히 동일한 패턴만 공통 클래스로 허용한다.
@@ -30,6 +36,7 @@
 ## Standard Structure
 
 페이지 섹션의 기본 골격은 유지하되, 실제 스타일은 섹션별 역할 클래스에 둔다.
+반복 여백을 공통으로 관리할 때만 `section-padding` 계열을 추가할 수 있고, 그 경우에도 섹션 대표 클래스는 반드시 먼저 붙인다.
 
 ```html
 <section class="section-role section-padding">

@@ -22,6 +22,10 @@
 
 - 일반 요소는 가능한 한 클래스 하나만 가집니다.
 - 섹션과 컴포넌트의 레이아웃, spacing, typo, color, responsive 값은 역할 클래스 내부에 포함합니다.
+- 모든 `section` 요소는 반드시 해당 섹션을 식별할 수 있는 대표 클래스를 가집니다. `section`, `padding-y-xl`, `bg-primary` 같은 범용/utility 클래스만 붙은 섹션은 금지합니다.
+- 섹션 고유 레이아웃은 해당 섹션 역할 클래스로 만듭니다. 예: `main-core-section-title`, `main-cta-inner`, `about-hero-title-box`.
+- 기존 클래스를 억지로 재사용하지 않습니다. 다른 섹션의 구조를 빌리면 유지보수가 어려워지므로, 의미가 다르면 새 역할 클래스를 만듭니다.
+- 완전히 동일한 구조와 스타일만 공통 클래스로 승격합니다. 예: 여러 sub page에서 같은 제목 블록이면 `sub-section-title`을 고려합니다.
 - 반복 섹션 여백처럼 완전히 동일한 패턴만 `section-padding`, `section-padding-sm`, `section-padding-lg` 같은 공통 클래스로 허용합니다.
 - 유지 가능한 공통 예외는 `container`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, `card-num`입니다.
 - `grid-*`, `gap-*`, `flex-*`, `heading-*`, `body-*`, `text-*`, `padding-*`, `margin-*`, weight utility를 새 페이지 요소에 직접 조합하지 않습니다.
