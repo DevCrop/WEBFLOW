@@ -17,83 +17,70 @@
 
 ## Webflow Design System Rules
 
-이 저장소의 Webflow 작업은 범용 디자인 시스템을 기준으로 진행합니다.
+이 저장소의 Webflow 작업은 `docs/webflow-design-system.md`의 One-Class First 기준으로 진행합니다.
 기존 레거시 클래스나 임시 클래스에 맞춰 확장하지 않습니다.
 
-- Webflow 페이지는 `Section > container > inner > section-title / contents` 구조를 기본으로 만듭니다.
-- 클래스는 짧고 규칙적으로 작성합니다.
-- 변수 scale은 소문자만 씁니다: `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`.
-- `legacy-*`, `deprecated-*`, `deprecate-*`, `delete-*`, `Div Block*`, `left`, `mid`, `right`, `cnt`, `txt`, `item`, `list`, `link` 같은 모호한 클래스는 새로 만들지 않습니다.
-- 섹션 고유 스타일이 필요하면 최상위 scope class와 짧은 역할 class를 combo로 씁니다.
-  예: `newsroom title`, `product-hero media`, `solution-list card`.
-- BEM식 긴 이름은 기본으로 쓰지 않습니다. 필요한 컴포넌트명만 짧게 허용합니다.
-  예: `news-card`, `product-card`, `sub-visual`.
+- 일반 요소는 가능한 한 클래스 하나만 가집니다.
+- 섹션과 컴포넌트의 레이아웃, spacing, typo, color, responsive 값은 역할 클래스 내부에 포함합니다.
+- 반복 섹션 여백처럼 완전히 동일한 패턴만 `section-padding`, `section-padding-sm`, `section-padding-lg` 같은 공통 클래스로 허용합니다.
+- 유지 가능한 공통 예외는 `container`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, `card-num`입니다.
+- `grid-*`, `gap-*`, `flex-*`, `heading-*`, `body-*`, `text-*`, `padding-*`, `margin-*`, weight utility를 새 페이지 요소에 직접 조합하지 않습니다.
+- 기존 utility 조합은 main, about, docusign, legal system 마이그레이션 과정에서 역할 클래스로 흡수합니다.
+- 모든 스타일 값은 Webflow Variables를 우선 사용합니다. 직접 hex, 임의 px, 임의 shadow, 임의 radius를 넣지 않습니다.
+- desktop, tablet, mobile 값은 각 역할 클래스 내부에 포함합니다.
+- 사용자가 이미지, SVG, 그래픽, 일러스트, 아이콘 제작/삽입을 명시하기 전까지 모든 시각 자료 영역은 실제 asset이 아니라 일반 placeholder 구조로 처리합니다.
+- 이 placeholder 규칙은 main, about, Docusign, legal system, `/components`를 포함한 모든 페이지/섹션에 동일하게 적용합니다.
+- `legacy-*`, `deprecated-*`, `deprecate-*`, `delete-*`, `Div Block*`, `left`, `mid`, `right`, `cnt`, `txt`, `item`, `list`, `link`, `cta`, `lang` 같은 모호한 클래스는 새로 만들지 않습니다.
 
-## Naming
+## Target Page Role Classes
 
-- spacing: `padding-top-md`, `padding-bottom-lg`, `padding-x-sm`, `padding-y-xl`
-- margin: `margin-top-md`, `margin-bottom-lg`, `margin-x-auto`
-- layout: `grid-3`, `grid-3-9`, `flex-col`, `flex-between`
-- responsive: `md-grid-2`, `sm-grid-1`, `md-flex-col`
-- state/variant: `is-primary`, `is-outline`, `is-active`, `is-disabled`
-- font family: 기본은 `fm-base`, 필요할 때만 `fm-ko`, `fm-en`
-- weight: `regular`, `medium`, `semibold`, `bold`
+Main:
 
-## Typography
+- `main-hero`, `main-hero-inner`, `main-hero-content`, `main-hero-title`, `main-hero-desc`, `main-hero-media`
+- `main-service`, `main-service-inner`, `main-service-title`, `main-service-desc`, `main-service-grid`, `main-service-card`
+- `main-client`, `main-client-list`, `main-cta`
 
-타이포 클래스 자체가 반응형 값을 포함해야 합니다. 페이지에서 `display-1`을 쓰면 desktop, tablet, mobile에서 자연스럽게 줄어들어야 하며 별도 `md-heading-*` 클래스를 남발하지 않습니다.
+About:
 
-- `display-1`, `display-2`, `display-3`
-- `heading-1` through `heading-6`
-- `body-1` through `body-4`
-- letter spacing은 `-2%` 기준으로 관리합니다.
+- `about-hero`, `about-hero-inner`, `about-hero-title`, `about-hero-desc`
+- `about-overview`, `about-overview-inner`, `about-overview-title`, `about-overview-desc`
+- `about-value`, `about-value-grid`, `about-value-card`
+- `about-history`, `about-history-list`, `about-location`
 
-## Components
+Docusign:
 
-기본 컴포넌트:
+- `sub-visual`, `breadcrumb`, `sub-nav`
+- `product-tabs`, `product-tabs-menu`, `product-tab-link`, `product-tabs-content`, `product-tabs-panel`
+- `sub-intro`, `youtube-video-wrap`
+- `sub-feature`, `sub-feature-inner`, `sub-feature-head`, `sub-feature-title`, `sub-feature-desc`, `sub-feature-grid`, `sub-feature-card`, `sub-feature-card-title`, `sub-feature-card-desc`
+- `sub-normal-banner`, `sub-normal-banner-inner`, `sub-normal-banner-title`, `sub-normal-banner-lead`, `sub-normal-banner-desc`
+- `sub-cases`, `sub-cases-inner`, `sub-cases-title`, `sub-cases-grid`, `case-card`, `case-card-logo`, `case-card-title`, `case-card-desc`, `case-quote`
+- `sub-cta`, `cta-banner`
 
-- `header`
-- `footer`
-- `breadcrumb`
-- `sub-visual`
-- `button`
-- `section-title`
-- `card`
-- `banner`
+Legal System:
 
-Component variable rule:
+- `legal-hero`, `legal-hero-inner`, `legal-hero-title`, `legal-hero-desc`
+- `legal-overview`, `legal-overview-inner`, `legal-overview-title`, `legal-overview-desc`
+- `legal-feature`, `legal-feature-grid`, `legal-feature-card`, `legal-feature-title`, `legal-feature-desc`
+- `legal-process`, `legal-process-list`, `legal-process-card`, `legal-faq`, `legal-faq-list`, `legal-cta`
 
-- 모든 컴포넌트 스타일은 Webflow 변수를 우선 사용합니다.
-- 색상, 배경, surface, border, text color, shadow, radius, spacing, typography 값은 컴포넌트에 hex나 임의 숫자로 직접 고정하지 않습니다.
-- 예: `fill-brand`는 `color/brand/primary`, `outline-brand`의 border도 `color/brand/primary`를 참조합니다.
-- `fill-white`, `outline-white`, `fill-black`, `outline-black`도 각각 `color/base/white`, `color/base/black`, `color/text/*`, `color/border/*` 토큰을 사용합니다.
-- 새 컴포넌트나 variant를 만들 때 필요한 변수가 없으면 먼저 변수 scale에 추가한 뒤 그 변수를 컴포넌트에 연결합니다.
+## Component Rules
 
-Button:
-
-- Use a single `button` component and extend it with variants. Do not create separate components for each visual variant.
-- Structure: `button > button-inner > button-label / button-icon`.
-- Variants: `fill-brand`, `outline-brand`, `fill-white`, `outline-white`, `fill-black`, `outline-black`, `size-xs`, `size-sm`, `size-md`, `size-lg`, `icon-none`, `icon-front`, `icon-end`.
-- Class order: `button is-brand is-fill`, `button is-white is-outline`, plus size/icon modifiers as needed.
-
-Card:
-
-- Use a single `card` component and extend it with variants.
-- Card variants include `image-card`, `text-card`, `link-card`, and `featured-card`.
-- Card internal classes are `card-media`, `card-body`, `card-title`, and `card-desc`.
-- Do not create separate `image-card` or `text-card` components.
-
-Banner:
-
-- Use a single `banner` component and extend it with variants.
-- Banner variants include `default-banner` and `cta-banner`.
-- Banner internal classes are `banner-inner`, `banner-body`, `banner-title`, `banner-desc`, and `banner-actions`.
-- Do not create a separate `cta-banner` component.
+- Header uses `header`, `header-container`, `header-logo`, `header-nav`, `header-actions`.
+- Footer uses `footer`, `footer-container`, `footer-brand`, `footer-nav`, `footer-meta`.
+- Button variants should become single classes: `button-primary`, `button-dark`, `button-outline`.
+- Page cards should prefer role classes such as `case-card`, `main-service-card`, `about-value-card`, `legal-feature-card`.
+- `card-num` remains a standalone shared class with fixed width, fixed height, and flex-center behavior.
+- CTA uses a single `cta-banner` class with `cta-banner-inner`, `cta-banner-title`, `cta-banner-desc`, `cta-banner-actions`.
+- `cta-banner` default desktop height is 640px through `size/cta-banner/height-desktop`.
+- `cta-banner-desc` and `cta-banner-actions` are optional; do not create a new component when they are absent.
 
 ## Migration Rule
 
-- 작업 전에 기존 레거시 클래스가 보이면 재사용하지 말고 제거하거나 최종 시스템 클래스명으로 흡수합니다.
-- 연결된 요소가 있더라도 현재 마이그레이션 단계에서는 레거시 연결을 유지하기 위해 구조를 보존하지 않습니다.
+- 작업 전에 Webflow MCP로 클래스, 변수, 대상 페이지 구조를 먼저 audit합니다.
+- 기존 레거시 클래스가 보이면 재사용하지 말고 최종 시스템 역할 클래스로 흡수합니다.
+- 미사용/중복/레거시 클래스와 변수는 먼저 삭제 후보로 기록합니다.
+- 연결된 요소나 사용자 작업이 있을 수 있으므로 실제 삭제는 사용자 확인 후 진행합니다.
 - Publish는 별도 승인 전까지 하지 않습니다.
 
 ## Component Catalog Rule
@@ -108,6 +95,7 @@ Banner:
 
 - Current Codex/Webflow workflow: `docs/official-workflow.md`
 - Webflow design system rules: `docs/webflow-design-system.md`
+- Current Webflow class/variable audit: `docs/webflow-migration-audit.md`
 - Official Webflow skills source: `vendor/webflow-skills`
 
 ## Verified External Sources

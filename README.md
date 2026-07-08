@@ -3,39 +3,46 @@
 Codex-first operating hub for the Intellectual Data Webflow rebuild.
 
 This repository stores current project instructions, official-source workflow
-rules, and the official Webflow skills submodule. It is not an exported Webflow
+rules, and the official Webflow skills reference. It is not an exported Webflow
 site source tree.
 
 ## Current Files
 
 - `AGENTS.md` - Codex project guidance.
 - `docs/official-workflow.md` - official Codex + Webflow operating workflow.
-- `vendor/webflow-skills` - official Webflow skills repository as a submodule.
+- `docs/webflow-design-system.md` - One-Class First Webflow design system.
+- `docs/webflow-migration-audit.md` - current Webflow class and variable audit.
 - `.gitattributes` - UTF-8 text handling for durable instruction files.
 
 ## Quick Start
 
 1. Open this repository in Codex.
 2. Read `AGENTS.md`.
-3. For Webflow work, use Webflow MCP and the Webflow skills.
-4. Confirm before CMS bulk changes, destructive actions, or publishing.
+3. For Webflow work, use Webflow MCP and Webflow skills first.
+4. Confirm before CMS bulk changes, destructive cleanup, class deletion, or publishing.
 
-## Current Webflow Conventions
+## Current Webflow Convention
 
-- Token and utility classes use short hyphen names such as `body-2`,
-  `weight-regular`, `font-base`, and `text-title`.
-- Component structure classes stay short and match the Navigator hierarchy,
-  such as `header`, `container`, `left`, `mid`, `right`, `menu`, `list`,
-  `item`, `link`, `logo`, `lang`, `search`, and `cta`.
-- Reusable grids use layout-first names such as `grid-2`, `grid-3`, `grid-4`,
-  `grid-3-9`, `grid-2-10`, `grid-4-8`, and `grid-6-6`; avoid content-specific
-  names such as `card-list-3`.
-- Typography uses existing hierarchy/token classes (`heading-*`, `body-*`,
-  `text-title`, `text-desc`, `font-ko`, `font-en`, and weight classes) rather
-  than one-off section or card font sizes.
-- Avoid BEM-style long names for Webflow structure classes.
-- The header right action group is `cta` (`Contact Us`), `lang` (`globe + EN`),
-  and `search` (search icon), styled from existing variables.
+The current convention is One-Class First.
+
+- General elements should have one role class whenever possible.
+- Repeated section spacing may use shared classes such as `section-padding`.
+- `container`, `placeholder`, `header`, `footer`, `button`, `card`, `banner`, `breadcrumb`, and `card-num` are allowed shared exceptions.
+- Utility combinations such as `grid-3 gap-lg`, `flex-col`, `heading-*`, `body-*`, `text-*`, `padding-*`, and `margin-*` should be absorbed into role classes during migration.
+- Header and footer use component-owned classes such as `header-container`, `header-logo`, `footer-container`, and `footer-meta`; do not use generic `left`, `mid`, `right`, `item`, `list`, `link`, `cta`, or `lang`.
+- Images, SVGs, graphics, illustrations, icons, and background assets stay as placeholders unless the user explicitly asks to insert or create them.
+- All visual values should reference Webflow Variables.
+- Publish is never automatic.
+
+## Target Pages
+
+Current migration scope:
+
+- main
+- about
+- docusign
+- legal system
+- `/components` catalog
 
 ## Official Sources
 

@@ -1,35 +1,71 @@
 # Webflow Design System
 
-이 문서는 Webflow 사이트를 다시 정리하기 위한 최종 클래스, 변수, 컴포넌트 기준이다. 목표는 페이지마다 클래스를 늘리는 방식이 아니라 범용 유틸리티, 실제 Webflow Component, 필요한 경우의 scope combo만으로 유지보수 가능한 구조를 만드는 것이다.
+이 문서는 Intellectual Data Webflow 리빌드의 최종 클래스, 변수, 컴포넌트 기준이다. 목표는 Webflow Designer에서 요소를 고칠 때 여러 utility class를 지우고 다시 붙이는 불편을 없애고, 가능한 한 하나의 역할 클래스 안에 레이아웃, 간격, 타이포, 색상, 반응형 값을 포함하는 것이다.
 
-## 방향
+## Core Rule
 
-- 범용 클래스만 기본 시스템에 남긴다.
-- 섹션은 같은 골격으로 반복한다.
-- 섹션 고유 스타일은 전역 클래스로 흩뿌리지 않고 scope combo로 제한한다.
-- 폰트, spacing, grid, color, border는 변수와 유틸리티로 관리한다.
-- 기존 레거시 이름은 사용하지 않는다.
+### One-Class First
 
-## Standard Section
+- 일반 요소는 가능한 한 클래스 하나만 가진다.
+- 섹션과 컴포넌트의 스타일은 역할 클래스 내부에 포함한다.
+- `grid-*`, `gap-*`, `flex-*`, `heading-*`, `body-*`, `text-*`, `padding-*`, `margin-*`, weight utility를 페이지 요소에 직접 조합하지 않는다.
+- 기존 utility 조합은 마이그레이션 과정에서 각 역할 클래스로 흡수한다.
+- 반복 섹션 여백처럼 완전히 동일한 패턴만 공통 클래스로 허용한다.
 
-```text
-Section
-  container
-    inner
-      section-title
-        title
-          h2 ~ h6
-        desc
-          p
-      contents
-        grid / list / CMS list / dynamic content
+허용되는 공통 예외:
+
+- `container`
+- `section-padding`
+- `section-padding-sm`
+- `section-padding-lg`
+- `placeholder`
+- `header`
+- `footer`
+- `button`
+- `card`
+- `banner`
+- `breadcrumb`
+- `card-num`
+
+## Standard Structure
+
+페이지 섹션의 기본 골격은 유지하되, 실제 스타일은 섹션별 역할 클래스에 둔다.
+
+```html
+<section class="section-role section-padding">
+  <div class="container">
+    <div class="section-role-inner">
+      <div class="section-role-head">
+        <h2 class="section-role-title"></h2>
+        <p class="section-role-desc"></p>
+      </div>
+      <div class="section-role-content"></div>
+    </div>
+  </div>
+</section>
 ```
 
-Webflow에서 `section` 이름 생성이 충돌하면 현재 시스템의 `Section` 클래스를 사용한다.
+`inner`, `head`, `title`, `desc`, `content` 같은 단어는 단독 전역 클래스로 남발하지 않는다. 섹션에 귀속된 역할 클래스로 작성한다.
+
+## Media Placeholder Rule
+
+사용자가 이미지, SVG, 그래픽, 일러스트, 아이콘 제작/삽입을 명시하기 전까지 모든 시각 자료 영역은 실제 asset이 아니라 일반 placeholder 구조로 처리한다.
+
+이 규칙은 main, about, Docusign, legal system, `/components`를 포함한 모든 페이지와 섹션에 동일하게 적용한다. Figma, Webflow, 캡처 이미지에서 그래픽이 보이더라도 사용자가 명시적으로 asset 반영을 요청하지 않으면 구조와 공간만 잡는다.
+
+기본 구조:
+
+```html
+<div class="main-hero-media placeholder"></div>
+```
+
+배경 이미지가 들어갈 영역도 실제 이미지를 바로 넣지 않는다. 배경 asset 예정 영역은 해당 역할 클래스 내부에 placeholder 배경값만 연결한다.
 
 ## Variables
 
-### Color
+모든 스타일 값은 Webflow Variables를 우선 참조한다. 직접 hex, 임의 px, 임의 shadow, 임의 radius를 넣지 않는다. 필요한 값이 없으면 먼저 변수 scale에 추가한 뒤 클래스에 연결한다.
+
+### Base Scales
 
 - `color/base/black`
 - `color/base/white`
@@ -50,15 +86,6 @@ Webflow에서 `section` 이름 생성이 충돌하면 현재 시스템의 `Secti
 - `color/border/weak`
 - `color/border/strong`
 - `color/border/inverse`
-- `color/state/success`
-- `color/state/warning`
-- `color/state/error`
-- `color/state/info`
-- `color/overlay/dark`
-- `color/overlay/light`
-
-### Space
-
 - `space/0`
 - `space/2xs`
 - `space/xs`
@@ -69,405 +96,342 @@ Webflow에서 `section` 이름 생성이 충돌하면 현재 시스템의 `Secti
 - `space/2xl`
 - `space/3xl`
 - `space/4xl`
+- `font/base`
+- `font/en`
+- `font/ko`
+- `weight/regular`
+- `weight/medium`
+- `weight/semibold`
+- `weight/bold`
+- `radius/none`
+- `radius/sm`
+- `radius/md`
+- `radius/lg`
+- `radius/xl`
+- `radius/full`
+- `border/width/default`
+- `border/width/strong`
+- `shadow/sm`
+- `shadow/md`
+- `shadow/lg`
+- `layout/container`
+- `layout/container/narrow`
+- `layout/container/wide`
+- `layout/gutter`
 
-### Other Tokens
+### Semantic Scales
 
-- `radius/none`, `radius/sm`, `radius/md`, `radius/lg`, `radius/xl`, `radius/full`
-- `border/width/default`, `border/width/strong`
-- `shadow/sm`, `shadow/md`, `shadow/lg`
-- `layout/container`, `layout/container/narrow`, `layout/container/wide`, `layout/gutter`
-- `font/base`, `font/en`, `font/ko`
-- `weight/regular`, `weight/medium`, `weight/semibold`, `weight/bold`
+- `space/section/padding-y-desktop`
+- `space/section/padding-y-tablet`
+- `space/section/padding-y-mobile`
+- `space/card/padding-desktop`
+- `space/card/padding-mobile`
+- `space/grid/gap-desktop`
+- `space/grid/gap-tablet`
+- `space/grid/gap-mobile`
+- `type/section-title/desktop`
+- `type/section-title/tablet`
+- `type/section-title/mobile`
+- `type/section-desc/desktop`
+- `type/section-desc/tablet`
+- `type/section-desc/mobile`
+- `type/card-title/desktop`
+- `type/card-title/tablet`
+- `type/card-title/mobile`
+- `type/card-desc/desktop`
+- `type/card-desc/tablet`
+- `type/card-desc/mobile`
+- `type/banner-title/desktop`
+- `type/banner-title/tablet`
+- `type/banner-title/mobile`
+- `type/banner-desc/desktop`
+- `type/banner-desc/tablet`
+- `type/banner-desc/mobile`
+- `size/card-num/desktop`
+- `size/card-num/mobile`
+- `size/cta-banner/height-desktop`
+- `size/cta-banner/height-tablet`
+- `size/cta-banner/height-mobile`
 
-## Typography Classes
+## Class Migration Buckets
 
-기본 폰트는 `fm-base`다. 특정 요소만 바꿀 때 `fm-ko`, `fm-en`을 추가한다.
+### Keep
 
-- `display-1`
-- `display-2`
-- `display-3`
-- `heading-1`
-- `heading-2`
-- `heading-3`
-- `heading-4`
-- `heading-5`
-- `heading-6`
-- `body-1`
-- `body-2`
-- `body-3`
-- `body-4`
-- `regular`
-- `medium`
-- `semibold`
-- `bold`
-- `fm-base`
-- `fm-ko`
-- `fm-en`
-
-타이포 클래스 내부에서 breakpoint별 font size, line height, letter spacing을 조정한다. 별도 responsive typography utility는 기본으로 만들지 않는다.
-
-## Utility Classes
-
-### Structure
-
-- `Section`
 - `container`
-- `inner`
-- `section-title`
-- `title`
-- `desc`
-- `contents`
-
-### Spacing
-
-- `padding-top-sm`
-- `padding-top-md`
-- `padding-top-lg`
-- `padding-top-xl`
-- `padding-top-2xl`
-- `padding-bottom-sm`
-- `padding-bottom-md`
-- `padding-bottom-lg`
-- `padding-bottom-xl`
-- `padding-bottom-2xl`
-- `padding-left-sm`
-- `padding-left-md`
-- `padding-left-lg`
-- `padding-right-sm`
-- `padding-right-md`
-- `padding-right-lg`
-- `padding-x-sm`
-- `padding-x-md`
-- `padding-x-lg`
-- `padding-x-xl`
-- `padding-y-sm`
-- `padding-y-md`
-- `padding-y-lg`
-- `padding-y-xl`
-- `padding-y-2xl`
-- `margin-0`
-- `margin-x-auto`
-- `margin-top-sm`
-- `margin-top-md`
-- `margin-top-lg`
-- `margin-top-xl`
-- `margin-bottom-sm`
-- `margin-bottom-md`
-- `margin-bottom-lg`
-- `margin-bottom-xl`
-- `gap-sm`
-- `gap-md`
-- `gap-lg`
-- `gap-xl`
-- `stack-sm`
-- `stack-md`
-- `stack-lg`
-- `stack-xl`
-
-### Layout
-
-- `grid`
-- `grid-2`
-- `grid-3`
-- `grid-4`
-- `grid-6-6`
-- `grid-4-8`
-- `grid-3-9`
-- `grid-2-10`
-- `flex`
-- `flex-row`
-- `flex-col`
-- `flex-center`
-- `flex-between`
-- `flex-start`
-- `flex-end`
-- `flex-wrap`
-
-### Responsive
-
-- `md-grid-1`
-- `md-grid-2`
-- `md-grid-3`
-- `md-grid-3-9`
-- `md-grid-6-6`
-- `sm-grid-1`
-- `sm-grid-2`
-- `md-flex-col`
-- `md-flex-row`
-- `sm-flex-col`
-- `sm-flex-row`
-- `md-text-left`
-- `md-text-center`
-- `md-text-right`
-- `sm-text-left`
-- `sm-text-center`
-- `sm-text-right`
-- `md-padding-y-lg`
-- `sm-padding-y-md`
-
-### Text And Color
-
-- `text-left`
-- `text-center`
-- `text-right`
-- `text-primary`
-- `text-secondary`
-- `text-muted`
-- `text-inverse`
-- `bg-primary`
-- `bg-secondary`
-- `bg-inverse`
-- `surface-primary`
-- `surface-secondary`
-- `surface-elevated`
-
-### Border And Size
-
-- `border`
-- `border-top`
-- `border-bottom`
-- `border-weak`
-- `border-strong`
-- `border-inverse`
-- `radius-sm`
-- `radius-md`
-- `radius-lg`
-- `radius-xl`
-- `radius-full`
-- `w-full`
-- `h-full`
-- `self-start`
-- `self-end`
-
-## Component Classes
-
+- `section-padding`
+- `section-padding-sm`
+- `section-padding-lg`
+- `placeholder`
 - `header`
 - `footer`
-- `breadcrumb`
-- `sub-visual`
 - `button`
-- `button-inner`
-- `button-label`
-- `button-icon`
 - `card`
-- `card-media`
-- `card-body`
-- `card-title`
-- `card-desc`
 - `banner`
-- `banner-inner`
-- `banner-body`
-- `banner-title`
-- `banner-desc`
-- `banner-actions`
+- `breadcrumb`
+- `card-num`
 
-Variant/state:
+### Absorb Into Role Classes
 
-- `is-fill`
-- `is-outline`
-- `is-brand`
-- `is-white`
-- `is-black`
-- `is-xs`
-- `is-sm`
-- `is-md`
-- `is-lg`
-- `has-icon`
-- `icon-front`
-- `icon-end`
-- `is-primary`
-- `is-secondary`
-- `is-dark`
-- `is-light`
-- `is-small`
-- `is-large`
-- `is-disabled`
-- `is-featured`
-- `is-link`
-- `is-active`
+- `grid-*`
+- `gap-*`
+- `flex-*`
+- `heading-*`
+- `body-*`
+- `bold`
+- `medium`
+- `semibold`
+- `text-*`
+- `padding-*`
+- `margin-*`
+- `fm-*`
 
-## Component Variable Rule
+### Delete Candidates
 
-모든 컴포넌트와 variant는 Webflow 변수를 기준으로 스타일링한다. 컴포넌트 내부에 색상, 배경, border, surface, text color, shadow, radius, spacing, typography 값을 hex나 임의 숫자로 직접 고정하지 않는다.
+삭제는 사용자 확인 후 진행한다.
 
-예:
-
-- `fill-brand` background: `color/brand/primary`
-- `fill-brand` text: `color/text/primary`
-- `outline-brand` border: `color/brand/primary`
-- `outline-white` border/text: `color/base/white`
-- `fill-white` background: `color/base/white`
-- `fill-black` background/border: `color/base/black`
-- card/banner border: `color/border/*`
-- card/banner surface: `color/background/*` 또는 `color/surface/*`
-
-필요한 토큰이 없으면 컴포넌트에 값을 직접 넣지 말고 먼저 변수 scale에 추가한다.
-
-## Button Rule
-
-버튼은 하나의 `button` 컴포넌트에서 확장한다. 형태나 색상별로 컴포넌트를 분리하지 않는다.
-
-Component variants:
-
-- `fill-brand`
-- `outline-brand`
-- `fill-white`
-- `outline-white`
-- `fill-black`
-- `outline-black`
-- `size-xs`
-- `size-sm`
-- `size-md`
-- `size-lg`
-- `icon-none`
-- `icon-front`
-- `icon-end`
-
-구조는 다음을 유지한다.
-
-```text
-button
-  button-inner
-    button-label
-    button-icon
-```
-
-`is-fill`은 채워진 버튼, `is-outline`은 투명 배경의 라인 버튼이다. `is-brand`, `is-white`, `is-black`은 색상 축이다. `is-xs`, `is-sm`, `is-md`, `is-lg`는 크기 축이다. 아이콘은 `button-inner`에 `has-icon icon-front` 또는 `has-icon icon-end`를 붙여 제어한다.
-
-## Card Rule
-
-카드는 하나의 `card` 컴포넌트에서 확장한다. 이미지 카드와 텍스트 카드를 별도 컴포넌트로 만들지 않는다.
-`post-card`, `news-card`, `product-card`처럼 콘텐츠 타입별 컴포넌트도 만들지 않는다. 콘텐츠 타입은 CMS 데이터나 scope combo로 구분하고, 컴포넌트 차이는 레이아웃 기준 variant로만 처리한다.
-
-Component variants:
-
-- `image-card`
-- `text-card`
-- `link-card`
-- `featured-card`
-
-구조는 다음을 유지한다.
-
-```text
-card
-  card-media
-  card-body
-    card-title
-    card-desc
-```
-
-## Banner Rule
-
-배너는 하나의 `banner` 컴포넌트에서 확장한다. `cta-banner`를 별도 컴포넌트로 만들지 않는다.
-
-Component variants:
-
-- `default-banner`
-- `cta-banner`
-
-구조는 다음을 유지한다.
-
-```text
-banner
-  banner-inner
-    banner-body
-      banner-title
-      banner-desc
-    banner-actions
-```
-
-CTA가 필요하면 `banner-actions` 영역에 `button` 컴포넌트 인스턴스를 조합한다.
-
-## Scope Combo Rule
-
-범용으로 처리 가능한 섹션은 scope 없이 조립한다.
-
-```text
-Section container inner section-title contents grid grid-3 sm-grid-1
-```
-
-특정 섹션만의 비주얼이나 인터랙션이 필요할 때만 scope class를 추가한다.
-
-```text
-newsroom title
-newsroom card
-product-hero media
-solution-list item
-```
-
-단독 전역 `item`, `list`, `link`, `txt`, `cnt`, `left`, `mid`, `right`는 만들지 않는다.
-
-## Do Not Use
-
+- 미사용 클래스
 - `legacy-*`
 - `deprecated-*`
 - `deprecate-*`
 - `delete-*`
 - `Div Block*`
-- `no-container`
-- `section-padding`
-- `bg-wave`
-- `split-fill`
-- `pb-8`
 - `txt`
 - `cnt`
+- `item`
+- `list`
+- `link`
 - `left`
 - `mid`
 - `right`
-- `lang`
 - `cta`
-- `footer-info`
-- `footer-bottom`
-- `newsroom-*`
-- `about-standard-*`
-- `news-card`
-- `post-card`
-- `solution-card`
-- `product-card`
-- `people-card`
-- `location-card`
-- `cta-band`
+- `lang`
+- `no-container`
+- `bg-wave`
+- `split-fill`
+- `pb-*`
+- 페이지별 중복 임시 클래스
 
-필요하면 옛 이름을 되살리지 말고 최종 시스템 클래스나 scope combo로 다시 만든다.
+## Responsive Rule
 
-## Header Build Rule
+- desktop, tablet, mobile 값은 각 역할 클래스 내부에 포함한다.
+- `md-grid-2`, `sm-grid-1`, `md-flex-col`, `sm-text-center` 같은 breakpoint utility를 새로 조합하지 않는다.
+- 섹션별 grid, flex, gap, padding은 해당 섹션 역할 클래스 내부에서 breakpoint별로 조정한다.
+- 타이포 크기, 줄 높이, letter spacing도 `main-hero-title`, `sub-cases-title` 같은 역할 클래스 내부에 포함한다.
 
-Header는 다음 순서로 만든다.
+## Page Structures
 
-```text
-header
-  container
-    inner
-      logo/link
-      nav
-      actions
+### Main
+
+```html
+<section class="main-hero section-padding">
+  <div class="container">
+    <div class="main-hero-inner">
+      <div class="main-hero-content">
+        <h1 class="main-hero-title"></h1>
+        <p class="main-hero-desc"></p>
+      </div>
+      <div class="main-hero-media placeholder"></div>
+    </div>
+  </div>
+</section>
 ```
 
-`logo`, `nav`, `actions` 같은 역할 이름은 header 내부 scope combo로만 쓴다. 전역 유틸리티로 만들지 않는다.
+권장 역할 클래스:
 
-예:
+- `main-hero`
+- `main-hero-inner`
+- `main-hero-content`
+- `main-hero-title`
+- `main-hero-desc`
+- `main-hero-media`
+- `main-service`
+- `main-service-inner`
+- `main-service-title`
+- `main-service-desc`
+- `main-service-grid`
+- `main-service-card`
+- `main-client`
+- `main-client-list`
+- `main-cta`
 
-```text
-header logo
-header nav
-header nav-link
-header actions
-button is-primary
+### About
+
+- `about-hero`
+- `about-hero-inner`
+- `about-hero-title`
+- `about-hero-desc`
+- `about-overview`
+- `about-overview-inner`
+- `about-overview-title`
+- `about-overview-desc`
+- `about-value`
+- `about-value-grid`
+- `about-value-card`
+- `about-history`
+- `about-history-list`
+- `about-location`
+
+`about-standard-*`처럼 임시로 생성된 중복 클래스는 역할 클래스로 흡수한다.
+
+### Docusign
+
+- `sub-visual`
+- `breadcrumb`
+- `sub-nav`
+- `product-tabs`
+- `product-tabs-menu`
+- `product-tab-link`
+- `product-tabs-content`
+- `product-tabs-panel`
+- `sub-intro`
+- `youtube-video-wrap`
+- `sub-feature`
+- `sub-feature-inner`
+- `sub-feature-head`
+- `sub-feature-title`
+- `sub-feature-desc`
+- `sub-feature-grid`
+- `sub-feature-card`
+- `sub-feature-card-title`
+- `sub-feature-card-desc`
+- `sub-normal-banner`
+- `sub-normal-banner-inner`
+- `sub-normal-banner-title`
+- `sub-normal-banner-lead`
+- `sub-normal-banner-desc`
+- `sub-cases`
+- `sub-cases-inner`
+- `sub-cases-title`
+- `sub-cases-grid`
+- `case-card`
+- `case-card-logo`
+- `case-card-title`
+- `case-card-desc`
+- `case-quote`
+- `sub-cta`
+- `cta-banner`
+
+IAM/eSignature 패널은 같은 내부 구조를 공유한다. 패널마다 중복 클래스 세트를 만들지 않는다.
+
+### Legal System
+
+- `legal-hero`
+- `legal-hero-inner`
+- `legal-hero-title`
+- `legal-hero-desc`
+- `legal-overview`
+- `legal-overview-inner`
+- `legal-overview-title`
+- `legal-overview-desc`
+- `legal-feature`
+- `legal-feature-grid`
+- `legal-feature-card`
+- `legal-feature-title`
+- `legal-feature-desc`
+- `legal-process`
+- `legal-process-list`
+- `legal-process-card`
+- `legal-faq`
+- `legal-faq-list`
+- `legal-cta`
+
+## Components
+
+### Header
+
+```html
+<header class="header">
+  <div class="header-container">
+    <a class="header-logo"></a>
+    <nav class="header-nav"></nav>
+    <div class="header-actions"></div>
+  </div>
+</header>
 ```
 
-## Publish Rule
+`left`, `mid`, `right`, `item`, `link`, `cta`, `lang`를 새로 만들지 않는다.
 
-Publish는 별도 승인 전까지 하지 않는다. Designer 정리는 draft 검증 후에만 publish를 요청한다.
+### Footer
 
-## Components Catalog Rule
+```html
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand"></div>
+    <nav class="footer-nav"></nav>
+    <div class="footer-meta"></div>
+  </div>
+</footer>
+```
 
-`/components` 페이지는 실제 Webflow 컴포넌트 인스턴스를 모아두는 draft-only 카탈로그다. 검색 색인 대상이 되지 않도록 draft/noindex 상태를 유지한다.
+### Button
 
-컴포넌트를 추가, 삭제, 이름 변경, variant 변경, prop 변경, 내부 구조 변경할 때는 같은 작업 안에서 `/components` 페이지도 갱신한다. 이 페이지의 슬롯은 자동 갱신을 쉽게 하기 위해 다음 속성으로 관리한다.
+버튼은 여러 variant class를 조합하지 않는다. 최종 단일 클래스는 다음을 우선 사용한다.
 
-- `data-component-slot`
-- `data-button-slot`
-- `data-card-slot`
-- `data-banner-slot`
+- `button-primary`
+- `button-dark`
+- `button-outline`
 
-버튼, 카드, 배너처럼 variant가 있는 컴포넌트는 base 인스턴스만 두지 말고 대표 variant를 모두 렌더한다.
+기존 `button is-fill is-black is-md` 조합은 마이그레이션 과정에서 흡수한다.
+
+### Card
+
+범용 카드가 필요한 경우만 `card`를 유지한다. 페이지 섹션에서는 역할 클래스가 우선이다.
+
+- `case-card`
+- `main-service-card`
+- `about-value-card`
+- `legal-feature-card`
+
+`card-num`은 width, height, flex-center를 포함하는 단독 범용 클래스로 유지한다.
+
+### Banner And CTA
+
+`banner cta-banner bg-placeholder is-invert` 조합 대신 `cta-banner` 단일 클래스를 사용한다.
+
+```html
+<section class="sub-cta section-padding">
+  <div class="container">
+    <div class="cta-banner">
+      <div class="cta-banner-inner">
+        <p class="cta-banner-desc"></p>
+        <h2 class="cta-banner-title"></h2>
+        <div class="cta-banner-actions">
+          <a class="button-dark"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+- `cta-banner` 기본 높이는 desktop 기준 `size/cta-banner/height-desktop`이며 현재 기준값은 640px이다.
+- `cta-banner-desc`와 `cta-banner-actions`는 optional이다.
+- 페이지별 배경 차이는 `cta-banner` 역할 클래스의 변수 연결 또는 page-specific 역할 클래스에서 처리한다.
+- 실제 배경 asset은 placeholder 상태로 유지한다.
+
+## Components Catalog
+
+`/components` 페이지는 draft-only 컴포넌트 카탈로그다. 검색 색인 대상이 되지 않도록 draft/noindex 상태를 유지한다.
+
+컴포넌트를 추가, 삭제, 이름 변경, variant 변경, prop 변경, 내부 구조 변경할 때는 같은 작업 안에서 `/components` 페이지도 갱신한다.
+
+## Migration Workflow
+
+1. Webflow MCP로 site 전체 클래스와 변수 목록을 audit한다.
+2. main, about, docusign, legal system, `/components`의 요소 구조를 확인한다.
+3. utility 조합을 역할 클래스 내부 스타일로 흡수한다.
+4. 중복 변수와 직접값을 semantic variable로 연결한다.
+5. 사용 중인 레거시 클래스는 삭제하지 않고 먼저 삭제 후보로 기록한다.
+6. 사용자 확인 후 삭제와 정리를 진행한다.
+7. publish는 별도 승인 전까지 하지 않는다.
+
+## Acceptance Checklist
+
+- 일반 요소는 가능한 한 클래스 하나만 가진다.
+- 반복 여백은 `section-padding` 계열만 예외로 쓴다.
+- utility 조합이 페이지 요소에서 제거된다.
+- 모든 스타일 값은 Webflow Variables를 참조한다.
+- desktop/tablet/mobile 값이 역할 클래스 내부에 포함된다.
+- 중복 클래스와 중복 변수는 audit 결과에 따라 병합 또는 삭제 후보화된다.
+- 문서, `/components`, 실제 페이지 구조가 같은 규칙을 말한다.
+- publish는 별도 승인 전까지 하지 않는다.
