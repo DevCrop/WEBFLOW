@@ -313,6 +313,37 @@ Migration direction:
   - service descriptions now use only `body-4`
 - Read-back confirmed no `main-client-*`, `main-core-service-*`, `service-col`, `service-arrow`, `border`, `border-strong`, `text-primary`, `text-secondary`, or multi-body text combo remains inside the scoped `main-services` section.
 
+2026-07-08 main core naming correction:
+
+- User correction: the section content is `Core Services`, so the section should not be named `main-services`. Renamed the scoped section family from `main-services` to `main-core`.
+- Renamed style families:
+  - `main-services` -> `main-core`
+  - `main-services__head` -> `main-core__head`
+  - `main-services__contents` -> `main-core__contents`
+  - `main-services__grid` -> `main-core__grid`
+  - `main-services__col` -> `main-core__col`
+  - `main-services__card` -> `main-core__card`
+  - `main-services__card-bg` -> `main-core__card-bg`
+  - `main-services__card-arrow` -> `main-core__card-arrow`
+  - `main-services__card-body` -> `main-core__card-body`
+  - `main-services__card-title` -> `main-core__card-title`
+- Read-back confirmed the scoped Core Services section now uses `main-core__*` internals.
+
+2026-07-08 main why scoped correction:
+
+- Problem confirmed: `main-why` still contained shared or wrong-section internals: `section-inner`, `main-section-title`, `section-contents`, `main-core-service__grid`, `main-core-service__card`, `main-core-service__icon`, `main-core-service__card-body`, `text-center heading-1`, and `sub-solution-table-body-list-desc body-2`.
+- Applied section-owned classes:
+  - `section-inner` -> `main-why__inner`
+  - `main-section-title` -> `main-why__head`
+  - `section-contents` -> `main-why__contents`
+  - `main-core-service__grid` -> `main-why__grid`
+  - `main-core-service__card` -> `main-why__card`
+  - `main-core-service__icon` -> `main-why__icon`
+  - `main-core-service__card-body` -> `main-why__card-body`
+  - `text-center heading-1` title lines -> `main-why__title-line`
+  - `sub-solution-table-body-list-desc body-2` descriptions -> `main-why__card-desc`
+- Read-back confirmed no `main-core-service__*`, `section-inner`, `main-section-title`, `section-contents`, `text-center`, or `sub-solution-table-body-list-desc` remains inside the scoped `main-why` section.
+
 ### About
 
 Page ID: `6a3c82d462d1516e899d7fec`

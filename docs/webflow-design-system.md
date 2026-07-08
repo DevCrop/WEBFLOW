@@ -15,7 +15,7 @@
 - 의미가 다른 구조는 새 역할 클래스를 만든다. 클래스 남발 금지는 고유 섹션 클래스를 금지한다는 뜻이 아니다.
 - 섹션 내부 클래스는 섹션 block과 반드시 매칭한다. 예: `sub-feature` 내부는 `sub-feature__container`, `sub-feature__inner`, `sub-feature__head`, `sub-feature__grid`로 정리하고 `inner`, `contents`, `section-title`, 다른 섹션의 내부 클래스를 남기지 않는다.
 - 완전히 같은 구조와 스타일만 공통 클래스로 승격한다. 예: 여러 sub page의 동일 제목 블록은 `sub-section-title`을 고려할 수 있다.
-- main page는 BEM 표기를 쓴다. 예: `main-hero__container`, `main-core-service__grid`, `main-cta__inner`.
+- main page는 BEM 표기를 쓴다. 예: `main-hero__container`, `main-core__grid`, `main-cta__inner`.
 - 변수는 값 목록이다. `space/main/*`, `type/main/*`, `space/docusign/*`처럼 페이지나 섹션 의미가 들어간 변수는 만들지 않는다.
 - 클래스가 범용 변수 scale에서 값을 선택한다. 의미는 변수가 아니라 클래스가 가진다.
 - 텍스트 leaf는 `display-*`, `heading-*`, `body-*`만 사용한다. 색상, 정렬, 간격, invert는 section 또는 wrapper class에서 처리한다.
@@ -31,8 +31,6 @@
 - `section-padding`
 - `section-padding-sm`
 - `section-padding-lg`
-- `section-inner`
-- `section-contents`
 - `placeholder`
 - `header`
 - `footer`
@@ -62,28 +60,26 @@
 ```
 
 `inner`, `head`, `title`, `desc`, `content` 같은 단어는 단독 전역 클래스로 남발하지 않는다.
-반복 wrapper는 `section-inner`, `section-contents`까지만 공통으로 허용하고, 나머지는 BEM element class로 작성한다.
-단, 특정 섹션의 유지보수가 더 중요하거나 사용자가 섹션 매칭을 요구한 경우 `section-inner`, `section-contents`보다 `section-block__inner`, `section-block__contents`를 우선한다.
+마이그레이션된 섹션 내부 wrapper는 섹션 block과 반드시 매칭한다. 예: `main-why` 내부는 `main-why__inner`, `main-why__head`, `main-why__contents`를 사용하고 `section-inner`, `section-contents`, 다른 섹션의 내부 class를 남기지 않는다.
+`section-inner`, `section-contents`는 레거시/전환 후보로만 기록하고 새 작업이나 마이그레이션 완료 섹션에는 사용하지 않는다.
 
 메인 예시:
 
 ```html
-<section class="main-core-service section-padding">
+<section class="main-core section-padding">
   <div class="container-xl">
-    <div class="section-inner">
-      <div class="main-section-title">
+    <div class="main-core__head">
         <h2 class="heading-1"></h2>
-      </div>
-      <div class="section-contents">
-        <div class="main-core-service__grid">
-          <article class="main-core-service__card">
-            <div class="main-core-service__card-body">
+    </div>
+    <div class="main-core__contents">
+        <div class="main-core__grid">
+          <article class="main-core__card">
+            <div class="main-core__card-body">
               <h4 class="heading-6"></h4>
               <p class="body-2"></p>
             </div>
           </article>
         </div>
-      </div>
     </div>
   </div>
 </section>
