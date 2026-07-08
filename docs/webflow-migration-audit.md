@@ -4,6 +4,10 @@ Audit date: 2026-07-08
 
 Site ID: `6a38f39fe95d43bbdbe5c71c`
 
+Implementation status: first live migration pass applied on 2026-07-08.
+
+No publish was performed.
+
 ## Target Pages
 
 | Scope | Page ID | Title | Path | Status |
@@ -155,6 +159,71 @@ Delete only after user confirmation:
 - legacy generic classes matching `left`, `mid`, `right`, `txt`, `cnt`, `item`, `list`, `link`, `cta`, `lang`
 
 No destructive class deletion has been performed.
+
+## Applied Migration Pass
+
+The first implementation pass updated the actual Webflow pages by replacing the highest-impact utility combinations with One-Class First role classes. This pass did not delete global classes or publish the site.
+
+Created or updated role styles:
+
+- `main-hero-inner`
+- `main-hero-title`
+- `main-hero-desc`
+- `main-service-grid`
+- `main-service-title`
+- `main-service-desc`
+- `main-client-list`
+- `main-client-title`
+- `main-client-desc`
+- `main-cta-title`
+- `main-stat-number`
+- `about-hero-title`
+- `about-hero-desc`
+- `about-overview-title`
+- `about-overview-desc`
+- `about-value-grid`
+- `about-value-title`
+- `about-value-card`
+- `about-history-title`
+- `about-history-list`
+- `about-location-title`
+- `about-location-desc`
+- `header-actions`
+- `sub-visual-title`
+- `sub-intro`
+- `sub-feature`
+- `sub-feature-grid`
+- `sub-feature-title`
+- `sub-feature-card-desc`
+- `sub-normal-banner-title`
+- `sub-normal-banner-desc`
+- `sub-cases-title`
+- `sub-cases-grid`
+- `case-card-desc`
+- `sub-solution-grid`
+- `cta-banner-title`
+- `cta-banner-desc`
+- `legal-hero-title`
+- `legal-overview-title`
+- `legal-overview-desc`
+- `legal-feature-title`
+- `legal-feature-desc`
+
+Element-level utility combinations removed from target pages:
+
+- main: `grid-3`, `gap-lg`, `heading-1`, `body-2`, `right`
+- about: `grid-3`, `gap-lg`, `heading-1`, `body-2`, `about-standard-item`
+- docusign: `grid-3`, `gap-lg`, `heading-1`, `body-2`, `sub-feacture-grid`
+- legal system: `grid-3`, `gap-lg`, `heading-1`, `body-2`
+
+Final read-back for the utility classes above returned zero matches on the four target pages.
+
+Notes:
+
+- Role styles were created with equivalent visual values from the existing utility classes.
+- Some newly created role styles still need a later variable-binding hardening pass because the Webflow style tool returned an internal error when `variable_as_value` was used for these new styles.
+- No duplicate/generated classes were deleted in this pass.
+- `/components` catalog was not published.
 
 ## Page Findings
 
