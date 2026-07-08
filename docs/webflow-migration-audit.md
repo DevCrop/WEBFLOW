@@ -354,6 +354,36 @@ Migration direction:
 - Attempted to rename `main-cta-title` -> `main-consulting__title`, but Webflow reported style `main-cta-title` was not found in the style registry.
 - `main-core__card-bg` is valid inside `main-core`; if it appears inside `main-insights`, it must be replaced on those specific insight elements only. Do not rename the global `main-core__card-bg` style because that would break the legitimate Core Services cards.
 
+2026-07-08 main cleanup pass:
+
+- Completed Webflow cleanup:
+  - Removed confirmed unused style `main-core__contents` after its element was changed to common `section-contents`.
+  - Removed confirmed unused style `main-why__contents` after its element was changed to common `section-contents`.
+  - Renamed `main-consulting-title` -> `main-consulting__title`.
+- Additional Webflow cleanup was stopped by the tool usage limit before the next rename batch could run.
+- Next main rename candidates:
+  - `main-hero-arrow` -> `main-hero__arrow`
+  - `main-client-list` -> `main-clients__list`
+  - `main-client-desc` -> `main-clients__desc`
+  - `number-contents` -> `main-num__contents`
+  - `number-item-head` -> `main-num__item-head`
+  - `number-item-body` -> `main-num__item-body`
+  - `main-stat-number` -> `main-num__stat-number`
+  - `global-left` -> `main-global__left`
+- Delete candidates that still need usage-zero verification before removal:
+  - `main-core-service__card-title`
+  - `main-core-section-title`
+  - `main-service-title`
+  - `main-service-desc`
+  - `main-hero-title`
+  - `main-hero-desc`
+  - `contents`
+  - `inner`
+  - `Section 4`
+  - `button-inner 2`
+  - duplicate generated CTA/banner variants such as `cta-banner 2`, `cta-banner 3`, `cta-banner 5`, `cta-banner 6`, `cta-banner 7`, `cta-banner 8`, `banner 2`, `banner-body 2`, `button-icon 2`.
+- Important constraint: do not globally rename or remove `main-core__card-bg` until the `main-insights` element using it is identified. `main-core__card-bg` is still valid for the Core Services cards.
+
 ### About
 
 Page ID: `6a3c82d462d1516e899d7fec`

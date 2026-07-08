@@ -64,6 +64,7 @@
 마이그레이션된 섹션 내부 wrapper는 섹션 block과 매칭하는 것을 기본으로 한다. 단, 여러 섹션에서 동일하게 반복되는 contents 영역 wrapper는 공통 `section-contents`를 사용한다.
 `section-inner`는 레거시/전환 후보로만 기록하고 새 작업이나 마이그레이션 완료 섹션에는 사용하지 않는다.
 섹션 고유 class는 `head`, `grid`, `card`, `media`, `actions`처럼 섹션별 레이아웃 의미가 있는 곳에 만든다.
+레거시 class 삭제는 사용처 0 확인 후 진행한다. 같은 작업에서 `section-contents`처럼 대체 class로 바꾼 뒤 read-back까지 완료한 class만 즉시 삭제할 수 있다.
 
 메인 예시:
 

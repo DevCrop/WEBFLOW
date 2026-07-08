@@ -91,6 +91,7 @@ The active Webflow convention is One-Class First.
 - Each role class owns its desktop, tablet, and mobile values.
 - Every style value should reference Webflow Variables.
 - Variables are generic value lists. Do not create page or section scoped variables such as `space/main/*`, `type/main/*`, or `space/docusign/*`; the class chooses values from generic `space/*`, `size/*`, `type/*`, and `color/*` scales.
+- Legacy style deletion requires usage-zero confirmation. The exception is a style that was replaced in the same task and immediately read back, such as a section-owned contents wrapper changed to shared `section-contents`.
 
 ## Figma To Webflow
 
