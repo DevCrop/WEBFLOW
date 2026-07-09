@@ -26,20 +26,32 @@ site source tree.
 
 ## Current Webflow Conventions
 
-- Token and utility classes use short hyphen names such as `body-2`,
-  `weight-regular`, `font-base`, and `text-title`.
+- Token and utility classes use short hyphen names such as `body-20`,
+  `regular`, `fm-base`, and `text-title`.
 - Component structure classes stay short and match the Navigator hierarchy,
-  such as `header`, `container`, `left`, `mid`, `right`, `menu`, `list`,
-  `item`, `link`, `logo`, `lang`, `search`, and `cta`.
+  such as `header`, `header__container`, `no-container`, `inner`, `nav`, `nav-link`, `logo`,
+  `actions`, `sub-section-txt`, `sub-section-txt-title`, `sub-section-txt-body`, and `section-contents`. Role names
+  such as `logo` or `actions` are header scope combo classes, not standalone
+  global utilities.
+- Do not use ambiguous singleton classes such as `left`, `mid`, `right`,
+  `txt`, `cnt`, `item`, `list`, `link`, and `lang`. Use final system
+  classes, section-prefix BEM, or component internal role classes instead.
+  The full ban list lives under "Do Not Use" in `docs/webflow-design-system.md`.
+- `main-cta` and `sub-cta` are the only shared CTA roots. Do not create
+  page-specific CTA roots such as `sub-legal-cta` or `sub-luminance-cta`.
 - Reusable grids use layout-first names such as `grid-2`, `grid-3`, `grid-4`,
   `grid-3-9`, `grid-2-10`, `grid-4-8`, and `grid-6-6`; avoid content-specific
   names such as `card-list-3`.
-- Typography uses existing hierarchy/token classes (`heading-*`, `body-*`,
-  `text-title`, `text-desc`, `font-ko`, `font-en`, and weight classes) rather
-  than one-off section or card font sizes.
-- Avoid BEM-style long names for Webflow structure classes.
-- The header right action group is `cta` (`Contact Us`), `lang` (`globe + EN`),
-  and `search` (search icon), styled from existing variables.
+- Text tags do not carry structure or section-specific classes. `h1`-`h6`
+  use only `display-*`/`heading-*` + `text-*` + weight class combinations;
+  `p` uses only `body-*` + `text-*` + weight class combinations. Add
+  `fm-ko`/`fm-en` only when the content needs a specific font family.
+- BEM is allowed for scoped page/component classes, but do not create
+  `*__container` wrappers. Use `no-container` or `no-container-xl` for section
+  width wrappers.
+- The header right action group uses scoped `header actions` roles — contact
+  button, language control, then search icon — styled from existing variables.
+  Do not use global `lang`; use only `main-cta`/`sub-cta` for shared CTA sections.
 
 ## Official Sources
 

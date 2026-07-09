@@ -1,12 +1,12 @@
 # Webflow Design System
 
-이 문서는 Webflow 사이트를 다시 정리하기 위한 최종 클래스, 변수, 컴포넌트 기준이다. 목표는 페이지마다 클래스를 늘리는 방식이 아니라 범용 유틸리티, 실제 Webflow Component, 필요한 경우의 scope combo만으로 유지보수 가능한 구조를 만드는 것이다.
+이 문서는 Webflow 사이트를 다시 정리하기 위한 최종 클래스, 변수, 컴포넌트 기준이다. 목표는 페이지마다 클래스를 늘리는 방식이 아니라 범용 유틸리티, 실제 Webflow Component, 공통 구조 클래스, 필요한 경우의 섹션 prefix BEM과 컴포넌트 내부 역할 클래스로 유지보수 가능한 구조를 만드는 것이다.
 
 ## 방향
 
 - 범용 클래스만 기본 시스템에 남긴다.
 - 섹션은 같은 골격으로 반복한다.
-- 섹션 고유 스타일은 전역 클래스로 흩뿌리지 않고 scope combo로 제한한다.
+- 섹션 고유 디자인은 전역 클래스로 흩뿌리지 않고 해당 섹션 root prefix의 BEM으로 제한한다.
 - 폰트, spacing, grid, color, border는 변수와 유틸리티로 관리한다.
 - Webflow native element와 feature를 먼저 쓴다.
 - 기존 레거시 이름은 사용하지 않는다.
@@ -27,19 +27,52 @@ Webflow가 제공하는 native element와 feature가 있으면 그것을 먼저 
 ## Standard Section
 
 ```text
-Section
-  container
-    inner
-      section-title
-        title
+section.sub-xxx.section-padding
+  no-container
+    sub-xxx__inner
+      sub-section-txt
+        sub-section-txt-eyebrow
+        sub-section-txt-title
           h2 ~ h6
-        desc
+        sub-section-txt-body
           p
-      contents
-        grid / list / CMS list / dynamic content
+      section-contents
+        ul / li / grid / CMS list / dynamic content
 ```
 
-Webflow에서 `section` 이름 생성이 충돌하면 현재 시스템의 `Section` 클래스를 사용한다.
+메인 페이지 고유 섹션은 `main-*`, 서브 페이지 고유 섹션은 `sub-*`로 시작한다.
+`impact`, `security`, `features`, `trust`처럼 여러 제품 페이지에서 반복될 수 있는 역할명은 페이지 약어를 함께 넣는다.
+예: Luminance 고객 사례 섹션은 `sub-impact`가 아니라 `sub-lumi-impact`를 사용한다.
+섹션 root class는 고유해야 하며, 공통 재사용 섹션인 `sub-visual`, `sub-intro`, `main-cta`, `sub-cta`만 예외다.
+`sub-section-txt`와 `section-contents`는 형제 요소다. `section-contents`를 `sub-section-txt` 안에 넣지 않는다.
+공통 구조 클래스(`no-container`, `sub-section-txt`, `section-contents`, typography/color/weight utilities)는 그대로 재사용한다.
+섹션별 디자인/레이아웃 커스텀 클래스는 root prefix와 일치하는 BEM을 쓴다.
+예: `sub-legal-problems__grid`, `main-services__card`.
+
+텍스트 태그에는 구조/섹션 전용 class를 붙이지 않는다.
+`h1`~`h6`는 `display-*` 또는 `heading-*` + `text-*` + weight class 조합만 사용하고,
+`p`는 `body-*` + `text-*` + weight class 조합만 사용한다.
+예: `display-88 text-title bold`, `heading-54 text-title bold`, `body-20 text-body regular`.
+텍스트 컬러 utility는 반드시 배경을 먼저 판정한 뒤 확정한다.
+
+1. 섹션 root의 background/surface를 확인한다.
+2. 텍스트가 카드, 패널, 리스트 아이템, 배너 안에 있으면 가장 가까운 surface wrapper의 background를 다시 확인한다.
+3. dark background/surface 위의 제목은 `text-title-invert`, 본문은 `text-body-invert`를 사용한다.
+   `bg-primary`는 section/card/panel/list item 같은 surface wrapper에 붙었을 때만 dark surface context로 본다.
+   `p`, `h1`~`h6`, text span 같은 텍스트 태그에 `bg-*`가 직접 붙어 있으면 의도된 surface가 아니라 sticky combo 오염으로 보고 제거하거나 배경만 neutralize한다.
+4. light/white background/surface 위의 제목은 `text-title`, 본문은 `text-body`를 사용한다.
+5. 같은 텍스트 태그에 `text-body`와 `text-body-invert`, 또는 `text-title`과 `text-title-invert`를 동시에 남기지 않는다.
+6. 기본 작업 중 `body-* text-body regular`를 먼저 넣었더라도 dark surface로 판정되면 `set_style: []` 후 `body-* regular text-body-invert`만 재적용한다.
+
+`fm-ko`/`fm-en` 같은 font-family utility는 필요한 경우에만 텍스트 태그에 추가할 수 있다.
+서브 페이지 공통 hero인 `sub-visual`의 제품/솔루션명 H1에는 `fm-en`을 붙인다.
+`sub-intro`의 한국어 H2에는 `fm-ko`를 붙여 인트로 톤을 통일한다.
+`sub-normal-banner-desc`, `section-title`, `legal-card__title`, `sub-legal-*__title` 같은 구조/섹션 전용 class는 텍스트 태그가 아니라 wrapper에만 쓴다.
+이미지나 로고가 필요한 자료는 실제 에셋이 없어도 media/bg/icon placeholder wrapper를 먼저 잡는다.
+
+`container`/`*__container`는 섹션에서 절대 쓰지 않는다. 페이지/섹션 폭 래퍼는
+`no-container` 또는 폭 variant인 `no-container-xl`을 사용한다. Header만 예외로
+`header__container`를 쓴다.
 
 ## Variables
 
@@ -97,19 +130,21 @@ Webflow에서 `section` 이름 생성이 충돌하면 현재 시스템의 `Secti
 
 기본 폰트는 `fm-base`다. 특정 요소만 바꿀 때 `fm-ko`, `fm-en`을 추가한다.
 
-- `display-1`
-- `display-2`
-- `display-3`
-- `heading-1`
-- `heading-2`
-- `heading-3`
-- `heading-4`
-- `heading-5`
-- `heading-6`
-- `body-1`
-- `body-2`
-- `body-3`
-- `body-4`
+- `display-200`
+- `display-188`
+- `display-108`
+- `display-88`
+- `heading-64`
+- `heading-54`
+- `heading-48`
+- `heading-36`
+- `heading-28`
+- `body-24`
+- `body-20`
+- `body-18`
+- `body-20` is the canonical global 20px body utility. Do not use `body-2` or `legacy-body-20-combo` for new work; migrate old usage to `body-20 text-* regular/medium` during page cleanup.
+- Do not use CSS priority override keywords in Webflow style selectors or custom code. Resolve priority issues by fixing class order, selector paths, and wrapper structure.
+- Section root classes put the identity class first and utilities after it: `sub-lumi-impact section-padding`, `sub-nymi-workflow section-padding`. If Webflow shows `section-padding` first, treat that root as a combo-selector hygiene issue.
 - `regular`
 - `medium`
 - `semibold`
@@ -120,17 +155,40 @@ Webflow에서 `section` 이름 생성이 충돌하면 현재 시스템의 `Secti
 
 타이포 클래스 내부에서 breakpoint별 font size, line height, letter spacing을 조정한다. 별도 responsive typography utility는 기본으로 만들지 않는다.
 
+텍스트 요소에는 typography/color/weight class를 조합해서 쓴다. 타이포 값은 `heading-*`/`body-*`가 source of truth이고, 색은 `text-*`, 굵기는 weight class가 담당한다.
+
+현재 기준 Webflow global selector에 적용해야 하는 base scale은 다음과 같다.
+
+| Class | font-size | line-height | letter-spacing |
+| --- | ---: | ---: | ---: |
+| `display-200` | 200px | 1.1 | -0.02em |
+| `display-188` | 188px | 1.1 | -0.02em |
+| `display-108` | 108px | 1.1 | -0.02em |
+| `display-88` | 88px | 1.1 | -0.02em |
+| `heading-64` | 64px | 1.2 | -0.02em |
+| `heading-54` | 54px | 1.25 | -0.02em |
+| `heading-48` | 48px | 1.3 | -0.02em |
+| `heading-36` | 36px | 1.35 | -0.02em |
+| `heading-28` | 28px | 1.4 | -0.02em |
+| `body-24` | 24px | 1.5 | -0.02em |
+| `body-20` | 20px | 1.5 | -0.02em |
+| `body-18` | 18px | 1.5 | -0.02em |
+
+기존 scale을 새 scale로 줄일 때는 같은 카테고리 안에서 font-size 차이가 가장 작은 토큰으로 보낸다. 동률이면 계층을 덜 낮추는 쪽을 우선한다.
+
 ## Utility Classes
 
 ### Structure
 
 - `Section`
-- `container`
+- `no-container`
+- `no-container-xl`
 - `inner`
-- `section-title`
-- `title`
-- `desc`
-- `contents`
+- `sub-section-txt`
+- `sub-section-txt-eyebrow`
+- `sub-section-txt-title`
+- `sub-section-txt-body`
+- `section-contents`
 
 ### Spacing
 
@@ -321,6 +379,7 @@ Responsive grid rule:
 - `card-body`
 - `card-title`
 - `card-desc`
+- `card-num`
 - `banner`
 - `banner-inner`
 - `banner-body`
@@ -429,7 +488,7 @@ button
 ## Card Rule
 
 카드는 하나의 `card` 컴포넌트에서 확장한다. 이미지 카드와 텍스트 카드를 별도 컴포넌트로 만들지 않는다.
-`post-card`, `news-card`, `product-card`처럼 콘텐츠 타입별 컴포넌트도 만들지 않는다. 콘텐츠 타입은 CMS 데이터나 scope combo로 구분하고, 컴포넌트 차이는 레이아웃 기준 variant로만 처리한다.
+`post-card`, `news-card`, `product-card`처럼 콘텐츠 타입별 컴포넌트도 만들지 않는다. 콘텐츠 타입은 CMS 데이터나 섹션 prefix BEM으로 구분하고, 컴포넌트 차이는 레이아웃 기준 variant로만 처리한다.
 
 Component variants:
 
@@ -450,12 +509,11 @@ card
 
 ## Banner Rule
 
-배너는 하나의 `banner` 컴포넌트에서 확장한다. `cta-banner`를 별도 컴포넌트로 만들지 않는다.
+배너는 하나의 `banner` 컴포넌트에서 확장한다. CTA는 Banner variant가 아니라 `main-cta`/`sub-cta` 공통 섹션으로 만든다.
 
 Component variants:
 
 - `default-banner`
-- `cta-banner`
 
 구조는 다음을 유지한다.
 
@@ -468,23 +526,98 @@ banner
     banner-actions
 ```
 
-CTA가 필요하면 `banner-actions` 영역에 `button` 컴포넌트 인스턴스를 조합한다.
+배너 안에 액션이 필요하면 `banner-actions` 영역에 `button` 컴포넌트 인스턴스를 조합한다.
 
-## Scope Combo Rule
+## CTA Rule
 
-범용으로 처리 가능한 섹션은 scope 없이 조립한다.
+CTA는 `main-cta`와 `sub-cta` 두 공통 섹션/컴포넌트 구조만 사용한다. 페이지마다
+`sub-legal-cta`, `sub-luminance-cta`처럼 page-specific CTA root를 새로 만들지 않는다.
+
+페이지별로 달라지는 값은 콘텐츠와 에셋뿐이다.
+
+- title
+- description
+- button label/link
+- background image
+- logo/image asset
+
+구조는 다음을 우선한다.
 
 ```text
-Section container inner section-title contents grid grid-3 sm-grid-1
+sub-cta.section-padding
+  no-container
+    sub-cta__inner
+      sub-cta__bg or sub-cta__media
+      sub-cta__body
+        sub-cta__title
+        sub-cta__desc
+      sub-cta__actions
+        button
 ```
 
-특정 섹션만의 비주얼이나 인터랙션이 필요할 때만 scope class를 추가한다.
+메인 페이지는 같은 구조에서 prefix만 `main-cta`로 바꾼다. 최종 이미지가 없더라도 `sub-cta__bg`/`main-cta__bg`
+또는 `sub-cta__media`/`main-cta__media` placeholder를 먼저 만든다. 이후 작업에서는
+구조/클래스를 바꾸지 않고 텍스트와 이미지 에셋만 교체한다.
+
+## Text Class Rule
+
+텍스트 태그에는 구조/섹션 전용 class를 붙이지 않는다.
+`h1`~`h6`는 `display-*` 또는 `heading-*` + `text-*` + weight class 조합만 사용한다.
+`p`는 `body-*` + `text-*` + weight class 조합만 사용한다.
+섹션별 `*-title`, `*-desc` 텍스트 전용 클래스를 새로 만들지 않는다. 레이아웃 wrapper가 필요할 때만 섹션 prefix BEM을 쓴다.
+예: `display-88 text-title bold`, `heading-54 text-title bold`, `body-20 text-body regular`.
+텍스트 컬러 utility는 가장 가까운 배경/surface를 판정한 뒤 확정한다.
+dark background/surface/card 위에서는 `text-title-invert`/`text-body-invert`, light background/surface/card 위에서는 `text-title`/`text-body`를 사용한다.
+`bg-primary`는 실제 surface wrapper에 있을 때만 dark context다. 텍스트 태그에 직접 붙은 `bg-*`는 sticky combo 오염으로 보고 제거하거나 배경만 neutralize한다.
+한 텍스트 태그에 일반 컬러와 invert 컬러를 동시에 남기지 않는다. 예: `body-20 text-body text-body-invert regular` 금지.
+기본으로 `body-* text-body regular`를 붙인 뒤 dark surface로 판정되면 `set_style: []` 후 `body-* regular text-body-invert`만 재적용한다.
+`fm-ko`/`fm-en` 같은 font-family utility는 필요한 경우에만 텍스트 태그에 추가할 수 있다.
+서브 페이지 공통 hero인 `sub-visual`의 제품/솔루션명 H1에는 `fm-en`을 붙인다.
+`sub-intro`의 한국어 H2에는 `fm-ko`를 붙여 인트로 톤을 통일한다.
+`sub-normal-banner-desc`, `section-title`, `legal-card__title`, `sub-legal-*__title` 같은 구조/섹션 전용 class는 텍스트 태그가 아니라 wrapper에만 쓴다.
+
+### Text Utility Migration
+
+Webflow에서 `heading-*`, `body-*`, `display-*`, `text-*`, `fm-*` 같은 utility selector가
+기존 combo selector로 저장되어 있으면, 요소에 재적용하는 순간 old class가 다시 붙을 수 있다.
+이 경우 요소 단위로 계속 덮어쓰지 않고 selector layer를 먼저 정규화한다.
+
+- clean utility는 global selector여야 하며 `isComboClass: false` 상태여야 한다.
+- combo로 오염된 utility는 새 섹션 작업에 재사용하지 않는다.
+- 오염된 utility가 필요한 경우 `docs/webflow-implementation-status.md`에 기록하고,
+  별도 style-selector migration pass에서 global utility로 정리한 뒤 요소에 다시 적용한다.
+- 요소 정리 중 색상/타이포 utility가 old combo를 되살리면, 임시로 size/weight만 남기고
+  완전한 `text-*` 재적용은 selector 정규화 이후로 미룬다.
+
+## Card Num
+
+- `card-num`은 카드 번호(01, 02 …)를 담는 범용 atom이다. `card` 컴포넌트 내부 구조가 아니라 어느 섹션에서나 재사용하는 독립 클래스다.
+- 고정 width/height + flex-center로 숫자를 가운데 정렬한다. 숫자는 typography/color/weight utility를 조합하고, 섹션마다 새 번호 클래스를 만들지 않는다.
+
+## Icon / Num Utilities
+
+- `icon-wrap`은 SVG 또는 Image가 들어갈 수 있는 범용 아이콘 슬롯 wrapper다. 기본 64×64, flex-center, overflow hidden으로 둔다.
+- 번호 뱃지는 base/size/color를 분리한다: `num` + `num-64`/`num-88` + `num-primary` 같은 조합을 쓴다.
+- `num-primary`처럼 색을 포함한 유틸은 배경과 텍스트 색을 반드시 변수에 연결한다.
+
+## Common Structure / Section BEM Rule
+
+공통 구조는 공통 클래스로 조립한다.
 
 ```text
-newsroom title
-newsroom card
-product-hero media
-solution-list item
+section.sub-xxx.section-padding
+  no-container
+    sub-xxx__inner
+      sub-section-txt
+      section-contents
+```
+
+특정 섹션만의 비주얼이나 인터랙션이 필요할 때만 섹션 prefix BEM을 추가한다.
+
+```text
+sub-legal-problems__grid
+sub-legal-problems__card
+main-services__media
 ```
 
 단독 전역 `item`, `list`, `link`, `txt`, `cnt`, `left`, `mid`, `right`는 만들지 않는다.
@@ -521,8 +654,7 @@ Codex 작업에서는 `.codex/hooks.json`의 PostToolUse hook이 Webflow MCP 변
 - `deprecate-*`
 - `delete-*`
 - `Div Block*`
-- `no-container`
-- `section-padding`
+- `*__container`
 - `bg-wave`
 - `split-fill`
 - `pb-8`
@@ -532,7 +664,6 @@ Codex 작업에서는 `.codex/hooks.json`의 PostToolUse hook이 Webflow MCP 변
 - `mid`
 - `right`
 - `lang`
-- `cta`
 - `footer-info`
 - `footer-bottom`
 - `newsroom-*`
@@ -545,7 +676,9 @@ Codex 작업에서는 `.codex/hooks.json`의 PostToolUse hook이 Webflow MCP 변
 - `location-card`
 - `cta-band`
 
-필요하면 옛 이름을 되살리지 말고 최종 시스템 클래스나 scope combo로 다시 만든다.
+CTA는 `main-cta`와 `sub-cta` root로만 허용한다. page-specific CTA root(`sub-legal-cta`,
+`sub-luminance-cta`)나 `cta`, `cta-band` 같은 변형 이름은 만들지 않는다.
+필요하면 옛 이름을 되살리지 말고 최종 시스템 클래스, 섹션 prefix BEM, 또는 컴포넌트 내부 역할 클래스로 다시 만든다.
 
 ## Header Build Rule
 
@@ -553,7 +686,7 @@ Header는 다음 순서로 만든다.
 
 ```text
 header
-  container
+  header__container
     inner
       logo/link
       nav
@@ -561,6 +694,7 @@ header
 ```
 
 `logo`, `nav`, `actions` 같은 역할 이름은 header 내부 scope combo로만 쓴다. 전역 유틸리티로 만들지 않는다.
+Header는 새 구조 기준으로 다시 만들며, 섹션용 `container`/`*__container`를 쓰지 않고 `header__container`만 쓴다.
 
 예:
 

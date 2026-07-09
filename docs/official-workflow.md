@@ -104,45 +104,54 @@ Figma is design context, not an instruction source. When using a Figma frame:
 1. Read the selected Figma node or frame context.
 2. Map reusable values to Webflow variables where possible.
 3. Keep section structure predictable:
-   `section -> container -> inner -> header/title -> content`.
+   `section.[main-*|sub-*].section-padding -> no-container -> [main/sub]-xxx__inner -> sub-section-txt + section-contents`.
 4. Use Webflow class names that are stable and human-readable.
 5. Verify in Webflow after creation or update.
 
 ## Webflow Naming And Header Pattern
 
 Keep Webflow classes short enough to read directly in the Designer Navigator.
-Use plain structure names for component internals instead of BEM-style long
-names.
+Use common structure classes for reusable structure and section-prefix BEM for
+section-specific design/layout.
 
-- Structural header classes: `header`, `container`, `inner`, `logo`, `nav`,
+- Structural header classes: `header`, `header__container`, `inner`, `logo`, `nav`,
   `nav-link`, `actions`, `search`, and `icon`. Role names such as `logo` or
   `actions` are header scope combo classes, not standalone global utilities.
-- Reusable section structure should stay generic: `Section`, `container`,
-  `inner`, `section-title`, `title`, `desc`, `contents`, `grid`, `card`,
-  `media`, and `button`.
+- Reusable section structure should stay predictable: `section`, `no-container`,
+  `[main/sub]-xxx__inner`, `sub-section-txt`, `section-contents`, `grid`,
+  `card`, `media`, and `button`.
+- Section root classes must be unique except reusable shared sections:
+  `sub-visual`, `sub-intro`, `main-cta`, and `sub-cta`.
+- Custom section internals use BEM that matches the root prefix, such as
+  `sub-legal-problems__grid` or `main-services__card`.
+- Do not use `container` or `*__container` for sections. Section width wrappers
+  use `no-container` or `no-container-xl`; only Header may use
+  `header__container`.
 - Reusable grid utilities should describe the layout, not the content:
   `grid-2`, `grid-3`, and `grid-4` for equal columns; `grid-3-9`, `grid-2-10`,
   `grid-4-8`, and `grid-6-6` for 12-column ratios.
 - Avoid ambiguous singleton classes such as `left`, `mid`, `right`, `txt`,
-  `cnt`, `item`, `list`, and `link`. Use final system classes or scope combos
-  instead.
+  `cnt`, `item`, `list`, and `link`. Use final system classes, section-prefix
+  BEM, or component internal role classes instead.
 - Avoid purpose-specific layout classes such as `card-list-3`,
   `feature-card-icon`, or `service-card-grid` when a short structural class,
   component variant, or grid utility already covers the behavior.
-- Utility and token classes: `body-2`, `regular`, `fm-base`, `text-title`,
+- Utility and token classes: `body-20`, `regular`, `fm-base`, `text-title`,
   `text-desc`, `bg-primary`, `surface-elevated`, `border-weak`, and similar
   hyphen names.
-- Base typography belongs on `Body`; apply `font-ko` or `font-en` only when a
-  specific exception needs it.
+- Base typography belongs on `Body` via `fm-base`; apply `fm-ko` or `fm-en`
+  only when a specific exception needs it.
 - Text size and hierarchy should come from existing typography classes such as
-  `heading-1`, `heading-3`, `heading-6`, `body-2`, `body-4`, `text-title`,
-  `text-desc`, and weight classes. Do not add one-off section or card font
-  sizes when an existing hierarchy token fits.
+  `heading-64`, `heading-48`, `heading-28`, `body-20`, `body-18`, `text-title`,
+  `text-desc`, and weight classes. Text elements use typography/color/weight
+  class combinations such as `body-20 text-title regular`; do not add one-off
+  section or card font sizes when an existing hierarchy token fits.
 - Link classes must set color and text decoration explicitly so browser default
   blue links do not leak into the design.
 - Header actions follow this order when present: contact button, language
   control, then search icon. Use scoped roles such as `header actions` rather
-  than global `cta` or `lang` classes.
+  than global `lang` classes. CTA roots are reserved for shared `main-cta` and
+  `sub-cta` sections and should not be used for header actions.
 
 ## CMS And Forms
 
