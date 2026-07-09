@@ -1,6 +1,7 @@
 # Webflow Design System
 
 이 문서는 Webflow 사이트를 다시 정리하기 위한 최종 클래스, 변수, 컴포넌트 기준이다. 목표는 페이지마다 클래스를 늘리는 방식이 아니라 범용 유틸리티, 실제 Webflow Component, 공통 구조 클래스, 필요한 경우의 섹션 prefix BEM과 컴포넌트 내부 역할 클래스로 유지보수 가능한 구조를 만드는 것이다.
+실제 페이지/섹션/카드/CTA 구조를 짜기 전에는 `docs/webflow-layout-flow-examples.md`의 케이스를 반드시 먼저 확인한다.
 
 ## 방향
 
@@ -48,6 +49,9 @@ section.sub-xxx.section-padding
 공통 구조 클래스(`no-container`, `sub-section-txt`, `section-contents`, typography/color/weight utilities)는 그대로 재사용한다.
 섹션별 디자인/레이아웃 커스텀 클래스는 root prefix와 일치하는 BEM을 쓴다.
 예: `sub-legal-problems__grid`, `main-services__card`.
+섹션별 card wrapper는 해당 카드의 단일 소유 class만 사용한다.
+예: `sub-lumi-impact__card`.
+이 wrapper에 `bg-*`, `surface-*`, `border-*`, `radius-*` utility를 조합하지 않는다.
 
 텍스트 태그에는 구조/섹션 전용 class를 붙이지 않는다.
 `h1`~`h6`는 `display-*` 또는 `heading-*` + `text-*` + weight class 조합만 사용하고,
@@ -56,9 +60,9 @@ section.sub-xxx.section-padding
 텍스트 컬러 utility는 반드시 배경을 먼저 판정한 뒤 확정한다.
 
 1. 섹션 root의 background/surface를 확인한다.
-2. 텍스트가 카드, 패널, 리스트 아이템, 배너 안에 있으면 가장 가까운 surface wrapper의 background를 다시 확인한다.
+2. 텍스트가 실제 `card` 컴포넌트, 패널, 리스트 아이템, 배너 안에 있으면 가장 가까운 명시적 surface wrapper의 background를 다시 확인한다. 섹션별 `sub-xxx__card` wrapper는 별도 배경 surface로 보지 않는다.
 3. dark background/surface 위의 제목은 `text-title-invert`, 본문은 `text-body-invert`를 사용한다.
-   `bg-primary`는 section/card/panel/list item 같은 surface wrapper에 붙었을 때만 dark surface context로 본다.
+   `bg-primary`는 section이나 명시적 surface wrapper에 붙었을 때만 dark surface context로 본다.
    `p`, `h1`~`h6`, text span 같은 텍스트 태그에 `bg-*`가 직접 붙어 있으면 의도된 surface가 아니라 sticky combo 오염으로 보고 제거하거나 배경만 neutralize한다.
 4. light/white background/surface 위의 제목은 `text-title`, 본문은 `text-body`를 사용한다.
 5. 같은 텍스트 태그에 `text-body`와 `text-body-invert`, 또는 `text-title`과 `text-title-invert`를 동시에 남기지 않는다.
@@ -489,6 +493,8 @@ button
 
 카드는 하나의 `card` 컴포넌트에서 확장한다. 이미지 카드와 텍스트 카드를 별도 컴포넌트로 만들지 않는다.
 `post-card`, `news-card`, `product-card`처럼 콘텐츠 타입별 컴포넌트도 만들지 않는다. 콘텐츠 타입은 CMS 데이터나 섹션 prefix BEM으로 구분하고, 컴포넌트 차이는 레이아웃 기준 variant로만 처리한다.
+섹션별 카드 wrapper가 실제 `card` 컴포넌트가 아니라 레이아웃용 wrapper라면 `sub-xxx__card` 같은 단일 소유 class만 사용한다.
+그 wrapper에는 배경/surface/border/radius utility를 추가하지 않는다.
 
 Component variants:
 
@@ -567,8 +573,8 @@ sub-cta.section-padding
 섹션별 `*-title`, `*-desc` 텍스트 전용 클래스를 새로 만들지 않는다. 레이아웃 wrapper가 필요할 때만 섹션 prefix BEM을 쓴다.
 예: `display-88 text-title bold`, `heading-54 text-title bold`, `body-20 text-body regular`.
 텍스트 컬러 utility는 가장 가까운 배경/surface를 판정한 뒤 확정한다.
-dark background/surface/card 위에서는 `text-title-invert`/`text-body-invert`, light background/surface/card 위에서는 `text-title`/`text-body`를 사용한다.
-`bg-primary`는 실제 surface wrapper에 있을 때만 dark context다. 텍스트 태그에 직접 붙은 `bg-*`는 sticky combo 오염으로 보고 제거하거나 배경만 neutralize한다.
+dark background/surface 위에서는 `text-title-invert`/`text-body-invert`, light background/surface 위에서는 `text-title`/`text-body`를 사용한다.
+`bg-primary`는 실제 section 또는 명시적 surface wrapper에 있을 때만 dark context다. 섹션별 `sub-xxx__card` wrapper와 텍스트 태그에 직접 붙은 `bg-*`는 sticky combo 오염으로 보고 제거하거나 배경만 neutralize한다.
 한 텍스트 태그에 일반 컬러와 invert 컬러를 동시에 남기지 않는다. 예: `body-20 text-body text-body-invert regular` 금지.
 기본으로 `body-* text-body regular`를 붙인 뒤 dark surface로 판정되면 `set_style: []` 후 `body-* regular text-body-invert`만 재적용한다.
 `fm-ko`/`fm-en` 같은 font-family utility는 필요한 경우에만 텍스트 태그에 추가할 수 있다.
@@ -622,7 +628,7 @@ main-services__media
 
 단독 전역 `item`, `list`, `link`, `txt`, `cnt`, `left`, `mid`, `right`는 만들지 않는다.
 
-## Scope-Specific Class Rule (구현 학습 반영)
+## Scope-Specific Class Rule
 
 일부 클래스는 특정 섹션 전용이다. 다른 섹션에서 재사용하지 않는다.
 
@@ -634,13 +640,13 @@ main-services__media
   실제 레이아웃 폭을 줄인다(컨테이너 넘침 + 겹침 동시 해결). 자세한 값은
   `webflow-implementation-status.md` 3.5 Consulting 참고.
 
-실제 구현 상태·변수 실측·컴포넌트 제약은 `docs/webflow-implementation-status.md` 를 우선 참조한다.
+현재 구현 상태·변수·컴포넌트 제약은 `docs/webflow-implementation-status.md` 를 우선 참조한다.
 
 ## Documentation Update Rule
 
 Webflow 변수, style selector, 컴포넌트, variant, page structure, CMS schema/content가 바뀌면 같은 작업 안에서 문서를 갱신한다.
 
-- 실측 상태와 변경 이력: `docs/webflow-implementation-status.md`
+- 현재 구현 상태: `docs/webflow-implementation-status.md`
 - 유지할 디자인 시스템 규칙: `docs/webflow-design-system.md`
 - 에이전트 공통 운영 규칙: `AGENTS.md`
 - 컴포넌트 생성/삭제/variant/property 변경: draft-only `/components` 카탈로그
