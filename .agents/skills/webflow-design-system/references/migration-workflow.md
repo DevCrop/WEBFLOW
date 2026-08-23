@@ -1,6 +1,6 @@
 # Webflow Migration Workflow
 
-contract_version: `2026-08-23.7`
+contract_version: `2026-08-23.8`
 
 Use this workflow for INDA, shared components, sitewide typography, variables, and legacy removal. The class rules themselves live only in [`class-contract.md`](class-contract.md).
 
@@ -35,11 +35,11 @@ Never jump states. A visual match alone is not migration evidence.
 
 ## 3. Canonical-style preparation
 
-- Pick one existing style ID for each approved semantic, weight, color, structure, and state selector.
+- Pick one existing style ID for each approved semantic, weight, standalone color, component root, structure, and state selector.
 - Prefer the style ID with the correct global usage and variable bindings. Do not assume the oldest or most-used duplicate is correct.
 - Remove disallowed properties from canonical semantic, weight, and color selectors only after listing every affected element and component.
 - Bind supported values to existing semantic variables. Create a new semantic variable when a shared variable has conflicting role values; never overwrite a variable's meaning to avoid creation.
-- Do not add declarations to the combined selector. The combination should compose the three single-responsibility selectors.
+- Do not add declarations to combined text selectors. Standalone text composes semantic, weight, and color selectors; component text composes semantic and weight selectors while its root supplies inherited color.
 
 ## 3.1 MCP 2.0 typography-variable procedure
 
@@ -93,29 +93,31 @@ Migrate only after the INDA pilot is accepted.
 ### `intro-title`
 
 ```text
-eyebrow  section-head-eyebrow + medium + text-desc*
-title    section-head-title + lang-variant + bold + text-title*
-subtitle section-head-subtitle + semibold + text-subtitle*
-body     section-head-body + regular + text-body*
+root     intro-title; Base color/text/title; invert color/text/title-invert
+eyebrow  section-head-eyebrow + medium
+title    section-head-title + lang-variant + bold
+subtitle section-head-subtitle + semibold
+body     section-head-body + regular
 ```
 
 ### `section-title`
 
 ```text
 wrapper  section-title + is-centered when centered
-eyebrow  section-head-eyebrow + medium + text-desc*
-title    section-head-title + bold + text-title*
-subtitle section-head-subtitle + semibold + text-subtitle*
-body     section-head-body + regular + text-body*
+root     section-title; Base color/text/title; invert color/text/title-invert
+eyebrow  section-head-eyebrow + medium
+title    section-head-title + bold
+subtitle section-head-subtitle + semibold
+body     section-head-body + regular
 ```
 
-`*` means choose the base or `-invert` color role from the component variant; it is not a literal selector.
+Component variants switch only the root color binding. Internal text never receives a `text-*` selector.
 
 For each component, verify Base, invert, centered, and right-aligned variants on representative pages before expanding the batch.
 
 ### `intro-title-v2`
 
-Replace both instances with the existing `intro-title` component. Map `heading-64 + regular + text-title-v2` to `section-head-title + bold + text-title*`. The component and `text-title-v2` may move to `zero-use` only after both replacement instances and every variant/custom-code reference are verified.
+Replace both instances with the existing `intro-title` component. Map `heading-64 + regular + text-title-v2` to `section-head-title + bold`, inheriting color from the component root. The component and `text-title-v2` may move to `zero-use` only after both replacement instances and every variant/custom-code reference are verified.
 
 ## 6. Sitewide expansion order
 

@@ -24,7 +24,7 @@ Intellectual Data Webflow 사이트의 디자인 시스템을 Webflow MCP로 감
 | [`docs/webflow/migration-register.md`](docs/webflow/migration-register.md) | 대상별 마이그레이션 상태와 검증 근거 |
 | [`llms.txt`](llms.txt) | AI 문서 탐색용 짧은 색인 |
 
-현재 계약 버전은 `2026-08-23.7`, 프로젝트 skill의 기준 Webflow MCP 버전은 `2.0.1`입니다. 사이트 삭제와 publish는 각각 별도 승인 전까지 금지됩니다.
+현재 계약 버전은 `2026-08-23.8`, 프로젝트 skill의 기준 Webflow MCP 버전은 `2.0.1`입니다. 사이트 삭제와 publish는 각각 별도 승인 전까지 금지됩니다.
 
 ## Official sources
 

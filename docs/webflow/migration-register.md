@@ -1,6 +1,6 @@
 # Webflow Migration Register
 
-contract_version: `2026-08-23.7`
+contract_version: `2026-08-23.8`
 
 Allowed status sequence:
 
@@ -33,14 +33,14 @@ The evidence log is chronological. A later verified row supersedes an earlier bl
 
 | Style/component ID | Current | Target | Usage/location | Current use | Breakpoints/variants | Status | Delete approved |
 |---|---|---|---|---:|---|---|---|
-| `43352630-4ca3-722b-7270-ff62ac820a04` | all four roles use the canonical `head` tier grammar and representative color classes | eyebrow `section-head-eyebrow + medium + text-desc*`; title `section-head-title + lang-variant + bold + text-title*`; subtitle `section-head-subtitle + semibold + text-subtitle*`; body `section-head-body + regular + text-body*` | shared component | 24 instances | six variants audited; KO/EN language switching and both invert body variable readbacks passed | migrated | no |
-| `9b4fc63d-3bda-d34d-302e-3b45259e7312` | all four roles use the canonical `head` tier grammar and representative color classes | wrapper `section-title + is-centered` when centered; invert variants switch only the representative-class variable bindings | shared component | 81 instances | all six variants audited; three invert body variants resolve `color/text/body-invert` | migrated | no |
+| `43352630-4ca3-722b-7270-ff62ac820a04` | all four roles use canonical `head` typography without internal color selectors | root `intro-title` owns color; internal eyebrow/title/subtitle/body retain semantic, language, and weight selectors only | shared component | 24 instances | six variants audited; KO/EN language switching retained; invert variants switch only root color | migrated | no |
+| `9b4fc63d-3bda-d34d-302e-3b45259e7312` | all four roles use canonical `head` typography without internal color selectors | root `section-title` owns color and alignment variants remain on the parent | shared component | 81 instances | all six variants audited; Base family inherits white and invert family switches only root color to neutral black | migrated | no |
 | `06868950-51cf-7bdf-164a-91b8dc366f91` | eyebrow, title, and body previously retained generated classes in front of semantic selectors | eyebrow `section-head-eyebrow + medium + text-desc`; title `section-head-title + bold + text-title`; body `section-head-body + regular + text-body` | shared component | 24 instances | KO and EN variants share the verified normal white-family hierarchy; final element-tree readback passed; representative responsive pages pending | migrated | no |
-| `e30bc340-99d7-a11d-6c28-a5d9eea3fb50` | number, eyebrow, title, and body use one canonical `micro` tier | number/title `section-micro-title + bold + text-title*`; eyebrow `section-micro-eyebrow + medium + text-desc*`; body `section-micro-body + regular + text-body*` | `num-card` | 34 instances | dark/light/brand audited; light body resolves `color/text/body-invert` | migrated | no |
-| `de43678e-3ea6-d3aa-225e-4c8af852d91b` | number, title, and body use one canonical `micro` tier | semantic role + weight + representative color classes | `num-row` | 5 instances | dark/light audited; light body resolves `color/text/body-invert` | migrated | no |
-| `7f4e0a47-583f-12f0-dcf6-1da959adbbb3`; `ca21b781-4f31-2fb2-49ff-2c084204b7b0` | all text roles use one canonical `micro` tier | light/white use invert representatives and dark switches those representatives to normal variables | `icon-card`; `icon-card-cms` | 53; 1 instances | final trees passed; both dark variants resolve normal title/body variables | migrated | no |
-| `0980d959-12aa-39a6-b071-e46fac6ac96f`; `ff822aac-009c-6f1a-f14d-d60c4537bfec` | all mapped review/story roles use canonical `micro` typography and representative invert classes | light surfaces use invert representatives; dark/Brand variants switch representatives to normal variables | `story-card`; `review-card` | 2; 6 instances | final trees and story dark/review Brand variable readbacks passed | migrated | no |
-| `dd757598-1c8a-df83-fe4e-f8deec6f96f6` | legacy `Heading 96` replaced by canonical head title; body already canonical | `section-head-title + bold + text-title`; `section-head-body + regular + text-body` | `banner` | 24 instances | base uses normal white-family variables; light surface switches title/body to invert variables | migrated | no |
+| `e30bc340-99d7-a11d-6c28-a5d9eea3fb50` | number, eyebrow, title, and body use one canonical `micro` tier without internal color selectors | root `num-card` owns inherited color | `num-card` | 34 instances | dark/brand root white; light root neutral black | migrated | no |
+| `de43678e-3ea6-d3aa-225e-4c8af852d91b` | number, title, and body use one canonical `micro` tier without internal color selectors | root `sub-ediscovery-checkpoint__item` owns inherited color | `num-row` | 5 instances | dark root white; light root neutral black | migrated | no |
+| `7f4e0a47-583f-12f0-dcf6-1da959adbbb3`; `ca21b781-4f31-2fb2-49ff-2c084204b7b0` | all text roles use one canonical `micro` tier without internal color selectors | shared root `icon-card` owns inherited color | `icon-card`; `icon-card-cms` | 53; 1 instances | light/white root neutral black; dark root white | migrated | no |
+| `0980d959-12aa-39a6-b071-e46fac6ac96f`; `ff822aac-009c-6f1a-f14d-d60c4537bfec` | all mapped roles use canonical `micro` typography without internal color selectors | `story-card` and `review-card` roots own inherited color | `story-card`; `review-card` | 2; 6 instances | light/white root neutral black; dark/Brand root white | migrated | no |
+| `dd757598-1c8a-df83-fe4e-f8deec6f96f6` | canonical head title/body without internal color selectors | root `banner` owns inherited color | `banner` | 24 instances | dark root white; light root neutral black | migrated | no |
 | `ea89ac4b-f08d-484c-5e95-a3bed92b8123` | `intro-title-v2` | replace with `intro-title` | shared component | 2 instances | pending | mapped | no |
 
 ## Sitewide legacy queue
@@ -69,6 +69,24 @@ The evidence log is chronological. A later verified row supersedes an earlier bl
 | Site head | `.regular`, `.medium`, `.semibold`, `.bold` with hard-coded weights | retain names; move ownership to Webflow variables/canonical styles after binding audit | observed |
 | Site head | `.u-display-*`, `.u-heading-*`, `.u-body-*`, `.u-regular`, `.u-medium`, `.u-semibold`, `.u-bold` | audit usage and migrate; do not reuse for new work | observed |
 | INDA page footer | `.sub-inda-process__card-desc` | selector is not present on the current mapped card body nodes; verify intended owner before cleanup | observed |
+
+## Component root color batch
+
+Internal component text keeps semantic typography, optional language, and weight selectors only. Each root selector owns inherited color and component variants switch only that root binding.
+
+| Component ID | Root selector | Current internal color ownership | Target root polarity | Instances | Status | Delete approved |
+|---|---|---|---|---:|---|---|
+| `9b4fc63d-3bda-d34d-302e-3b45259e7312` | `section-title` | root only; internal direct color count 0 | Base white / invert neutral black | 81 | migrated | no |
+| `43352630-4ca3-722b-7270-ff62ac820a04` | `intro-title` | root only; internal direct color count 0 | Base/White white / invert neutral black | 24 | migrated | no |
+| `dd757598-1c8a-df83-fe4e-f8deec6f96f6` | `banner` | root only; internal direct color count 0 | dark white / light neutral black | 24 | migrated | no |
+| `e30bc340-99d7-a11d-6c28-a5d9eea3fb50` | `num-card` | root only; internal direct color count 0 | dark/brand white / light neutral black | 34 | migrated | no |
+| `7f4e0a47-583f-12f0-dcf6-1da959adbbb3` | `icon-card` | root only; internal direct color count 0 | light/white neutral black / dark white | 53 | migrated | no |
+| `ca21b781-4f31-2fb2-49ff-2c084204b7b0` | `icon-card` | shared root only; internal direct color count 0 | same root polarity as icon-card | 1 | migrated | no |
+| `ab27e870-e706-54b9-0ead-4eca2dd0777a` | `icon-num-card__card` | root only; internal direct color count 0 | light/white neutral black / dark white | 13 | migrated | no |
+| `0980d959-12aa-39a6-b071-e46fac6ac96f` | `story-card` | root only; internal direct color count 0 | light neutral black / dark white | 2 | migrated | no |
+| `ff822aac-009c-6f1a-f14d-d60c4537bfec` | `review-card` | root only; internal direct color count 0 | Light/White neutral black / Brand white | 6 | migrated | no |
+| `de43678e-3ea6-d3aa-225e-4c8af852d91b` | `sub-ediscovery-checkpoint__item` | root only; internal direct color count 0 | dark white / light neutral black | 5 | migrated | no |
+| `f86a942e-5c0a-cd72-b413-8b437a9cf99c` | `sub-ediscovery-sanction__icard` | root only; internal direct color count 0 | Base white / Light/White/Brand neutral black | 14 | migrated | no |
 
 ## Batch evidence log
 
@@ -107,3 +125,4 @@ The evidence log is chronological. A later verified row supersedes an earlier bl
 | 2026-08-23 | Exact invert global repair | Designer-selected exact globals rebound `text-title-invert` to `color/text/title-invert` and `text-body-invert` to `color/text/body-invert`; removed the accidental direct `position: static` declaration from the body selector | exact-ID `get_styles` readback passed; both selectors now contain only their canonical color variable |
 | 2026-08-23 | Remaining shared component completion | created the exact ordered micro invert paths through Designer, migrated all deferred section/intro/number/card/banner roles, and wrote representative-only variant color overrides | final trees passed across 230 component instances; 16 variant readbacks passed; temporary page probes removed; no structural component class owns text color; no publish |
 | 2026-08-23 | Neutral-black invert scale | contract and live rule advanced to v2026-08-23.7; retained all four variable IDs and changed only their values: title `#000000`, subtitle `#111111`, body `#222222`, desc `#333333` | passed live readback; all four keep `modeValues: []`; no selector, component, variant, mode, deletion, or publish change |
+| 2026-08-23 | Component root color ownership | contract and live rule advanced to v2026-08-23.8; moved inherited foreground color to 10 component root selectors across 11 components; removed all internal `text-*` bindings and 58 stale internal variant color overrides | 11/11 component trees report zero internal direct color selectors; 10/10 Base root bindings and 26/26 non-Base root variant reads passed; no deletion or publish |

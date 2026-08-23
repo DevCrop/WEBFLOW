@@ -1,6 +1,6 @@
 # Intellectual Data Webflow MCP 2.0.1
 
-> Canonical operating documents for the Intellectual Data Webflow design system. Contract version: 2026-08-23.7.
+> Canonical operating documents for the Intellectual Data Webflow design system. Contract version: 2026-08-23.8.
 
 ## Start
 

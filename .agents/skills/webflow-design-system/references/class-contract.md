@@ -1,16 +1,24 @@
 # Webflow Class Contract
 
-contract_version: `2026-08-23.7`
+contract_version: `2026-08-23.8`
 
 This file is the canonical policy for text classes, state classes, and their variable responsibilities.
 
 ## 1. Selector grammar
 
-Text elements MUST use exactly this order:
+Standalone text elements MUST use exactly this order:
 
 ```text
 [semantic tier base] + [optional language] + [weight] + [color]
 ```
+
+Text inside a reusable Webflow component MUST use:
+
+```text
+[semantic tier base] + [optional language] + [weight]
+```
+
+The component's outermost owned root selector supplies the inherited text color. Internal component text MUST NOT carry `text-*` color selectors.
 
 ALLOWED:
 
@@ -18,6 +26,7 @@ ALLOWED:
 section-head-title + bold + text-title
 section-head-title + lang-en + regular + text-title
 section-content-body + regular + text-body-invert
+component root: section-title; internal title: section-head-title + bold
 ```
 
 MUST NOT:
@@ -27,7 +36,7 @@ heading-52 + bold + text-title
 section-content-title + regular + bold + text-title
 ```
 
-The first selector defines semantic scale. An optional language selector follows it. The next selector defines only weight and the final selector defines only color. A text element therefore uses exactly three design-system selectors when no language override is needed and exactly four when a language override is present. Functional third-party classes such as `swiper-slide` belong on their functional wrapper, not on the text node.
+The first selector defines semantic scale. An optional language selector follows it. The next selector defines only weight. Standalone text adds a final color selector. Component internals stop after weight and inherit color from the component root. Functional third-party classes such as `swiper-slide` belong on their functional wrapper, not on the text node.
 
 ## 1.1 Language selectors
 
@@ -85,7 +94,7 @@ section-micro-body
 section-micro-eyebrow
 ```
 
-`section-content-index` is the only approved supplementary role. It uses the `content/title` typography metrics and the `bold` weight selector. Its color remains a separate text-color selector.
+`section-content-index` is the only approved supplementary role. It uses the `content/title` typography metrics and the `bold` weight selector. Standalone use adds a text-color selector; component use inherits color from its root.
 
 ## 2.1 Canonical responsive typography
 
@@ -225,7 +234,7 @@ text-desc
 text-desc-invert
 ```
 
-Each color selector MUST contain only `color`, linked to the matching `color/text/*` variable. `invert` means the role used against the opposite surface theme; it does not change type scale or weight.
+Each color selector MUST contain only `color`, linked to the matching `color/text/*` variable. These selectors are for standalone text, not reusable component internals. `invert` means the role used against the opposite surface theme; it does not change type scale or weight.
 
 Color polarity is fixed:
 
@@ -248,6 +257,21 @@ Text-color roles are surface-dependent, not viewport-dependent. They MUST NOT us
 
 Title and subtitle are distinct roles. `title` provides the strongest foreground emphasis. `subtitle` is intentionally lower contrast. `body` supports reading; `desc` is reserved for tertiary or supporting information and MUST still satisfy the project's accessibility target.
 
+## 4.1 Component color ownership
+
+A reusable title, card, banner, or content component MUST use its outermost owned structural selector as the default text-color owner. That root binds one approved `color/text/*` variable. Its variants may change the root's `color` binding, but MUST NOT add color declarations or `text-*` selectors to internal text nodes.
+
+```text
+section-title                   color: color/text/title
+section-title invert variant    color: color/text/title-invert
+internal title                  section-head-title + bold
+internal body                   section-head-body + regular
+```
+
+The inherited root color is component-specific presentation, not a global text role. Typography scale, language, and weight remain on internal text nodes. A nested button, badge, link, or other independently themed component keeps its own color ownership and does not inherit the parent component's text color.
+
+If one component intentionally contains a separately themed region, create a documented component-owned subroot for that region. Do not restore global `text-*` color classes on individual internal text nodes as a shortcut.
+
 ## 5. Structural and state selectors
 
 Parent elements use:
@@ -268,7 +292,7 @@ is-disabled
 
 `is-centered` owns child text alignment through the parent context. Text nodes MUST NOT use `text-center` for component alignment. Additional `is-*` states require a reusable behavioral or presentation state, a documented owner, and a contract update.
 
-Structural selectors may own layout, spacing, and component geometry. They MUST NOT own reusable text scale, weight, or color. Page-specific `sub-inda-*` selectors may remain only on structural wrappers.
+Structural selectors may own layout, spacing, and component geometry. Only the outermost owned selector of a reusable component, or an approved component-owned subroot, may own inherited text color. Structural selectors MUST NOT own reusable text scale or weight. Page-specific `sub-inda-*` selectors may remain only on structural wrappers.
 
 ## 6. Variable contract
 
@@ -323,7 +347,8 @@ Also forbidden:
 
 - duplicate canonical selectors with separate style IDs;
 - combo selectors that store new typography, weight, color, or spacing declarations;
-- component or page selectors used to override the semantic text contract;
+- page selectors used to override the semantic text contract;
+- `text-*` color selectors on reusable component internals;
 - class names chosen only from their current visual value.
 
 Existing forbidden selectors are migration inputs, not reusable tools. Track them by exact current name in the migration register; never rename them to another temporary legacy name.

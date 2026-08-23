@@ -1,6 +1,6 @@
 # Webflow Audit Baseline
 
-contract_version: `2026-08-23.7`
+contract_version: `2026-08-23.8`
 
 observed_through: `2026-08-23 Asia/Seoul`
 
@@ -97,14 +97,14 @@ Variable namespaces were inconsistently cased as `Color/...` and `color/...`. Ro
 
 The eight canonical variables use lowercase semantic paths. Seven existing variable IDs were retained and `color/text/title-invert` was created as `variable-759fb0ac-b062-9f1b-b699-9c1f9109159b`. On 2026-08-23 the four invert values were normalized to opaque neutral blacks from `#000000` through `#333333`; all four exceed the 4.5:1 target on white.
 
-Exact global-style readback confirms `text-title`, `text-subtitle`, `text-subtitle-invert`, `text-body`, `text-desc`, and `text-desc-invert` use their canonical semantic variables. `text-title-invert` and `text-body-invert` still point to `Color/Base/Black` because the name-addressed connector and Designer class chooser resolve duplicate definitions instead of the exact global IDs. A Designer attempt also left `position: static` on global `text-body-invert`; this disallowed declaration requires exact-global cleanup before the color-class migration can be marked complete. All temporary probe elements were removed. No deletion or publication occurred.
+Exact global-style readback confirms all eight standalone `text-*` selectors use their canonical semantic variables. The exact duplicate-name globals `text-title-invert` and `text-body-invert` were repaired through the scoped Designer fallback; `text-body-invert` no longer contains the accidental `position: static` declaration. All temporary probe elements were removed. No deletion or publication occurred.
 
 ## Shared components
 
 | Component | ID | Instances | Observed issue |
 |---|---|---:|---|
-| `section-title` | `9b4fc63d-3bda-d34d-302e-3b45259e7312` | 81 | all four roles canonical; three invert variants switch representative body color to `body-invert` |
-| `intro-title` | `43352630-4ca3-722b-7270-ff62ac820a04` | 24 | all four roles canonical; KO/EN invert variants switch representative body color to `body-invert` |
+| `section-title` | `9b4fc63d-3bda-d34d-302e-3b45259e7312` | 81 | internal roles use typography and weight only; root owns white Base color and neutral-black invert color |
+| `intro-title` | `43352630-4ca3-722b-7270-ff62ac820a04` | 24 | internal roles use typography/language/weight only; root owns Base/White and invert color polarity |
 | `sub-visual` | `06868950-51cf-7bdf-164a-91b8dc366f91` | 24 | eyebrow/title/body canonical normal white-family hierarchy |
 | `intro-title-v2` | `ea89ac4b-f08d-484c-5e95-a3bed92b8123` | 2 | numeric typography and `text-title-v2` |
 
@@ -137,6 +137,8 @@ Exact `get_styles` readback confirms semantic Desktop/Base bindings on 14 global
 
 ## Current connector boundary
 
-MCP 2.0.1 Data reads and variable/style writes are operational with the documented `data_*` action shapes. Exact duplicate-name global owners were repaired on 2026-08-23 through the scoped Designer fallback, and the ordered micro invert paths were created there. `text-title-invert` and `text-body-invert` now contain only their canonical invert variable bindings, with no stray position declaration. Deferred body and card roles were migrated, and representative-only variant overrides passed readback across section-title, intro-title, num-card, num-row, icon-card, icon-card-cms, story-card, review-card, and banner. Structural component classes do not own text color.
+MCP 2.0.1 Data reads and variable/style writes are operational with the documented `data_*` action shapes. Exact duplicate-name global owners were repaired on 2026-08-23 through the scoped Designer fallback, and the ordered micro paths were created there. `text-title-invert` and `text-body-invert` contain only their canonical invert variable bindings, with no stray position declaration.
+
+On 2026-08-23 the reusable component color model moved to root inheritance. Final tree readback across `section-title`, `intro-title`, `banner`, `num-card`, `icon-card`, `icon-card-cms`, `icon-num-card`, `story-card`, `review-card`, `num-row`, and `case-card` found zero internal `text-title`, `text-subtitle`, `text-body`, `text-desc`, or `-invert` bindings. Ten distinct root selectors bind one approved title foreground variable: white `variable-b90879fd-bc66-1d32-d73c-675a5d8414f2` on dark surfaces or neutral black `variable-759fb0ac-b062-9f1b-b699-9c1f9109159b` on light surfaces. Twenty-six non-base variant root readbacks passed, and 58 stale internal variant `color` overrides were removed. Representative post-cleanup reads returned empty property sets on internal `text-*` variant styles.
 
 Four empty combo definitions recorded in the migration register are retained until exact usage and custom-code deletion gates are independently satisfied. Empty declaration blocks are not themselves a rendering defect: the ordered class path can still be required by live elements. No global unused-style broom is authorized. Earlier schema-failure rows in the chronological register are historical evidence and MUST NOT be reused as a current capability conclusion.
