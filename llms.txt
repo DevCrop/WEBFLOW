@@ -1,0 +1,25 @@
+# Intellectual Data Webflow MCP 2.0.1
+
+> Canonical operating documents for the Intellectual Data Webflow design system. Contract version: 2026-08-23.7.
+
+## Start
+
+- [Repository overview](https://github.com/DevCrop/WEBFLOW/blob/main/README.md)
+- [Agent rules](https://github.com/DevCrop/WEBFLOW/blob/main/AGENTS.md)
+- [Documentation index](https://github.com/DevCrop/WEBFLOW/blob/main/docs/README.md)
+- [Computer and browser setup](https://github.com/DevCrop/WEBFLOW/blob/main/docs/webflow/mcp-2-setup.md)
+
+## Design-system contract
+
+- [Webflow design-system skill](https://github.com/DevCrop/WEBFLOW/blob/main/.agents/skills/webflow-design-system/SKILL.md)
+- [Class and variable contract](https://github.com/DevCrop/WEBFLOW/blob/main/.agents/skills/webflow-design-system/references/class-contract.md)
+- [Migration workflow](https://github.com/DevCrop/WEBFLOW/blob/main/.agents/skills/webflow-design-system/references/migration-workflow.md)
+- [Current audit baseline](https://github.com/DevCrop/WEBFLOW/blob/main/docs/webflow/audit-baseline.md)
+- [Migration register](https://github.com/DevCrop/WEBFLOW/blob/main/docs/webflow/migration-register.md)
+
+## Official Webflow references
+
+- [Webflow MCP documentation index](https://developers.webflow.com/llms.txt)
+- [Webflow MCP getting started](https://developers.webflow.com/mcp/reference/getting-started)
+- [Webflow MCP data tools](https://developers.webflow.com/mcp/tools/data-tools)
+- [Webflow MCP skill migration](https://developers.webflow.com/mcp/skills/skill-migration)
