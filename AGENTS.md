@@ -1,6 +1,6 @@
 # Webflow Project Instructions
 
-contract_version: `2026-08-23.8`
+contract_version: `2026-08-24.1`
 
 ## Active guidance
 
@@ -14,7 +14,7 @@ contract_version: `2026-08-23.8`
 
 - Standalone text selectors MUST follow `[semantic tier] + [optional language] + [weight] + [color]`. Reusable component internals omit `[color]` and inherit it from the component's outermost owned root selector.
 - A single component or text group MUST use one semantic tier consistently. `head`, `lead`, `normal`, `content`, and `micro` roles MUST NOT be mixed inside the same group.
-- Canonical role weights are title `bold` (700), subtitle `semibold` (600), body `regular` (400), and eyebrow `medium` (500). Weight remains a separate selector and MUST NOT be stored on `section-*` selectors or combos.
+- Canonical role weights are title `bold` (700), subtitle `semibold` (600), body `regular` (400), and eyebrow `medium` (500). The approved exception is the `sub-visual` H1, which MUST use `regular` (400) for both KO and EN. Weight remains a separate selector, MUST NOT be stored on `section-*` selectors or combos, and MUST NOT change by language variant.
 - Canonical responsive sizes, line heights, and letter spacing are defined only in the class contract. Text sizes MUST NOT fall below 18px.
 - Normal text-color selectors (`text-title`, `text-subtitle`, `text-body`, `text-desc`) MUST use white-family colors on dark surfaces. `-invert` selectors MUST use the neutral black scale `#000000`, `#111111`, `#222222`, and `#333333` on light surfaces. Invert never means white text.
 - A reusable title, card, banner, or content component MUST NOT place `text-*` color selectors on internal text nodes. Its outermost owned root selector MUST bind the approved color variable, and component variants MUST switch color only on that root. Nested buttons, badges, links, or other independently themed components retain their own color ownership.

@@ -1,6 +1,6 @@
 # Webflow Audit Baseline
 
-contract_version: `2026-08-23.8`
+contract_version: `2026-08-24.1`
 
 observed_through: `2026-08-24 Asia/Seoul`
 
@@ -105,7 +105,7 @@ Exact global-style readback confirms all eight standalone `text-*` selectors use
 |---|---|---:|---|
 | `section-title` | `9b4fc63d-3bda-d34d-302e-3b45259e7312` | 81 | internal roles use typography and weight only; root owns white Base color and neutral-black invert color |
 | `intro-title` | `43352630-4ca3-722b-7270-ff62ac820a04` | 24 | internal roles use typography/language/weight only; root owns Base/White and invert color polarity |
-| `sub-visual` | `06868950-51cf-7bdf-164a-91b8dc366f91` | 24 | H1 uses `section-head-title + lang-variant + bold`; KO/EN rendered fonts verified; root owns inherited H1 color |
+| `sub-visual` | `06868950-51cf-7bdf-164a-91b8dc366f91` | 24 | H1 uses `section-head-title + lang-variant + regular`; KO/EN rendered fonts and common weight 400 verified; root owns inherited H1 color |
 | `intro-title-v2` | `ea89ac4b-f08d-484c-5e95-a3bed92b8123` | 2 | numeric typography and `text-title-v2` |
 
 The site had 54 components at observation time.
@@ -144,5 +144,7 @@ On 2026-08-23 the reusable component color model moved to root inheritance. Fina
 The `num-row` Light variant required one additional runtime correction after that batch. Data readback reported empty Light-variant properties for H3 `de43678e-3ea6-d3aa-225e-4c8af852d91e`, while the Designer still emitted a duplicate-name `section-micro-title` variant rule with `color: white`. The exact Designer declaration was reset without adding an internal color selector, and `bold` was restored on the H3. Final computed-style verification returned Base `rgb(255, 255, 255)` and Light `rgb(0, 0, 0)`, both at weight 700; the Light root remained bound to `color/text/title-invert` (`variable-759fb0ac-b062-9f1b-b699-9c1f9109159b`). This is evidence that an empty Data property set does not by itself prove the absence of stale duplicate-name Designer CSS; representative computed-style verification remains required for affected variants.
 
 On 2026-08-24 the `sub-visual` H1 `fd925077-3255-e041-c767-cf3f0a27f720` was normalized to `section-head-title + lang-variant + bold`. Base `lang-variant` retains `Font/Ko` (`variable-594caf2b-9394-0f5f-2379-2c30cab5c727`, Noto Serif KR), and EN variant `e676d2de-dc88-ac1e-48a1-86b5f9422ca2` binds `Font/En` (`variable-ad9aed0c-874f-af62-a7ff-0c57090bb8e1`, EB Garamond). The `sub-visual` root now owns the inherited white title color, so the H1 no longer carries `text-title`. Final Designer computed styles returned Noto Serif KR on KO and EB Garamond on EN, both white and weight 700. The initial Data variant write appeared in readback but did not emit the exact runtime variant CSS until the `lang-variant` owner was reselected and relinked in Designer; exact rendered-font verification is therefore retained as required evidence for language variants.
+
+The same H1 received the approved component-wide weight correction later on 2026-08-24. Its final class list is `section-head-title + lang-variant + regular`; Designer computed KO as Noto Serif KR at 400 and EN as EB Garamond at 400, both white. The EN font required one exact Designer relink after the ordered class path changed from `bold` to `regular`. Neither variant contains a `font-weight` override. Global `.regular` currently stores the direct value 400 rather than a `Weight/Regular` variable reference. A name-addressed MCP write selected `.section-head-body.regular` instead of the exact global; that test declaration was removed and the combo read back empty. Exact-global variable rebinding remains a separate sitewide cleanup item and is not represented as completed by this component batch.
 
 Four empty combo definitions recorded in the migration register are retained until exact usage and custom-code deletion gates are independently satisfied. Empty declaration blocks are not themselves a rendering defect: the ordered class path can still be required by live elements. No global unused-style broom is authorized. Earlier schema-failure rows in the chronological register are historical evidence and MUST NOT be reused as a current capability conclusion.

@@ -1,6 +1,6 @@
 # Webflow Migration Workflow
 
-contract_version: `2026-08-23.8`
+contract_version: `2026-08-24.1`
 
 Use this workflow for INDA, shared components, sitewide typography, variables, and legacy removal. The class rules themselves live only in [`class-contract.md`](class-contract.md).
 
@@ -112,6 +112,17 @@ body     section-head-body + regular
 ```
 
 Component variants switch only the root color binding. Internal text never receives a `text-*` selector.
+
+### `sub-visual`
+
+```text
+root     sub-visual; color/text/title
+title    section-head-title + lang-variant + regular
+KO       lang-variant font-family Font/Ko
+EN       lang-variant font-family Font/En
+```
+
+The H1 uses the approved component-wide `regular` (400) exception in both languages. KO and EN variants switch only `font-family`; they MUST NOT override `font-weight`.
 
 For each component, verify Base, invert, centered, and right-aligned variants on representative pages before expanding the batch.
 

@@ -1,6 +1,6 @@
 # Webflow Class Contract
 
-contract_version: `2026-08-23.8`
+contract_version: `2026-08-24.1`
 
 This file is the canonical policy for text classes, state classes, and their variable responsibilities.
 
@@ -104,7 +104,7 @@ All sizes below are pixels. The minimum supported text size is 18px. Equal value
 
 ### Title
 
-Uses the existing variables resolving to line-height 121%, letter-spacing -0.02em, and weight `bold` (700).
+Uses the existing variables resolving to line-height 121%, letter-spacing -0.02em, and weight `bold` (700). The only approved component exception is the `sub-visual` H1, which retains the same `head/title` type scale but uses `regular` (400) in both KO and EN.
 
 | Tier | Desktop | Tablet | Mobile Landscape | Mobile Portrait |
 |---|---:|---:|---:|---:|
@@ -217,7 +217,7 @@ Canonical role assignments are mandatory:
 | `eyebrow` | `medium` |
 | `index` | `bold` |
 
-A component variant MUST NOT change a role's weight. A different weight requires a different semantic role or a contract update.
+A component variant MUST NOT change a role's weight. The approved `sub-visual` H1 exception uses `section-head-title + lang-variant + regular` in every language variant; the weight is component-wide, not a variant override. Any other different weight requires a different semantic role or a contract update.
 
 ## 4. Color selectors
 
