@@ -1,6 +1,6 @@
 # Webflow Audit Baseline
 
-contract_version: `2026-08-24.1`
+contract_version: `2026-08-24.2`
 
 observed_through: `2026-08-24 Asia/Seoul`
 
@@ -104,7 +104,7 @@ Exact global-style readback confirms all eight standalone `text-*` selectors use
 | Component | ID | Instances | Observed issue |
 |---|---|---:|---|
 | `section-title` | `9b4fc63d-3bda-d34d-302e-3b45259e7312` | 81 | internal roles use typography and weight only; root owns white Base color and neutral-black invert color |
-| `intro-title` | `43352630-4ca3-722b-7270-ff62ac820a04` | 24 | internal roles use typography/language/weight only; root owns Base/White and invert color polarity |
+| `intro-title` | `43352630-4ca3-722b-7270-ff62ac820a04` | 24 | title uses `section-head-title + lang-variant + regular`; KO/EN font switching retained with common weight 400; root owns Base/White and invert color polarity |
 | `sub-visual` | `06868950-51cf-7bdf-164a-91b8dc366f91` | 24 | H1 uses `section-head-title + lang-variant + regular`; KO/EN rendered fonts and common weight 400 verified; root owns inherited H1 color |
 | `intro-title-v2` | `ea89ac4b-f08d-484c-5e95-a3bed92b8123` | 2 | numeric typography and `text-title-v2` |
 
@@ -148,5 +148,7 @@ On 2026-08-24 the `sub-visual` H1 `fd925077-3255-e041-c767-cf3f0a27f720` was nor
 The same H1 received the approved component-wide weight correction later on 2026-08-24. Its final class list is `section-head-title + lang-variant + regular`; Designer computed KO as Noto Serif KR at 400 and EN as EB Garamond at 400, both white. The EN font required one exact Designer relink after the ordered class path changed from `bold` to `regular`. Neither variant contains a `font-weight` override. Global `.regular` currently stores the direct value 400 rather than a `Weight/Regular` variable reference. A name-addressed MCP write selected `.section-head-body.regular` instead of the exact global; that test declaration was removed and the combo read back empty. Exact-global variable rebinding remains a separate sitewide cleanup item and is not represented as completed by this component batch.
 
 On 2026-08-24 every metadata-reported `banner` instance was normalized to the existing Dark variant. Twenty Light instance values were changed and four existing Dark values were retained. Direct post-write reads of all 24 exact composite element IDs returned Variant `base`; no Light value remained. The component settings resolve `base` to `dark`, and the Base `banner` root retains the white `color/text/title` binding `variable-b90879fd-bc66-1d32-d73c-675a5d8414f2`. Filtered page queries returned intermittent subsets during discovery, so the exact per-instance prop reads—not one filtered-query count—are the authoritative completion evidence. No content, media, CTA, typography, class, variable, deletion, or publication change was included.
+
+The `intro-title` title received the same approved component-wide weight treatment on 2026-08-24. Title element `256cd16c-b9be-dde3-4e33-707fe73999a1` now uses `section-head-title + lang-variant + regular` across all 24 instances. Base, KO White, and KO invert inherit `Font/Ko`; English, English White, and English invert bind `Font/En`. All six variant reads contain no `regular` weight override, and all non-Base `bold` reads are empty, so language and surface variants do not change the component-wide 400 weight. The existing global `regular` selector supplies 400; its exact variable rebinding remains the previously recorded separate sitewide debt. A representative Base Designer snapshot showed the title visible without clipping. No content, root color, layout, deletion, or publication change was included.
 
 Four empty combo definitions recorded in the migration register are retained until exact usage and custom-code deletion gates are independently satisfied. Empty declaration blocks are not themselves a rendering defect: the ordered class path can still be required by live elements. No global unused-style broom is authorized. Earlier schema-failure rows in the chronological register are historical evidence and MUST NOT be reused as a current capability conclusion.

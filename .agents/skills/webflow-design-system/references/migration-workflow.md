@@ -1,6 +1,6 @@
 # Webflow Migration Workflow
 
-contract_version: `2026-08-24.1`
+contract_version: `2026-08-24.2`
 
 Use this workflow for INDA, shared components, sitewide typography, variables, and legacy removal. The class rules themselves live only in [`class-contract.md`](class-contract.md).
 
@@ -95,10 +95,12 @@ Migrate only after the INDA pilot is accepted.
 ```text
 root     intro-title; Base color/text/title; invert color/text/title-invert
 eyebrow  section-head-eyebrow + medium
-title    section-head-title + lang-variant + bold
+title    section-head-title + lang-variant + regular
 subtitle section-head-subtitle + semibold
 body     section-head-body + regular
 ```
+
+The title uses the approved component-wide `regular` (400) exception in every KO and EN variant. Language variants switch only `font-family` and MUST NOT override `font-weight`.
 
 ### `section-title`
 
@@ -128,7 +130,7 @@ For each component, verify Base, invert, centered, and right-aligned variants on
 
 ### `intro-title-v2`
 
-Replace both instances with the existing `intro-title` component. Map `heading-64 + regular + text-title-v2` to `section-head-title + bold`, inheriting color from the component root. The component and `text-title-v2` may move to `zero-use` only after both replacement instances and every variant/custom-code reference are verified.
+Replace both instances with the existing `intro-title` component. Map `heading-64 + regular + text-title-v2` to `section-head-title + lang-variant + regular`, inheriting color from the component root. The component and `text-title-v2` may move to `zero-use` only after both replacement instances and every variant/custom-code reference are verified.
 
 ## 6. Sitewide expansion order
 
