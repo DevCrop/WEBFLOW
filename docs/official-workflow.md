@@ -42,14 +42,44 @@ Before mutation work:
 
 After mutation work:
 
-1. Report every touched site/page/collection/item/element ID that the MCP tools
+1. Treat mutation-tool success as an accepted request, not proof of final state.
+2. Read the same target back through MCP and compare the stored element IDs,
+   `styleNames`, props, variable bindings, variant IDs, and other changed fields
+   against the requested final state.
+3. For responsive style work, read every changed breakpoint (`main`, `medium`,
+   `small`, `tiny`, or any larger breakpoint used) and verify variant/base
+   inheritance separately.
+4. For user-visible Designer changes, inspect the rendered element using an
+   element snapshot or the live Designer DOM and record the relevant computed
+   values such as `font-size`, `font-weight`, `line-height`, display, color, or
+   layout alignment.
+5. Mark the task complete only when mutation success, stored-state read-back,
+   breakpoint/variant read-back, and rendered-state verification all agree.
+   If any check differs, report the exact observed state as incomplete or failed.
+6. Report every touched site/page/collection/item/element ID that the MCP tools
    returned.
-2. Update `docs/webflow-implementation-status.md` for measured state changes.
-3. Update `docs/webflow-design-system.md` and `AGENTS.md` when the change creates a durable rule.
-4. Update the draft-only `/components` catalog when Webflow components, variants,
+7. Update `docs/webflow-implementation-status.md` with measured state, including
+   failed or partial migrations. Never document intended state as measured state.
+8. Update `docs/webflow-design-system.md` and `AGENTS.md` when the change creates a durable rule.
+9. Update the draft-only `/components` catalog when Webflow components, variants,
    properties, or internal component structure change.
-5. Explain how to verify the result in Webflow Designer or CMS.
-6. Run a relevant audit or read-back when the change is user-visible.
+
+### Webflow Completion Gate
+
+Use this gate before saying a Webflow task is complete:
+
+- `Mutation`: the intended write action returned success.
+- `Stored state`: the same element/component/style/variable was queried again and
+  matches the exact requested identifiers and values.
+- `Responsive state`: every changed breakpoint and component variant was queried
+  independently and matches the intended token/value.
+- `Rendered state`: the live Designer DOM or element snapshot shows the expected
+  computed result for user-visible work.
+- `Documentation`: implementation status describes the measured result, not the
+  attempted operation.
+
+Failure of any gate means the task is not complete. UI clicks, keyboard input,
+absence of an exception, and a mutation response alone are never completion evidence.
 
 ## Native First Operating Model
 
