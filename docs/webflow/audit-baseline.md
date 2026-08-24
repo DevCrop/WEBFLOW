@@ -2,7 +2,7 @@
 
 contract_version: `2026-08-24.2`
 
-observed_through: `2026-08-24 Asia/Seoul`
+observed_through: `2026-08-25 Asia/Seoul`
 
 This document records observations, not policy. Counts may change after any Designer edit.
 
@@ -152,3 +152,11 @@ On 2026-08-24 every metadata-reported `banner` instance was normalized to the ex
 The `intro-title` title received the same approved component-wide weight treatment on 2026-08-24. Title element `256cd16c-b9be-dde3-4e33-707fe73999a1` now uses `section-head-title + lang-variant + regular` across all 24 instances. Base, KO White, and KO invert inherit `Font/Ko`; English, English White, and English invert bind `Font/En`. All six variant reads contain no `regular` weight override, and all non-Base `bold` reads are empty, so language and surface variants do not change the component-wide 400 weight. The existing global `regular` selector supplies 400; its exact variable rebinding remains the previously recorded separate sitewide debt. A representative Base Designer snapshot showed the title visible without clipping. No content, root color, layout, deletion, or publication change was included.
 
 Four empty combo definitions recorded in the migration register are retained until exact usage and custom-code deletion gates are independently satisfied. Empty declaration blocks are not themselves a rendering defect: the ordered class path can still be required by live elements. No global unused-style broom is authorized. Earlier schema-failure rows in the chronological register are historical evidence and MUST NOT be reused as a current capability conclusion.
+
+## 2026-08-25 Docusign YouTube pilot
+
+The Docusign page `6a531d0c85ba94997412b0ce` contains three native `YouTubeVideo` elements. Their exact element IDs are `952327b7-3ecd-e86a-f562-b8d0e86c34cc`, `4d316267-016d-2849-c751-4eb61474c36f`, and `f032750f-b131-7ef5-f477-e8526a18f0fa`. Each is nested under a `.youtube-video-wrap`; the existing global wrapper style owns only a 16px radius. The existing `sub-intro__contents` structure was retained.
+
+A page-local HtmlEmbed named `youtube-player-pilot-code` was added as element `2bf0cdde-e4e7-ebfa-6f7e-598625ab23b0`. It does not change shared components, typography selectors, color variables, or other pages. At runtime it discovers YouTube iframes with an observer and bounded retry, replaces the initial iframe with an accessible poster facade, creates the IFrame API player only after activation, and restores the facade after the ended state. Playback defaults to page-scroll mode (`pointer-events: none` on the iframe); `영상 조작` explicitly enables native player input, and the same control switches back to `페이지 스크롤`. The script pauses other registered players, pauses on document hiding or pagehide, and pauses before the explicit external YouTube link opens.
+
+Data verification passed for exact scope, stored code, JavaScript syntax, delayed iframe detection, default scroll mode, explicit input toggle, ended-state restoration, external/tab pause, viewport height cap, and accessibility labels. The connected Designer reloaded the Docusign canvas and selected the exact HtmlEmbed successfully. Interactive Preview verification is still required for mouse wheel, trackpad, arrow keys, settings-menu visibility, native YouTube title/logo tab behavior, and ended-state rendering. The site was not published, and this pilot MUST NOT be rolled out to other pages until those checks pass.
