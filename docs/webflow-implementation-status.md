@@ -360,6 +360,17 @@ footer__social-pill    social icon links
 - `section-title-eyeblow` uses `Body/01/Size` (24px) and `141%` line height. Existing smaller-breakpoint overrides remain unchanged.
 - No publish was performed.
 
+## K-Discovery alternating content candidate
+
+- Page: `K-Discovery` (`6a531cf5199ab832e2a92655`).
+- Preserved the existing comparison content and added a separate three-row candidate `sub-kdisc-rich` (`cd692ea8-c679-01ca-8974-485833af91fb`) after the copied AI-layout grid.
+- The candidate uses the sequence `전문 기술 PM → 기술 플랫폼 → 디스커버리 분야 전문기관` and reuses only K-Discovery copy already present on the page or in the existing qualification section.
+- Existing site assets are connected for AI-assisted review, large-scale data analysis, and INDA DataHandler. All three images include descriptive alt text.
+- Desktop alternates image/text left-right-left. Tablet reduces gaps, and mobile stacks every row image-first in reading order.
+- Designer snapshot confirmed all three images, alternating layout, dark-surface text contrast, and section spacing render on desktop.
+- Existing sections and the user's earlier copied grid remain in place for comparison. No deletion or publish was performed.
+- The site's contaminated combo selectors rejected API reattachment of standalone text color utilities. The candidate currently stores `section-content-title + bold` and `section-content-body + regular`, while visible white text is inherited from the dark parent surface. Normalize the selector layer before treating the candidate as the final production section.
+
 ### 2026-08-24 - `u-no-container` large breakpoint gutter sync
 
 - K-Discovery에서 `sub-visual`과 본문 인트로의 좌측 정렬 차이를 측정했다.
@@ -589,3 +600,66 @@ footer__social-pill    social icon links
 - Final page-level Heading/Paragraph audit found no remaining color-utility omissions outside component instances.
 - Paragraph elements used as short diagram labels retain `text-title-invert` because their semantic content is a label/title rather than body copy.
 - Components, CMS content, DOM structure, variable values, and publish state were not changed.
+
+## eDiscovery compact process layout prototype
+
+- Page: `eDiscovery 란?` (`6a531cf45392c9be635e08bc`).
+- Existing `How eDiscovery Works` block (`946b193e-31aa-b5e7-1a99-828228bff279`) was preserved unchanged.
+- Added a comparison-only section immediately after it: `sub-ediscovery-process-alt` (`e85fe0b6-9538-cf1e-8bf6-2ad1ad76bc40`).
+- The alternative presents four ordered rows with `number | title and description | compact 16:9 static media placeholder`, separated by bottom borders.
+- Responsive layout is 3 columns on desktop, a reduced media column on tablet, and reading-order stacking on mobile. No autoplay video or play/pause control is included.
+- Stored-state read-back confirmed the section root, four list rows, four text bodies, and four accessible media placeholders.
+- Completion gate is not fully passed: the current site stores several typography/color/weight utilities only as contaminated combo paths, so requested new combinations were rejected and some new text nodes retain only their base size class. Element snapshot also returned `status:false`, so rendered visual verification is pending.
+- No existing section, component, CMS content, asset, or publish state was changed.
+## eDiscovery compact process layout final
+
+- Page: `6a531cf45392c9be635e08bc`
+- Final section: `6efd0350-c51b-c8d0-1c9f-123ed8279916` (`sub-ediscovery-process-final`)
+- Original process section remains unchanged.
+- Temporary prototype roots `e85fe0b6-9538-cf1e-8bf6-2ad1ad76bc40` and `e20dc026-7ca2-e355-6037-f0a8f298435d` are absent.
+- Row titles use only `section-content-title`; row descriptions use only `section-content-body`.
+- Existing four source videos and original Korean/English copy are reused. Video controls are omitted.
+- Responsive layout read-back:
+  - Desktop: `64px / flexible text / 320px`, gap `32px`, number `64px`.
+  - Tablet: `56px / flexible text / 220px`, gap `24px`, number `56px`.
+  - Mobile landscape: two-column text flow with media below, number `48px`.
+  - Mobile portrait: `36px / flexible text`, full-width media below, number `48px`.
+- Computed typography inherits the shared content roles at every breakpoint; no `section-micro-*` class remains on the final row copy.
+- Not published.
+## case-card component responsive migration
+
+- Component: `case-card` (`f86a942e-5c0a-cd72-b413-8b437a9cf99c`), 14 instances, variants `Base / Light / White / Brand`.
+- Typography nodes:
+  - H4 uses only `section-micro-title`.
+  - P uses only `section-micro-body`.
+  - Removed `Heading 100` and `Paragraph 27` legacy selectors.
+- Color responsibility:
+  - Title inherits the variant root color variable.
+  - Description is wrapped by `case-card__desc-wrap`; this component-owned wrapper stores the variant color variable and `0.68` body hierarchy opacity.
+  - No `text-title`, `text-body`, or inverse text utility is attached to component text nodes.
+- Responsive root:
+  - Desktop: row, `24px 28px` padding, `32px` gap, `88px` icon.
+  - Tablet: row, `20px 24px` padding, `24px` gap, `88px` icon.
+  - Mobile landscape: column/icon-first, `20px` padding, `20px` gap, `72px` icon.
+  - Mobile portrait: column/icon-first, `16px` padding, `16px` gap, `64px` icon.
+- White variant gap overrides are explicitly synchronized across all breakpoints.
+- Verified on the actual eDiscovery page at the 393px Designer breakpoint: column layout, icon above text, `16px` gap/padding, correct title/body color hierarchy.
+- Not published.
+## Typography global migration audit - in progress
+
+- MCP 2.0 audit found selector and variable-mode pollution beyond simple combo classes.
+- `section-micro-title` is normalized and verified on the eDiscovery page: `26 / 24 / 22 / 20px`, line-height `141%`.
+- `section-micro-body` currently verifies as `17 / 16 / 18 / 17px`; target is `17 / 16 / 15 / 14px`, line-height `161.8%`.
+- Root cause: duplicated selectors (`section-micro-body`, copies, numbered copies, legacy combos) plus Typography variable modes mapped to the wrong breakpoint. Style Manager reports 17 matching selector/use rows and 146 other-page usages.
+- No remaining typography roles are marked complete until variable-mode mappings and duplicate selector paths are normalized, then all target roles are read back at four breakpoints.
+- No publish performed.
+
+## K-Discovery qualification layout V3
+
+- Page: `K-Discovery` (`6a531cf5199ab832e2a92655`).
+- Added the comparison-only section `sub-kdisc-qualification-v3` (`778e9ff9-ff9d-7936-e361-12697ebffb7c`) below the existing qualification section.
+- Preserved the original title and all three description lines verbatim; no label, metadata, or supporting copy was added.
+- Desktop uses a left-aligned text-first grid with a restrained non-text certification/check graphic. Tablet and mobile rules reduce spacing and stack the graphic above the text without changing reading content.
+- The failed V2 comparison section (`62a9ed55-da07-82f8-acd0-53f55244dff6`) was removed.
+- Stored-state selection read-back passed. The Designer element snapshot request timed out, so final rendered visual verification remains pending and the section is not marked visually complete.
+- No publish was performed.
