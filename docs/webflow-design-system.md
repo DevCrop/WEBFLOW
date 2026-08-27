@@ -728,3 +728,18 @@ Publish는 별도 승인 전까지 하지 않는다. Designer 정리는 draft �
 - `data-banner-slot`
 
 버튼, 카드, 배너처럼 variant가 있는 컴포넌트는 base 인스턴스만 두지 말고 대표 variant를 모두 렌더한다.
+
+## Board detail back action
+
+- Board detail templates use the master `button` component with the `board-back` variant for back-to-list actions on dark surfaces.
+- `board-back` is an outline-white pill with a leading back arrow, `56px` desktop height, `52px` mobile height, and token-based white/inverse hover colors.
+- The back arrow stays before the label, points left, and uses difference blending so it remains visible when the button surface changes from dark to white on hover.
+- The canonical internal structure is `button > button-inner > button-label + button-icon`. Do not attach typography utilities or legacy classes to `button-inner`.
+- Do not create Release Notes, Newsroom, or Insights-specific back-button selectors. When those templates expose a back action, set only the shared component props for label, link, and icon visibility.
+
+## Banner language variants
+
+- The shared `banner` component provides `en`, `ko`, `en-invert`, and `ko-invert` variants.
+- `en` uses the existing `font/en` variable and `ko` uses `font/ko`; the font family is set once on the `banner` root so title, description, and nested CTA typography inherit consistently.
+- `en-invert` and `ko-invert` use `Color/Base/White`, `color/text/title-invert`, and `color/text/body-invert` variables in addition to their language font variable.
+- Language variants do not alter spacing, typography scale, media, CTA content, or responsive layout.

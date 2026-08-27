@@ -131,7 +131,8 @@ Button:
 
 - Use a single `button` component and extend it with variants. Do not create separate components for each visual variant.
 - Structure: `button > button-inner > button-label / button-icon`.
-- Variants: `fill-brand`, `outline-brand`, `fill-white`, `outline-white`, `fill-black`, `outline-black`, `size-xs`, `size-sm`, `size-md`, `size-lg`, `icon-none`, `icon-front`, `icon-end`.
+- Variants: `fill-brand`, `outline-brand`, `fill-white`, `outline-white`, `fill-black`, `outline-black`, `size-xs`, `size-sm`, `size-md`, `size-lg`, `icon-none`, `icon-front`, `icon-end`, `board-back`.
+- Board detail templates use the shared `board-back` variant for back-to-list actions on dark surfaces. Do not create page-specific back-button selectors.
 - Class order: `button is-brand is-fill`, `button is-white is-outline`, plus size/icon modifiers as needed.
 
 Card:
@@ -144,7 +145,8 @@ Card:
 Banner:
 
 - Use a single `banner` component and extend it with variants.
-- Banner variants include `default-banner`.
+- Banner variants include `default-banner`, `en`, `ko`, `en-invert`, and `ko-invert`.
+- `en`/`ko` change only the inherited font-family variable. `en-invert`/`ko-invert` also use the white surface, title-invert, and body-invert color variables.
 - Banner internal classes are `banner-inner`, `banner-body`, `banner-title`, `banner-desc`, and `banner-actions`.
 - CTA is not a banner variant. Use shared `main-cta` / `sub-cta` sections instead.
 

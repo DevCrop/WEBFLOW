@@ -360,6 +360,115 @@ footer__social-pill    social icon links
 - `section-title-eyeblow` uses `Body/01/Size` (24px) and `141%` line height. Existing smaller-breakpoint overrides remain unchanged.
 - No publish was performed.
 
+### Native monochrome pagination migration
+
+- Migrated the Release Notes pagination surface from runtime-injected CSS to native Webflow styles.
+- Added global styles `release-pagination-control`, `release-pagination-current`, and `release-pagination-disabled`.
+- `release-pagination-control` uses the existing `color/base/black` and `color/base/white` variables, a centered flex layout, a 1px white border, and a true circular radius.
+- Controls are `44px x 44px` at main/tablet/mobile-landscape inheritance and `40px x 40px` at the tiny breakpoint.
+- The current-page state uses a white surface with black text; unavailable arrows use `0.3` opacity and disabled pointer events.
+- Previous and next arrow elements were read back with the exact final `styleNames` value `["release-pagination-control"]`.
+- Registered and applied `release_notes_filter_pagination` version `1.0.4`; dynamically generated page numbers receive the native control/current classes and boundary arrows receive the native disabled class.
+- Removed `release_notes_pagination_monochrome_theme` from the site's applied scripts, so runtime CSS no longer owns the visual treatment.
+- Final site-script read-back confirmed `release_notes_filter_pagination` version `1.0.4` is applied and the monochrome theme script is absent.
+- Webflow element snapshot still returned `status:false`, so visual snapshot verification remains pending; stored styles, element classes, and applied scripts passed MCP read-back.
+- No publish was performed.
+
+### Pagination navigation correction
+
+- Corrected the Release Notes pagination controls that could fall through to their anchor navigation and move the viewport instead of changing pages.
+- Removed `href` from the stored previous and next Link elements while retaining `role="button"`, their accessible labels, data attributes, and `release-pagination-control` style.
+- Registered and applied `release_notes_filter_pagination` version `1.0.5`.
+- Dynamic page numbers are now generated as `button type="button"` elements rather than anchors.
+- Previous and next controls now clamp requested pages to the valid range, prevent default navigation, stop click propagation, update item visibility, and re-render current/disabled states.
+- Enter and Space keyboard activation is supported on the stored previous and next controls.
+- MCP read-back confirmed both controls have no `href` and the site applies version `1.0.5`.
+- No publish was performed.
+
+### Pagination global-controller isolation
+
+- Preview mode still scrolled upward after the anchor correction because the Release Notes DOM retained the global `cms-pagination*` selectors used by `id_cms_pagination`.
+- Added native `release-pagination` and `release-pagination-numbers` layout styles.
+- Replaced the pagination root and numbers wrapper style lists with the exact values `["release-pagination"]` and `["release-pagination-numbers"]`.
+- Registered and applied `release_notes_filter_pagination` version `1.0.6`.
+- Dynamic page buttons now use only `release-pagination-control` and `release-pagination-current`; no `cms-pagination*` classes or anchor targets remain.
+- Pagination clicks are handled in the capture phase, cancel default behavior, and stop competing global listeners before changing the page state.
+- MCP read-back confirmed the isolated root/wrapper class lists and the applied `1.0.6` script.
+- The initial combined style creation returned HTTP 504 and was not treated as success; both styles were subsequently created in separate calls and confirmed by successful element assignment/read-back.
+- No publish was performed.
+
+### Pagination item-visibility root cause correction
+
+- Confirmed from `id_ui_controller` version `1.1.57` that Release Notes filtering writes both `item.hidden` and inline `item.style.display`.
+- The pagination implementation only wrote the HTML `hidden` state. The Webflow item selector's authored `display` value could override that state, leaving all filtered items visible and making page clicks appear ineffective.
+- Added the native `release-page-hidden` style with `display:none` as the pagination-only visibility state.
+- Registered and applied `release_notes_filter_pagination` version `1.0.7`.
+- Filtering remains owned by `id_ui_controller`; pagination now removes/applies only `release-page-hidden` after reading the filter's `hidden` and inline display results.
+- Page size remains eight items. The earlier excessive visible count was caused by the overridden `hidden` state, not by the page-size calculation.
+- Site-script read-back confirmed version `1.0.7` is applied.
+- No publish was performed.
+
+### Pagination result-position scrolling
+
+- Registered and applied `release_notes_filter_pagination` version `1.0.8`.
+- After a successful page-number, previous, or next change, the viewport now scrolls to the Release Notes result-list start with a 96px header offset.
+- Scroll behavior is smooth by default and switches to immediate movement when `prefers-reduced-motion: reduce` is active.
+- Invalid, disabled, or already-current page requests do not trigger scrolling.
+- Site-script read-back confirmed version `1.0.8` is applied.
+- No publish was performed.
+
+### Pagination spacing refinement
+
+- Updated native `release-pagination` spacing to separate the controls from the final result row.
+- Main/tablet/mobile-landscape inherit `margin-top: 48px`; mobile portrait overrides it to `32px`.
+- Webflow style mutation read-back confirmed both breakpoint values.
+- No publish was performed.
+
+### Shared pagination visual component migration
+
+- Audited Release Notes, Newsroom, and Insights pagination structures. Newsroom uses stored page links, Insights uses Webflow Native Pagination, and Release Notes uses filter-aware client pagination; forcing one shared DOM/component instance would break one or more behavior models.
+- Unified the visual component layer while preserving each page's native/owned behavior.
+- Added shared selectors: `pagination-control` (dark/default/current-on-light), `pagination-on-light` (inactive controls on light surfaces), `pagination-numbers`, `pagination-current-dark`, and `pagination-disabled`.
+- Shared control size is `44px x 44px` on main/tablet/mobile landscape and `40px x 40px` on mobile portrait, with true circular radius and centered content.
+- Root and number gaps are `12px` on main and `8px` on mobile portrait. Existing `cms-pagination` and `cms-pagination__numbers` were updated to the same gap scale.
+- Release Notes uses the shared dark control and numbers layer; Newsroom and Insights use the shared light treatment while preserving href and Webflow Native Pagination behavior.
+- Registered and applied `release_notes_filter_pagination` version `1.0.9` so runtime-created controls use the shared visual classes.
+- Exact element styleNames were read back successfully on all three pages.
+- Removed unused migration selectors: `release-pagination-control`, `release-pagination-current`, `release-pagination-disabled`, `release-pagination-numbers`, `pagination-on-dark`, and `pagination-current-light`.
+- The first five-style cleanup request returned HTTP 504 and was not treated as success; cleanup was repeated in batches of two or fewer and each removal returned success.
+- No publish was performed.
+
+### Release detail empty-media spacing correction
+
+- Release Notes template: `6a51b6b07ac4cedebadca69b`; media wrapper: `ea27c0d5-6911-bc92-17cc-72199be583b5`.
+- Confirmed the image binds to the Release Notes `Cover` field while the figure wrapper remains structurally present.
+- Existing `id_ui_controller` version `1.1.57` already sets the media wrapper's `hidden` state when no image source exists.
+- The root cause was authored `display:block` on `sub-release-detail__media`, which overrode the browser's `[hidden] { display:none }` behavior and left the wrapper's `48px` top margin in layout.
+- Removed only the authored `display` property. Preserved `margin-top:48px` for entries that actually have a Cover image.
+- Normalized figure margins to `margin-left/right/bottom:0`; retained width, overflow, and radius.
+- A temporary fallback script/style was created during diagnosis, then removed after the cleaner existing-controller fix was confirmed. No extra runtime layer remains.
+- Style mutation read-back confirmed `sub-release-detail__media` no longer contains `display`.
+- No publish was performed.
+
+## Reveal awards typography migration
+
+- Page: `Reveal` (`6a531d2b86942d09a53222e1`), grid `sub-reveal-awards__grid` (`f2fc078d-7e44-22cc-2b66-f28f91fa4d36`).
+- Replaced both legacy award H3 elements with canonical `section-micro-title` headings while preserving their text and heading level.
+- Removed `sub-reveal-awards__highlight`, `section-micro-title--legacy-16`, and the auto-generated text wrapper classes from the active nodes.
+- Replaced both `Div Block 122` wrappers with `sub-reveal-awards__body` (`7364a558-a676-5cc0-155f-2a8cb33978e9`).
+- The body subroot owns flex centering, centered text alignment, and the existing `text-title-invert` color variable so both headings inherit the required light-surface title color without a contaminated combo selector.
+- Stored-state read-back confirmed both wrappers use only `sub-reveal-awards__body` and both H3 nodes use only `section-micro-title`.
+- Designer Bridge disconnected before the final element snapshot, so visual snapshot verification remains pending.
+- No publish was performed.
+
+## `section-content-title` line-height adjustment
+
+- Updated the bound Percentage variable `type/section/content/title/line-height` (`variable-1ed9a77f-ceab-fcbb-bdde-c7ecfd0a0f92`) from `121%` to `141%`.
+- Updated all four explicit Typography collection modes: Base, Tablet, Mobile L, and Mobile.
+- Preserved global selector `section-content-title` (`04d6c5c9-d6a4-5eef-5992-b97b817859bb`) and its existing variable binding, responsive font-size variable, `700` weight, letter-spacing variable, and spacing reset.
+- Variable read-back returned Base/Tablet/Mobile L/Mobile = `141/141/141/141`.
+- No publish was performed.
+
 ## K-Discovery alternating content candidate
 
 - Page: `K-Discovery` (`6a531cf5199ab832e2a92655`).
@@ -662,4 +771,254 @@ footer__social-pill    social icon links
 - Desktop uses a left-aligned text-first grid with a restrained non-text certification/check graphic. Tablet and mobile rules reduce spacing and stack the graphic above the text without changing reading content.
 - The failed V2 comparison section (`62a9ed55-da07-82f8-acd0-53f55244dff6`) was removed.
 - Stored-state selection read-back passed. The Designer element snapshot request timed out, so final rendered visual verification remains pending and the section is not marked visually complete.
+- No publish was performed.
+## Release Notes `All content` filter
+
+- Page: `Release Notes` (`6a48b6c27b53afca3f2c8f38`).
+- Added `All content` as the first option in the `Content Type` group.
+- Element: `3a0a9da4-a951-cba1-4d19-252700f4b4f9`, native `button`, class `sub-release-board__filter-option`, attribute `data-release-category-all`, initial `aria-pressed="true"`.
+- Registered `Release Notes All Content Filter` (`release_notes_all_content_filter`, version `1.0.0`) and applied it to the site footer. The script exits immediately unless `[data-release-board]` exists, so behavior is isolated to Release Notes.
+- Clicking `All content` clears only active `data-release-category` filters through the existing `ID UI Controller`; search, Solution, and sort state are preserved.
+- The active state stays synchronized after category changes and the global Reset action.
+- Stored element state and applied script version passed MCP read-back.
+- Visual verification remains pending: Webflow element snapshot returned `status:false`, and the local in-app browser runtime failed to initialize. Do not describe rendered-state verification as complete until one of those surfaces succeeds.
+- No publish was performed.
+
+### Duplicate residue cleanup
+
+- Removed the unstyled duplicate `All content` Link (`9bf94ebc-d9e9-d348-930f-88b724479cd2`) left by the initial builder validation failure.
+- Post-cleanup read-back confirms the duplicate ID is absent.
+- The `Content Type` wrapper now contains exactly one `All content` button followed by `New Feature`, `Update`, and `Bug Fix`.
+- The retained button is `3a0a9da4-a951-cba1-4d19-252700f4b4f9` with only `sub-release-board__filter-option` plus the intended data and ARIA attributes.
+- No publish was performed.
+
+## Release Notes filtered pagination
+
+- Page: `Release Notes` (`6a48b6c27b53afca3f2c8f38`).
+- Added pagination root `ff18d906-6d34-7617-3408-3456db6b8de0` after the existing results and empty-state area.
+- Reused only the existing global pagination classes: `cms-pagination`, `cms-pagination__arrow`, `cms-pagination__numbers`, with runtime-created `cms-pagination__number` and `cms-pagination__dot` nodes.
+- Added accessible previous/next labels, `aria-current` for the active page, and disabled-state `aria-disabled` / keyboard removal at the range boundaries.
+- Registered and applied `Release Notes Filter Pagination` (`release_notes_filter_pagination`, version `1.0.0`) after the existing UI and All Content scripts.
+
+### Release Notes attachment visibility and download UI
+
+- Release Notes list page `6a48b6c27b53afca3f2c8f38` groups the clip and date inside `sub-release-board__row-meta-end` (`2e91582d-f446-02fb-dcc2-b51ade1193cd`). This right-side group uses flex, center alignment, `space-between`, responsive minimum width, and `margin-left: auto`; the left solution/category metadata and original row arrow remain independent. The clip is a low-emphasis 18px indicator across desktop/tablet/mobile. Responsive attachment normalization remains in hook `2b08a76a-cae9-bf20-cae6-b90a63595b56`. The filename span `0bf422fb-89e1-cb3d-84cc-ad924c19eeac` remains hidden while attachment detection and accessible filename metadata are preserved.
+- User-created `Div Block 189` (`e27fbb15-d12e-ec6d-f7fa-5247ad87ba91`) was migrated to `sub-release-board__row-content` (`1649046e-0bd3-4aa9-5a63-e347abe5a555`). The new wrapper contains only `sub-release-board__row-main` and `sub-release-board__row-arrow` and uses responsive flex, full width, center alignment, and `space-between`. Read-back confirmed the legacy block no longer exists.
+- User-created `Div Block 188` (`4f9b9303-59f3-6f12-04e0-d5a171d1176b`) was migrated to `sub-release-board__row-layout` (`52422703-a799-fe9c-4fb9-428dc13cd12b`). It contains `sub-release-board__row-meta` and `sub-release-board__row-content`, uses full-width column flex, and applies responsive gaps of 20px / 18px / 16px / 14px from main through tiny. Read-back confirmed the legacy block no longer exists.
+- The list enhancement embed is `5abd722e-ac09-fed5-0a10-0a5edccd0244`; its scoped responsive style embed is `5fc8ee74-e320-f886-6a09-0273b77acf16`.
+- Direct CMS attribute binding writes were unavailable through the current MCP permission surface. The isolated list embed therefore reads each row's existing same-origin detail URL, confirms `.sub-release-detail__attachment a[href]`, and reveals the indicator only when a real attachment exists. This avoids false attachment badges and leaves filtering, pagination, and row navigation unchanged.
+- Release Notes detail template `6a51b6b07ac4cedebadca69b` keeps its native `Attachment` file binding on link `eaa29298-b8cc-e054-4a40-e5ba32749261`. Read-back confirmed collection `6a51b6af7ac4cedebadca695`, field `7fce940d4e2f7c8577d87bc4f0a2d237`.
+- Detail enhancement embed `f62afcb1-5dc1-b31d-3d16-734d696fb346` exposes the cleaned filename, preserves the direct file URL, adds the download filename/accessible label, and scopes the refreshed download-card styling to `.sub-release-detail__attachment`.
+- Designer DOM read-back confirmed all three new elements and the original CMS file binding. Element snapshot/browser runtime verification was unavailable due a local browser runtime error, so interactive click verification remains required in Designer Preview after publishing.
+- No publish was performed.
+- Client-side page size is 8. Pagination is hidden automatically when the filtered result count is 8 or fewer.
+- Search, Solution, Content Type, Reset, and sort changes reset only the page index to 1; their active filter state remains managed by `ID UI Controller` and is preserved during pagination navigation.
+- Pagination uses the filtered and sorted DOM order, so it does not enable native CMS pagination or restrict filtering to one server page.
+- Stored DOM structure, exact style names, script source, version, and site-footer application passed MCP read-back.
+- Visual verification remains pending because Webflow element snapshot returned `status:false`.
+- No publish was performed.
+
+### Invert color and interaction verification
+
+- Registered and applied `release_notes_filter_pagination` version `1.0.1`.
+- Pagination numbers and arrows now use the existing CSS variable `--color--text--title-invert`; the global light-surface `cms-pagination` styles were not changed.
+- Boundary arrows retain the invert color and use opacity `0.35`, `aria-disabled`, and `tabindex=-1` when unavailable.
+- Chromium interaction verification passed with the registered `1.0.1` source and a matching Release Notes DOM:
+  - Initial page: items 1-8 visible, page 1 active.
+  - Clicking page 2: items 9-14 visible, page 2 active.
+  - Clicking a filter from page 2: filtered items remain selected, page resets to 1, and pagination hides when results fit on one page.
+  - Both page-number and arrow runtime colors resolved from `var(--color--text--title-invert)`.
+- The Codex in-app browser bridge still fails to initialize because its local kernel-assets path is missing, so the interaction verification used bundled headless Chromium rather than the live Designer canvas.
+- No publish was performed.
+
+### Pagination control surface contrast correction
+
+- Corrected the previous text-only contrast treatment by registering and applying `release_notes_filter_pagination` version `1.0.2`.
+- Page-number and previous/next controls now use `--color--base--white` for their background and `--color--brand--primary` for numbers/arrows.
+- The active page uses full opacity, inactive page numbers use `0.65`, and unavailable boundary arrows use `0.35` while retaining their white control surface.
+- Global `cms-pagination` styles remain unchanged; this treatment is isolated to the Release Notes runtime instance.
+- Bundled Chromium verification passed against the registered `1.0.2` hosted script: 1-8 → page 2 shows 9-14 → filter selection preserves its active state, resets to page 1, and hides pagination for three results.
+- Runtime style inspection confirmed both numbers and arrows receive the white-background and brand-foreground variables.
+- No publish was performed.
+
+### Monochrome circular pagination refinement
+
+- Replaced the all-white inline treatment with separated behavior and theme layers.
+- `release_notes_filter_pagination` is now version `1.0.3`; it owns pagination/filter behavior only and no longer writes colors or backgrounds inline.
+- Added `Release Notes Pagination Monochrome Theme` (`release_notes_pagination_monochrome_theme`, version `1.0.0`), scoped by `[data-release-pagination]`.
+- Desktop/tablet controls are true `44px × 44px` circles; mobile portrait controls are `40px × 40px` circles.
+- Default numbers/arrows use a 10% white surface, white foreground, and an 18% white border.
+- The current page uses a white surface, black foreground, white border, and restrained black shadow.
+- Hover uses an 18% white surface and a 1px upward translation; unavailable arrows use `0.3` opacity and no pointer events.
+- The legacy pagination dot is hidden in this circular variant.
+- Hosted-script Chromium verification passed: computed active state `44px / 44px / 50% / white background / black text`, inactive state `44px / 44px / 50% / 10% white background / white text`, and page 1 → page 2 changed visible items from 1-8 to 9-14.
+- Existing global `cms-pagination*` classes and other pages remain unchanged.
+- No publish was performed.
+
+## Shared sub-nav container normalization (2026-08-27)
+
+- Shared `sub-nav` component `56e6d2de-a523-db49-3246-0756fda56119` now uses plain Block `930179bc-bbef-6b83-7c45-da082117cdc0` with exact styles `no-container sub-nav-swiper`.
+- The existing `sub-nav-inner sub-nav-swiper__wrapper` subtree and all navigation links were moved without content changes.
+- Legacy BlockContainer `56e6d2de-a523-db49-3246-0756fda5611a` and its `product-tabs__container*` selector combination were removed.
+- MCP read-back confirmed the new wrapper once and the legacy wrapper zero times. A Release Notes component-instance snapshot confirmed the rendered navigation remains visible and centered within the standardized width.
+- This is a shared component change, so all existing `sub-nav` instances inherit the normalized container. No production publish was performed.
+
+## Release Notes mobile filter UI audit (2026-08-27)
+
+- Audited the deployed mobile filter behavior and current Designer DOM for the Release Notes page.
+- The existing transition remains unchanged: the overlay uses a short `300ms` fade and the panel uses a `320ms` scale/fade easing. The controller also handles `prefers-reduced-motion`, Escape close, backdrop close, body scroll lock, focus transfer to the close button, and focus return to the trigger.
+- Updated global selector `sub-release-board__filter-close` at the `small` breakpoint from `40px` to `44px` for both width and height. `tiny` inherits the same value without a duplicate override.
+- Element read-back confirmed exact role classes and accessibility wiring: trigger `sub-release-board__mobile-filter-button`, panel `sub-release-board__filters`, and close control `ui-modal-close sub-release-board__filter-close`; `aria-controls` matches panel id `release-mobile-filters`.
+- No new selector was created. The two close-button classes are intentional: shared modal-close behavior plus the Release Notes scoped visual override. No selector removal was necessary.
+- The style update response confirmed the stored `small` values. A separate targeted style-search read is unavailable on the current connector permission surface, so no production publish was performed.
+
+## Release Notes mobile filter vertical alignment (2026-08-27)
+
+- Root cause: the compact, collapsed filter form used `align-self: center` inside a `100dvh` overlay, creating a large inactive-looking area beneath the card.
+- Updated global `sub-release-board__filter-form` at `small` to `align-self: flex-start` and `transform-origin: 50% 0%`.
+- `tiny` inherits the `small` values; no duplicate selector or breakpoint override was added.
+- Existing overlay dimensions, safe-area-aware maximum height, internal scrolling, filter behavior, and `300-320ms` reduced-motion-aware transitions remain unchanged.
+- MCP style response confirmed the stored values and an element snapshot confirmed the filter content now begins at the top without the previous centered-card gap. No production publish was performed.
+
+## Release Notes mobile filter header alignment (2026-08-27)
+
+- Root cause: `Filters`, `Reset`, and the close control were distributed by a flex `space-between` row, making `Reset` appear detached in the middle.
+- Updated global `sub-release-board__filters-head` at `small` to `display: grid`, `grid-template-columns: 1fr auto auto`, `column-gap: 12px`, and centered cross-axis alignment.
+- The title remains left-aligned while `Reset` and the close control form a compact right-side action area. `tiny` inherits the same layout without a duplicate override.
+- No wrapper or selector was added, and desktop behavior remains inherited from the existing base flex layout. No production publish was performed.
+
+## Shared board detail back button migration (2026-08-27)
+
+- Added `board-back` variant `7baae161-5727-0cd5-f290-6d6d26fc8ec7` to master `button` component `665c98a3-189c-44a3-bc1d-420ae20e224c` by duplicating the existing token-based `outline-white` variant.
+- Main: `56px` minimum height, `24px` horizontal padding, `18px` text, leading icon with `12px` gap. Small: `52px` minimum height, `20px` horizontal padding, `16px` text. Tiny inherits small without another override.
+- Existing outline-white hover behavior is preserved: white surface and inverse text, with no transform lift. The default arrow asset is rotated for the back direction.
+- Removed `section-content-body--legacy-18` from shared `button-inner`; replaced automatic `Text Block 6` with canonical global `button-label`. Final component classes read back as `button > button-inner > button-label + button-icon`.
+- Release Notes Template instance `c97d513d-4db1-05c9-3cf1-e59edd0168ab` now uses `board-back`, label `목록으로 돌아가기`, link `/release-notes`, and `showIcon: true`.
+- Newsroom and Insights templates currently contain no back-to-list control, so no new action was inserted. Future back actions must reuse `board-back`.
+- Added representative `board-back` instance `df15e488-4e75-96b9-7427-60f5d2dc2910` to the draft Components page shared UI area and verified its props.
+- MCP read-back confirmed component classes, variant main/small/hover styles, and both instance prop sets. A Designer snapshot confirmed the Release Notes button renders as an outlined pill with a leading back arrow. No production publish was performed.
+
+## Release detail button contrast correction (2026-08-27)
+
+- Corrected `board-back` icon layout from `row-reverse` to `row` while retaining icon `order: -1`, so the left-pointing arrow now appears before the label.
+- Added `mix-blend-mode: difference` to the `board-back` icon. The white source asset remains visible on the dark default surface and becomes dark against the white hover surface without a second asset or a page-specific hover selector.
+- Updated existing global `sub-release-detail__attachment-label` to use `color/base/white`, inherited button font size, and `1.4` line height. Its existing `600` weight remains unchanged.
+- No new selector was created. The attempted canonical class replacement was rejected because the template page did not resolve the newly created styles; the element therefore safely retained its single scoped class and only that existing selector's values were updated.
+- Variant read-back confirmed `row`, `order: -1`, `rotate(180deg)`, and difference blending. Element read-back confirmed the PDF label's exact class. Designer snapshots confirmed the back arrow is leading and the PDF label is visibly white. No production publish was performed.
+
+## Banner language and invert variants (2026-08-27)
+
+- Added `en` (`eaa38fbe-596c-f4f1-a7ac-4f522952d01e`) and `ko` (`32ecc78c-b5ba-6d6b-7e47-59bae9d14e63`) to banner component `dd757598-1c8a-df83-fe4e-f8deec6f96f6` by duplicating the existing dark base.
+- Added `en-invert` (`de9a1736-2856-e0e3-410a-eb9b9887a8ae`) and `ko-invert` (`8d9c1c12-e8a3-9c10-c70e-5c9233993368`) by duplicating the existing light variant.
+- Root font-family values resolved through existing variables: `en` to `variable-ad9aed0c-874f-af62-a7ff-0c57090bb8e1` and `ko` to `variable-594caf2b-9394-0f5f-2379-2c30cab5c727`.
+- Invert variants use `Color/Base/White` for the surface, `color/text/title-invert` for title/root color, and `color/text/body-invert` for the description. No hard-coded font or color value was introduced.
+- Added four representative banner instances to the draft Components page shared UI area and set each corresponding variant with language-specific sample text.
+- MCP read-back confirmed the six-variant list, all font/color variable bindings, and all four catalog prop sets. Designer snapshots confirmed the normal English dark state and the Korean white-surface invert state. No production publish was performed.
+
+## Sub-visual sentence punctuation normalization (2026-08-27)
+
+- Audited all current shared `sub-visual` description props and limited punctuation changes to complete sentence-form copy; noun-form product taglines remain unchanged.
+- Insights CMS Template description now reads `전문가가 분석한 최신 업계 동향과 인사이트를 확인하세요.`
+- Newsroom CMS Template description now reads `Intellectual Data의 주요 소식과 보도자료를 확인하세요.`
+- No component structure, styles, variants, visibility settings, or other prop values were changed.
+- MCP prop read-back and Designer snapshots confirmed both final rendered values. No production publish was performed.
+
+## Insights optional author display (2026-08-27)
+
+- Audited all 78 Insights CMS items: every existing item uses `인텔렉추얼데이터` in the optional Author field and no item had an empty author value.
+- Added optional Switch field `Show Author` (`show-author`, field ID `b6a13cb7d562003be1160810b37b12d9`) with help text for external-contributor use.
+- Placed `Show Author` immediately after Author in the existing `콘텐츠` collection field group.
+- Bound the featured-card author (`a1446c28-f183-8eaa-a6e9-82064ab3822d`) and separator (`ab3e1857-2178-1abd-14a2-0e0e4d616982`) visibility to `Show Author`.
+- Bound the archive-card author (`d40832a1-da33-8b70-7815-65396c5803c1`) and separator (`d40832a1-da33-8b70-7815-65396c5803c2`) visibility to the same field.
+- Featured and archive date elements remain statically visible. Existing Author values were preserved; no bulk CMS content rewrite was performed.
+- Designer snapshot confirmed current internal posts render with date only and no dangling separator in both featured and archive layouts. Future external-author posts display author metadata by entering Author and enabling `Show Author`.
+- No custom code, new selector, component change, or production publish was performed.
+## Insights external author test item (2026-08-27)
+
+- Updated one Featured Insights CMS item for optional-author display testing.
+- Item ID: `6a605a01bc0e3a4218fd7cc6`
+- Item title: `AI와의 대화, 미국 법원에서 eDiscovery 증거가 될까? Heppner, Warner 사건 판례`
+- `author`: `외부 필진 테스트`
+- `show-author`: `true`
+- CMS read-back confirmed both staged values and preserved the existing published timestamp.
+- No site or CMS publish was performed; the change remains staged in Webflow.
+- Designer selection read-back succeeded, but element snapshots for the dynamic Featured Collection Item and its footer returned an empty Webflow response. Visual rendering remains unverified and must not be reported as complete until a Designer DOM snapshot succeeds.
+## Insights page typography and color migration (2026-08-27)
+
+- Scope: static `Insights` page `6a531d42d02345c985f7df52`; reusable component instances were excluded.
+- Language selectors were intentionally not added or changed because language handling already exists separately.
+- Dark Featured region migrated to `section-head-*`, `section-content-*`, and `section-micro-*` typography with `text-title`, `text-body`, and `text-desc` colors.
+- Light All Posts region migrated to the corresponding `*-invert` color utilities.
+- Featured card title uses `section-content-title + text-title`, preserving the former 30px hierarchy with the nearest canonical 28px tier. Weight remains 700 from the current canonical base selector because the missing three-class combo could not be selected by name.
+- Archive card body and metadata were migrated to `section-micro-body regular text-body-invert` and `section-micro-eyebrow medium text-desc-invert`.
+- `ins-badge` remains as its dedicated pill selector so its padding, radius, background, and existing variable-bound color are preserved.
+- Residual: archive card title element `d40832a1-da33-8b70-7815-65396c5803be` still uses `sub-insights__card-title + section-micro-title--legacy-02`. The canonical `section-micro-title` name has duplicate/ambiguous definitions and MCP rejected both `section-micro-title + bold` and the standalone name. It was not forced to `section-content-title` because that would increase the title from 24px to 28px and alter the existing card hierarchy.
+- Read-back confirmed every successful target's exact final `styleNames`; a full Designer section snapshot confirmed dark/light contrast and layout remained visually stable.
+- No publish was performed.
+
+## Newsroom page typography and color migration (2026-08-27)
+
+- Scope: static text elements on the Newsroom page (`6a531d435392c9be635e4a8a`). Shared components were excluded.
+- Existing language handling was preserved; no `lang-*` class was added or changed.
+- Top introduction: `section-head-title bold text-title`, `section-head-body regular text-body`.
+- Featured area: `section-content-title text-title`, card title `section-micro-title text-title`, body `section-micro-body regular text-body`.
+- General list area: `section-content-title text-title-invert`, body `section-micro-body regular text-body-invert`.
+- Metadata wrappers retain only `sub-news-list__meta`; metadata text uses `section-micro-eyebrow medium` with `text-desc` or `text-desc-invert` according to its surface.
+- Removed target-element legacy selectors including `news-title`, `news-summary`, `Heading 93`, `Paragraph 22`, and `section-micro-body--legacy-*`.
+- Webflow Data API read-back confirmed the exact final `styleNames` on all 13 migrated elements.
+- Designer visual snapshot remains unverified because the Webflow Designer MCP app was disconnected at verification time.
+- Publish was not performed.
+
+## Careers page typography migration audit (2026-08-27)
+
+- Page: Careers (`6a531d43f6d47994d2a339ae`, `/board/Careers`).
+- Component instances were excluded from page-level edits: header, sub-visual media, CTA button, breadcrumb, sub-nav, intro-title, section-title, icon-card, slider-arrow, banner, and footer.
+- Surface audit: Hero, employee voice, and jobs areas are dark; the application modal uses the light `ui-modal-surface` panel.
+- Safely migrated the three CMS job metadata paragraphs from `section-micro-body Copy Copy` to `section-micro-body regular text-body-invert`.
+- Hero body was read back unchanged as `section-head-body regular text-body-invert`.
+- A clean multi-utility pilot (`section-micro-title semibold text-title-invert`) was rejected because Webflow requires an existing exact combo selector path. The pilot job title was restored to `section-icro-title` immediately and read back successfully.
+- Remaining page-level legacy targets are not marked complete: `section-icro-title`, `sub-careers-voice__mark Copy`, `section-micro-title--legacy-11`, `section-content-body--legacy-07`, and modal text selectors.
+- `data_style_tool get_styles` confirmed clean global selectors exist, but style creation/write access is unavailable in the current MCP tool schema; required empty combo paths could not be created safely.
+- Designer snapshot confirmed no visible regression in the jobs section after the safe partial cleanup.
+- No component variants, CMS bindings/content, layout structure, or publish state were changed.
+## Careers static typography cleanup (2026-08-27)
+
+- Page: Careers (`6a531d43f6d47994d2a339ae`).
+- Shared component instances and component variants were excluded from this page-level migration.
+- Migrated the misspelled `section-icro-title` job title to the current role-based title utility.
+- Normalized `sub-careers-voice__mark Copy` to `sub-careers-voice__mark`.
+- Removed `section-micro-title--legacy-11` and `section-content-body--legacy-07` from the employee voice copy.
+- Replaced application modal typography-only selectors with existing role utilities:
+  - modal title: `section-content-title text-title`
+  - questions: `section-micro-title text-title`
+  - emphasized answers and labels: `section-micro-body text-title`
+  - normal answers: `section-content-body regular text-body`
+  - list items: `section-micro-body regular text-body`
+- MCP read-back found all 28 target elements and confirmed no target retains `section-icro-title`, `Copy`, `legacy`, `sub-careers-modal__*`, `sub-careers-voice__name`, or `sub-careers-voice__role` typography classes.
+- Designer snapshot confirmed the employee name renders with sufficient light-on-dark contrast. The job-title snapshot endpoint returned an empty error response, so its visual snapshot remains unverified even though its stored class read-back passed.
+- No component, CMS, layout, or publish changes were made.
+## About Us micro-title typo cleanup (2026-08-27)
+
+- Page: About Us (`6a531d3f86942d09a5323036`).
+- Audited the full static page tree and found 13 headings using the misspelled `section-icro-title` selector.
+- Replaced all 13 exact class lists with `section-micro-title text-title`.
+- The page's dark variable mode resolves `text-title` to the intended light title color; representative snapshots across five card groups confirmed sufficient light-on-dark contrast and preserved micro-title hierarchy.
+- MCP read-back found all 13 target elements and confirmed every target has the exact final `styleNames` list with no `section-icro-title` remaining.
+- Existing component instances, variants, body typography, layout wrappers, CMS content, and page structure were not changed.
+- No publish was performed.
+## About Us typography and color hierarchy migration (2026-08-27)
+
+- Page: About Us (`6a531d3f86942d09a5323036`).
+- Audited 54 static heading/paragraph elements and preserved dedicated gallery interaction typography and the `sub-visual-title` display title.
+- Updated 34 elements in this pass:
+  - content titles: `section-content-title text-title`
+  - content descriptions: `section-content-body regular text-body`
+  - value-card descriptions: `section-micro-body regular text-body`
+  - standard-card numbers and supporting subtitles: `section-micro-title text-title`
+  - hero eyebrow: `section-micro-body regular text-body`
+  - hero description: `section-content-body regular text-body`
+- The 13 About micro titles migrated earlier remain exactly `section-micro-title text-title`.
+- Dark page variable mode resolves title tokens to the highest light tone and body tokens to the lower-emphasis light tone. Representative snapshots confirmed the intended hierarchy across hero, Mission, Values, history, case support, and standards sections.
+- `Heading 91 section-lead-title` remains on one lead heading. `section-lead-title` exists only as that combo selector, and no standalone `section-lead-title` or `heading-48` selector is available; removal attempts were rejected by Webflow without changing the element. It was preserved to avoid a visual regression until the selector layer is normalized deliberately.
+- Existing components, variants, CMS content, layout wrappers, and interaction-specific gallery classes were not changed.
 - No publish was performed.
