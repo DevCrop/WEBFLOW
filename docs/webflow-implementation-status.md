@@ -1022,3 +1022,29 @@ footer__social-pill    social icon links
 - `Heading 91 section-lead-title` remains on one lead heading. `section-lead-title` exists only as that combo selector, and no standalone `section-lead-title` or `heading-48` selector is available; removal attempts were rejected by Webflow without changing the element. It was preserved to avoid a visual regression until the selector layer is normalized deliberately.
 - Existing components, variants, CMS content, layout wrappers, and interaction-specific gallery classes were not changed.
 - No publish was performed.
+
+## Shared component display-title scale migration (2026-08-28)
+
+- Site: `intellectualdata` (`6a38f39fe95d43bbdbe5c71c`).
+- Updated the shared title hierarchy without changing the global semantic `section-head-title` variable:
+  - `sub-visual`: 72 / 64 / 54 / 44, regular 400.
+  - `intro-title`: 64 / 56 / 48 / 40, regular 400.
+  - `section-title`: 48 / 42 / 36 / 32, bold 700.
+- Created Typography variables:
+  - `type/component/sub-visual/title/font-size` (`variable-51e4f81e-040b-89a2-6e8a-c10317176269`).
+  - `type/component/intro-title/title/font-size` (`variable-0ed1195c-a6bc-8e75-a083-f78bc3737559`).
+  - `type/component/section-title/title/font-size` (`variable-80d71ea1-90ea-16fa-6214-135849c68d7f`).
+- Bound `sub-visual-title` and `intro-title__title-text` to their scoped variables.
+- Added `section-title__title-text` as the approved component-only size combo after `section-head-title + bold`.
+- Applied the Typography collection's automatic Tablet, Mobile Landscape, and Mobile Portrait modes at `medium`, `small`, and `tiny`.
+- Removed the old explicit `sub-visual-title` breakpoint font-size overrides, including the previous 52px Mobile Landscape value.
+- Read-back confirmed:
+  - all three Base variable bindings;
+  - all three responsive mode mappings;
+  - `section-title` title class order is exactly `section-head-title + bold + section-title__title-text`;
+  - site rule `rules/design-system.md` is version `2026-08-28.2`.
+- Audited all 12 `sub-visual-media-*` desktop/mobile components: each contains six media nodes and zero Heading, Paragraph, Text Block, or title-style nodes.
+- The shared `sub-visual` component has 28 instances. All media-split variants inherit their rendered title from this parent component.
+- Updated all 12 media component descriptions to document that they are media-only and must not own title typography.
+- No site publish was performed.
+- Verification scope: Webflow MCP stored-state and binding read-back passed. A rendered Designer Preview/snapshot was not performed in this batch.
