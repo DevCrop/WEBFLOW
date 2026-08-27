@@ -743,3 +743,35 @@ Publish는 별도 승인 전까지 하지 않는다. Designer 정리는 draft �
 - `en` uses the existing `font/en` variable and `ko` uses `font/ko`; the font family is set once on the `banner` root so title, description, and nested CTA typography inherit consistently.
 - `en-invert` and `ko-invert` use `Color/Base/White`, `color/text/title-invert`, and `color/text/body-invert` variables in addition to their language font variable.
 - Language variants do not alter spacing, typography scale, media, CTA content, or responsive layout.
+
+## Shared component display-title hierarchy (2026-08-28)
+
+The shared component title hierarchy is:
+
+```text
+sub-visual > intro-title > section-title
+```
+
+These are approved component-scoped title-size exceptions. They do not repurpose the global semantic `head`, `lead`, or `normal` variables.
+
+| Component | Variable | Desktop | Tablet | Mobile Landscape | Mobile Portrait | Weight |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| `sub-visual` | `type/component/sub-visual/title/font-size` | 72 | 64 | 54 | 44 | `regular` 400 |
+| `intro-title` | `type/component/intro-title/title/font-size` | 64 | 56 | 48 | 40 | `regular` 400 |
+| `section-title` | `type/component/section-title/title/font-size` | 48 | 42 | 36 | 32 | `bold` 700 |
+
+Rules:
+
+- Bind each title style once to its component-scoped Typography variable.
+- Use the existing automatic Typography modes for `medium`, `small`, and `tiny`.
+- Eyebrow, subtitle, and body retain the component's canonical semantic tier.
+- The exception changes title scale only. Color remains owned by the component root, alignment by the structural parent, and weight by the approved weight selector.
+- The twelve `sub-visual-media-*` desktop/mobile components are media-only slot children. They must not contain text or title styles; the parent `sub-visual` owns and renders the title.
+- Do not create page-specific or media-specific title-size selectors for these variants.
+
+Official references:
+
+- https://developers.webflow.com/mcp/tools/data-tools
+- https://help.webflow.com/hc/en-us/articles/33961268146323-Variables
+- https://help.webflow.com/hc/en-us/articles/33961300305811-Breakpoints-overview
+- https://help.webflow.com/hc/en-us/articles/33961311094419-Classes
