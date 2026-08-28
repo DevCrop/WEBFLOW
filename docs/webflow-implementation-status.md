@@ -357,7 +357,7 @@ footer__social-pill    social icon links
 - Main-breakpoint line-height scale: title/heading `141%`, body `161.8%`, eyebrow `141%`, and display `121%`.
 - The existing `display-200` and `heading-36` classes were not present, so no replacement classes were created.
 - `section-title-body` uses `Body/Content/Size` (20px), `161.8%` line height, and `Color/Text/Desc` (#EEE) so body copy sits below white titles in contrast.
-- `section-title-eyeblow` uses `Body/01/Size` (24px) and `141%` line height. Existing smaller-breakpoint overrides remain unchanged.
+- The former `section-title-eyeblow` selector was later proven unused across all 41 pages and current component definitions and has been removed. Current section-title eyebrow content uses `section-head-eyebrow medium`.
 - No publish was performed.
 
 ### Native monochrome pagination migration
@@ -1048,3 +1048,846 @@ footer__social-pill    social icon links
 - Updated all 12 media component descriptions to document that they are media-only and must not own title typography.
 - No site publish was performed.
 - Verification scope: Webflow MCP stored-state and binding read-back passed. A rendered Designer Preview/snapshot was not performed in this batch.
+
+## Enterprise AI static style migration (2026-08-28)
+
+- Page: `기업용 AI 도입` (`6a531cf785ba94997412a151`, `/page/AI`).
+- Shared component instances were excluded from the page-level migration: `edge-gradient`, `header`, `sub-visual`, `sub-nav`, `intro-title`, `section-title`, `banner`, and `footer`.
+- Replaced the two documented legacy container aliases with the canonical global wrapper:
+  - consulting section wrapper `4c0abfc8-f9f9-0851-e7ed-02a1c8facf1e`: `u-no-container` -> `no-container`;
+  - Legal AI section wrapper `b9b58657-6254-0eb2-a311-2e44f4941ce7`: `u-no-container` -> `no-container`.
+- Normalized the three consulting body paragraphs to the exact dark/light-surface-compatible class list `section-content-body regular text-body-invert`:
+  - `adf2c6f3-73f8-83a1-cc29-101069802331`;
+  - `a1b21879-5940-8775-ef24-ff4f952f2664`;
+  - `be94b678-99c7-2ade-b191-1880f27485bf`.
+- Normalized the three Legal AI item headings to `section-content-title text-title`:
+  - `35244870-e74a-ab16-36b0-0c7e4a1e3b1a`;
+  - `35244870-e74a-ab16-36b0-0c7e4a1e3b22`;
+  - `35244870-e74a-ab16-36b0-0c7e4a1e3b2a`.
+- Normalized the three Legal AI item body paragraphs to `section-micro-body regular text-body`:
+  - `35244870-e74a-ab16-36b0-0c7e4a1e3b1e`;
+  - `35244870-e74a-ab16-36b0-0c7e4a1e3b26`;
+  - `35244870-e74a-ab16-36b0-0c7e4a1e3b2e`.
+- MCP element read-back confirmed the exact final `styleNames` on all 11 changed elements with no missing or remerged class.
+- Designer snapshots confirmed the consulting section remains a light surface with readable dark text and preserved alternating media layout, while the Legal AI section remains a dark surface with readable light text and preserved media layout.
+- Used the live Designer style selector and rendered DOM to inspect selector usage before structural renames. Renamed only selectors with no other-page usage, preserving their existing breakpoint/style data in place:
+  - `Div Block 141` -> `sub-ai-adopt-consulting__media` on `da6f4cf5-610d-505a-075b-773d362b528b`;
+  - `Div Block 78` -> `sub-ai-adopt-legal__media` on `c8be8eb2-03ec-9f7f-3565-021aab919eec`;
+  - `Image 239` -> `sub-ai-adopt-legal__image` on `c3d7527d-9b19-9d1f-dcaa-9f76185da240`.
+- MCP read-back confirmed the three renamed elements' exact final `styleNames`. New Designer snapshots confirmed the consulting media, Legal AI media, Legal AI image, alternating layout, and dark/light contrast remain rendered correctly after rename.
+- Remaining shared structural selectors were intentionally preserved because Designer usage read-back showed they affect other pages: `Div Block 142` (3 on this page, 2 on other pages), `Div Block 143` (3 on this page, 2 on other pages), `Div Block 144` (2 on this page, 1 on another page), and `Image 255` (3 on this page, 2 on other pages). Renaming them globally would exceed this page-only scope.
+- `Div Block 144 Copy Copy` and `u-section-padding` remain. A direct `sub-ai-adopt-legal section-padding` pilot was rejected with `styles not found`, leaving the root unchanged as `sub-ai-adopt-legal u-section-padding`; no partial class change occurred.
+- No component, component prop, content, asset, CMS data, page structure, or publish state was changed. No production publish was performed.
+
+## NCT static typography migration (2026-08-28)
+
+- Page: `국가핵심기술(NCT)` (`6a531cf6624189f3842b9870`, `/page/NCT`).
+- Used Webflow MCP 2.0.1 Data Tools. Shared component instances were excluded, including `edge-gradient`, `header`, `sub-visual`, `sub-nav`, `intro-title`, `section-title`, `icon-card`, `banner`, and `footer`.
+- Re-read every target immediately before mutation and found no concurrent class-list change.
+- Normalized the page-level process-panel heading `8b6a98e5-e296-8296-a0f2-5d4a2feaa79c` from `section-content-title text-title` to the exact canonical order `section-content-title bold text-title`.
+- Normalized the page-level process-panel paragraph `0fbe32ad-1c11-61c5-fccf-01c9fffd094b` from `section-content-body u-on-dark-body` to `section-content-body regular text-desc`. `u-on-dark-body` and `text-desc` resolve to the same existing color variable (`variable-98e0836a-e764-be6f-55bf-aad365bbd615`), preserving the prior foreground value while removing the context alias.
+- MCP element read-back confirmed both exact final `styleNames`, original text, heading level, and visibility.
+- No global selector, variable, breakpoint value, component, component prop, content, asset, CMS data, or page structure was changed.
+- Structural cleanup candidates `Div Block 140` (`9b435b87-24a2-e83d-5e5c-a767fa59e421`) and `Image 237` (`0b5abb55-bdc3-9892-a973-ad8c68c4b186`) were intentionally left unchanged because rendered verification was unavailable.
+- Designer element snapshot retried after stored-state verification but returned an empty Webflow response. Rendered state remains unverified, so this pass is stored-state complete but not visually complete.
+- No production publish was performed.
+
+## K-Discovery static structure migration (2026-08-28)
+
+- Page: `K-디스커버리` (`6a531cf5199ab832e2a92655`, `/page/K_Discovery`).
+- Used Webflow MCP 2.0.1 Data Tools. Shared component instances and component props were excluded.
+- Re-read 14 target elements before mutation. The first bulk read encountered Webflow asset API `429` responses on image-containing targets; no failed request was treated as success. After backoff, mutations were retried in small batches.
+- The planned canonical text combinations were rejected without changing the elements because the exact combo path does not exist:
+  - `section-content-title bold text-title-invert` for headings;
+  - `section-content-body regular text-body-invert` for lists.
+- Read-back confirmed the two headings remain `section-content-title text-title-invert` and the two lists remain `section-content-body text-body-invert`. Their current global semantic selectors already own the previous visual weight, so no global selector or variable was modified to force the grammar migration.
+- Replaced page-level copied and auto-generated structure selectors with K-Discovery-owned BEM selectors:
+  - `Div Block 183` -> `sub-kdisc-system__inner` on `afcfa48a-bcb1-cdb8-7a83-3fbf090b2993`;
+  - `sub-ai-adopt-consulting__grid` -> `sub-kdisc-service__rows` on `147ae9f3-6e95-6091-2855-54fdcc4e5dbf`;
+  - both `Div Block 142` rows -> `sub-kdisc-service__row` on `147ae9f3-6e95-6091-2855-54fdcc4e5dc0` and `147ae9f3-6e95-6091-2855-54fdcc4e5dc8`;
+  - both `Div Block 143` text wrappers -> `sub-kdisc-service__body` on `147ae9f3-6e95-6091-2855-54fdcc4e5dc3` and `147ae9f3-6e95-6091-2855-54fdcc4e5dcb`;
+  - `Div Block 144` -> `sub-kdisc-service__row-media` on `147ae9f3-6e95-6091-2855-54fdcc4e5dc1`;
+  - `Div Block 144 Copy Copy` -> `sub-kdisc-service__row-media-reverse` on `147ae9f3-6e95-6091-2855-54fdcc4e5dc9`;
+  - the unclassified main-media wrapper -> `sub-kdisc-service__media-main` on `e9e21800-0d0b-862d-9b25-2aba959bad0f`;
+  - `Image 253` -> `sub-kdisc-service__image` on `e3df109b-d577-c46a-5266-bdccbe1c8324`.
+- New style IDs:
+  - `sub-kdisc-system__inner`: `4341a81e-fc09-4a9a-d540-a09630fcf0e7`;
+  - `sub-kdisc-service__rows`: `3164cdc7-a316-4a25-cd95-9bd938f965de`;
+  - `sub-kdisc-service__row`: `0c7bddc5-d229-87c9-b31e-baf3646b6baa`;
+  - `sub-kdisc-service__body`: `26002c97-86eb-468f-73b2-c6b997308e7c`;
+  - `sub-kdisc-service__row-media`: `2e85efc7-20dc-2932-e7c0-e0d84bb66447`;
+  - `sub-kdisc-service__row-media-reverse`: `0bf3ac5b-0c03-e451-13a3-660b8a7c6878`;
+  - `sub-kdisc-service__media-main`: `01811ae5-742b-276e-1b39-057aa2fe4615`;
+  - `sub-kdisc-service__image`: `f5549dec-4275-f8f2-061d-2c69630fffac`.
+- Style read-back confirmed the copied Base and responsive values on every changed selector: rows Base/medium, row Base/small/tiny, media Base/small, reverse media Base/small/tiny, body Base, and image Base width.
+- Element read-back confirmed every exact final `styleNames`, tag, visibility, and the main image asset ID `6a5a33aef112858b986a5a6c`.
+- Page-scoped queries confirmed zero remaining K-Discovery elements using `Div Block 183`, `sub-ai-adopt-consulting__grid`, `Div Block 142`, `Div Block 143`, `Div Block 144`, `Div Block 144 Copy Copy`, or `Image 253`.
+- Existing style definitions were not deleted. Sitewide zero-use and separate deletion approval are required before removal.
+- A post-change Designer element snapshot returned an empty Webflow response. Stored-state and responsive read-back passed, but rendered visual verification remains pending.
+- No component, component prop, content, CMS data, asset binding, section root, global selector, variable, or publish state was changed. No production publish was performed.
+
+## DocuSign static typography and color migration (2026-08-28)
+
+- Page: `DocuSign` (`6a531d0c85ba94997412b0ce`, `/page/Docusign`).
+- Used Webflow MCP `2.0.1`; shared component instances and component variants were excluded from this page-level pass.
+- Migrated 23 static text elements to the existing `section-*` role system and then corrected their color utilities against the rendered DocuSign surfaces:
+  - dark normal banner: `section-micro-eyebrow`, `section-head-title bold text-title`, `section-head-body regular text-body`;
+  - three light case cards: `section-micro-title text-title-invert`, `section-micro-body regular text-body-invert`;
+  - dark quote/author and Part11 title: `section-content-title text-title`, `section-micro-body regular text-body`;
+  - dark Gartner source, five values, and five labels: `section-micro-eyebrow`, `section-micro-title text-title`, `section-micro-body text-body`.
+- Removed target-element legacy and typo selectors including `section-normal-title--legacy-07`, `Heading 88`, `Heading 89`, `Heading 90`, and `section-icro-title`.
+- Restored the three light customer-case body paragraphs to their original `Paragraph 10 section-micro-body` path because that existing selector owns the required centered alignment. The cleaner `section-micro-body regular text-body-invert text-center` path was rejected because the exact combo selector does not exist, and this MCP workspace does not expose parent-combo creation. No global body selector or inline style was modified.
+- Re-audited the shared `section-title` component (`9b4fc63d-3bda-d34d-302e-3b45259e7312`): its title is exactly `section-head-title bold section-title__title-text`, and its definition contains no `section-icro-title`. The misspelled selector and its old combo definitions still exist globally in the site style registry; they were not deleted because sitewide zero-use has not been proven.
+- Preserved inline `Strong` runs inside existing content to avoid changing CMS/editorial emphasis during this outer-class migration.
+- The first color mapping was visually rejected by the user-provided Designer screenshot: light-card text became white and dark quote text became black. The mapping was reversed immediately so light surfaces use the page's dark `*-invert` utilities and dark surfaces use the page's light non-invert utilities.
+- MCP full-page element read-back confirmed all 23 corrected targets have their exact expected final `styleNames`; no target failed or remerged an old selector.
+- Automated Designer render verification remains unavailable. Element snapshots returned empty responses and browser control failed to initialize because its local runtime asset path was unavailable. The supplied Designer screenshot was used as direct visual evidence for the correction, but a fresh post-correction Designer screenshot is still required for full visual completion.
+- No global style declaration, variable, breakpoint value, component, content, CMS data, layout structure, or publish state was changed. No production publish was performed.
+
+## Data Security static style migration (2026-08-28)
+
+- Page: `Data Security` (`6a531cf63cafe13ffe61dcf3`, `/page/Data_Security`).
+- Used Webflow MCP `2.0.1`. Shared component instances were excluded: `edge-gradient`, `header`, `sub-visual`, `sub-nav`, `intro-title`, `section-title`, `icon-card`, `banner`, and `footer`.
+- Re-read the complete page tree immediately before mutation and applied the site contract order `[semantic tier] + [weight] + [color]` to the three static transfer cards.
+- Normalized the three card headings to the exact class list `section-content-title bold text-title` and changed their semantic tag from `h1` to `h3`:
+  - `03eb98e9-64bc-d35b-dd0b-499fd3992f9b`;
+  - `cbb0615e-195d-006c-d95d-42717f22a7be`;
+  - `3369c0a7-a7ed-e9f0-891d-d872249007a2`.
+- Normalized the three corresponding paragraphs to the exact class list `section-content-body regular text-body`:
+  - `88d7347b-e924-a665-d726-404cc486fe35`;
+  - `cbb0615e-195d-006c-d95d-42717f22a7c0`;
+  - `3369c0a7-a7ed-e9f0-891d-d872249007a4`.
+- MCP read-back confirmed all six exact final `styleNames` lists and all three `h3` tags. Designer snapshots confirmed the dark surface, white hierarchy, three-column layout, media proportions, and following process content remain visually intact.
+- The dark feature-panel title/body remain `section-normal-title text-title` and `section-normal-body`. Attempts to apply `section-normal-title bold text-title` and `section-normal-body regular text-body` were rejected with `styles not found`; Webflow made no partial change. The panel remained visually intact in the follow-up snapshot.
+- Structural migration remains pending. Roots `Section 14 sub-ai-adopt-process u-section-padding` and `Section 15 sub-ai-adopt-process Copy Copy Copy u-section-padding`, plus generic wrappers such as `List 6`, `List Item 4`, and `Div Block *`, were not renamed because page-owned exact selector paths could not be safely created/applied in this pass and their sitewide usage was not proven zero.
+- No component, component prop, content, asset, CMS data, global selector declaration, page structure, or publish state was changed. No production publish was performed.
+
+### Data Security static structure follow-up (2026-08-28)
+
+- Audited all 41 site pages before structural selector rename. `sub-ai-adopt-process` is shared by Data Security, Careers, K-Discovery, and Data Analytics; every other successfully migrated selector below was found only on Data Security.
+- Preserved each selector's existing stored breakpoint/style values by renaming the selector definition rather than recreating the element or copying CSS manually.
+- Transfer section read-back:
+  - root: `sub-ds-transfer sub-ai-adopt-process u-section-padding`;
+  - list: `sub-ds-transfer__grid`;
+  - all three items: `sub-ds-transfer__item`;
+  - all three media wrappers: `sub-ds-transfer__media`;
+  - all three images: `sub-ds-transfer__image`;
+  - all three body wrappers: `sub-ds-transfer__body`;
+  - process wrapper: `sub-ds-transfer__process`;
+  - existing empty layout node: `sub-ds-transfer__process-spacer`.
+- Protection section read-back:
+  - root identity: `sub-ds-protection`;
+  - title wrapper: `sub-ds-protection__heading`;
+  - feature panel: `sub-ds-protection__feature`;
+  - feature text wrapper: `sub-ds-protection__feature-body`;
+  - media wrapper/image: `sub-ds-protection__media`, `sub-ds-protection__image`;
+  - icon-card group wrapper: `sub-ds-protection__cards`.
+- The protection root still includes `sub-ai-adopt-process Copy Copy Copy u-section-padding`. Duplicate selector names prevented the Designer selector manager from deterministically addressing the exact style ID attached to this element; it was preserved rather than forcing an ambiguous replacement.
+- The transfer root keeps shared `sub-ai-adopt-process` because sitewide use is non-zero and its `u-section-padding` combo owns the existing spacing. The page-owned identity selector is first in the final class order.
+- The feature-panel title/body remain `section-normal-title text-title` and `section-normal-body`. MCP rejected both the canonical three-class combo and semantic-base-only fallback as unresolved exact paths, so the visually stable stored classes were preserved.
+- Two unused pilot selector definitions, `sub-ds-transfer__image-03` and `sub-ds-protection__surface`, remain in the style registry. They are not attached to the verified target elements and were not deleted because style deletion requires a separate exact-ID approval and zero-use verification.
+- MCP read-back confirmed the exact class lists on all migrated non-image wrappers and all four migrated images, including original asset IDs and transfer-image alt text.
+- Designer snapshots confirmed both sections preserve their dark/light surfaces, three-column layouts, media proportions, text contrast, and process/feature composition after the structural rename.
+- Shared components, component props, content, assets, CMS data, and page structure were not changed. No production publish was performed.
+
+### NCT static structure cleanup follow-up (2026-08-28)
+
+- Re-audited the exact legacy selectors at `main`, `medium`, `small`, and `tiny` before replacement.
+- Created page-owned BEM selectors with properties identical to the legacy Base definitions:
+  - `sub-nct-process__media` (`88b24a22-e0dd-38ea-5ebd-048004fc0212`): `margin-top: 48px`;
+  - `sub-nct-define__image` (`a81883ce-d8eb-d6da-de1b-fe80867c2ddd`): `width: 100%`.
+- Replaced the complete class lists on:
+  - process media wrapper `9b435b87-24a2-e83d-5e5c-a767fa59e421`: `Div Block 140` -> `sub-nct-process__media`;
+  - definition image `0b5abb55-bdc3-9892-a973-ad8c68c4b186`: `Image 237` -> `sub-nct-define__image`.
+- MCP element read-back confirmed both exact final `styleNames`. The process wrapper retained its `responsive-media` subtree, desktop/mobile image asset IDs, existing desktop alt text, tag, and visibility. The definition image retained its asset ID and visibility.
+- Page-scoped style queries confirmed zero remaining NCT-page elements using `Div Block 140` or `Image 237`.
+- Preserved `sub-nct-process`, `sub-nct-reason`, and `sub-intro u-section-padding`. Their existing responsive spacing values do not exactly match the current global section-padding modes, so forced replacement would alter layout.
+- A post-change Designer element snapshot again returned an empty Webflow response. Asset preview for the definition image returned Webflow `429 Too Many Requests`; no alt text was invented without visual evidence.
+- The superseded style definitions were not deleted. Sitewide zero-use and explicit deletion approval are still required before removal.
+- No production publish was performed.
+## Data Analytics static typography migration (2026-08-28)
+
+- Page: `Data Analytics` (`6a5317bbd02345c985f5d43b`, `/page/Data_Analytics`).
+- Used Webflow MCP `2.0.1`. Shared component instances and the functional `sub-gallery__*` area were excluded.
+- Preserved the current dark/light surface mapping and existing typography sizes. This pass only made weight ownership explicit where the exact existing combo path resolved.
+- Migrated the Active Learning supporting heading from `section-content-sub-title text-subtitle` to `section-content-subtitle semibold text-subtitle`.
+- Added `regular` to 14 visible static body elements while preserving their existing `text-body` or `text-body-invert` class and the legacy `section-micro-body` opacity.
+- Added `bold` to ten `section-icro-title` headings using existing exact combo paths. The typo selector was intentionally retained because the canonical `section-micro-title bold text-title-invert` path does not exist and Webflow rejected it without partial change.
+- The following visually stable headings remain unchanged because their requested exact combo paths do not exist: `section-normal-title text-title` on `8fc8402e-9e25-6607-5308-eb0ae4bd96f4`; `section-icro-title text-title-invert` on `8fc8402e-9e25-6607-5308-eb0ae4bd96fc`; and both `section-content-title text-title-invert` headings on `58a81cc2-e1be-2308-4547-28fcea894d07` and `a8d9cf47-9ec7-c8de-d1c7-c0f4c735cbc7`.
+- Four hidden functional labels remain `section-content-body text-title-invert` with visibility false. They were not reclassified without rendered/function evidence.
+- MCP read-back confirmed every successful target's exact final `styleNames`. One temporary `429 Too Many Requests` was retried successfully.
+- Structural roots and copied selectors remain pending because `sub-ai-adopt-process + u-section-padding` and `sub-ai-adopt-process Copy + u-section-padding + bg-secondary` own the current responsive spacing/background paths. Removing them without page-owned selector copies would change the current appearance.
+- Designer element snapshots returned empty responses before this migration, so rendered verification remains pending; stored-state verification passed.
+- No component, component prop, content, asset, CMS data, global selector declaration, variable, page structure, or publish state was changed. No production publish was performed.
+
+## INDA FullDiscovery static typography migration (2026-08-28)
+
+- Page: `INDA FullDiscovery®` (`6a5317ba9538f5ffd5a324c2`, `/page/INDA_FullDiscovery`).
+- Used Webflow MCP `2.0.1`. Shared component instances, component props, CMS gallery interaction classes, content, and assets were excluded.
+- Designer snapshots established the current surface mapping before mutation: the intro/process/capability area is a black surface with white hierarchy, the process cards use a dark navy surface with white hierarchy, and the expertise/LPO areas are light gray surfaces with dark hierarchy. The migration therefore used non-invert text utilities on dark surfaces and `-invert` utilities on light surfaces.
+- Normalized the process section heading to `section-content-title bold text-title`.
+- Normalized all eight process cards to exact class lists:
+  - index: `section-content-index bold text-title`;
+  - subtitle: `section-content-subtitle semibold text-subtitle`;
+  - English stage title: `section-icro-title bold text-title`;
+  - body: `section-content-body regular text-body`.
+- Normalized the four capability item headings to `section-content-title bold text-title`. Their body/list typography was already explicit and was retained.
+- The four capability subtitles remain `section-content-sub-title medium text-subtitle`. Webflow rejected the visually equivalent canonical-name request `section-content-subtitle medium text-subtitle` because that exact selector path does not exist; no partial change occurred.
+- On the light expertise section, normalized the subtitle to `section-content-subtitle semibold text-subtitle-invert` and the body to `section-content-body regular text-body-invert`. The heading remains `section-content-title` because `section-content-title bold text-title-invert` does not exist and Webflow rejected the request without partial change.
+- On the light LPO section, normalized all three card headings to `section-icro-title bold text-title-invert` and all three descriptions to `section-micro-body regular text-body-invert`.
+- Full-page MCP read-back confirmed the exact final `styleNames` for all eight process-card index/subtitle/title/body groups, the expertise subtitle/body, and all six LPO text elements. A later title-only read-back encountered Webflow asset API `429`; the successful mutation responses and the earlier complete tree remain the stored evidence for the process heading and four capability headings.
+- Post-change Designer snapshots confirmed the intro/process dark surface, process-card navy surface, white hierarchy, capability layouts, and LPO light surface/dark hierarchy remain visually intact. The expertise post-change snapshot returned an empty Webflow response; its pre-change surface snapshot and stored class read-back passed.
+- Structural legacy selectors including `sub-intro Copy`, `sub-inda-caps__inner Copy`, `sub-inda-caps__media Copy`, `sub-inda-out`, `Div Block 69`, `Div Block 71`, and `Image 229/232/233/234` remain. They were not replaced because their exact responsive property ownership and sitewide usage were not proven safe in this typography-preservation pass.
+- The legacy typo selector `section-icro-title` remains where the existing exact combo paths own the preserved rendered typography. No global selector or variable was changed to force a rename.
+- No production publish was performed.
+
+### INDA FullDiscovery static structure follow-up (2026-08-28)
+
+- Continued the page-level cleanup while preserving each legacy selector's existing stored properties rather than rebuilding the affected elements.
+- Renamed the original selector definitions in place, preserving their IDs and all stored responsive values:
+  - `Div Block 69` -> `sub-inda-process__media-panel` (`c2a610e5-1691-eb88-3bbb-7a840b59dae3`), including Base 36/48px padding, 24px gap/radius, 4% white surface and medium/small/tiny padding overrides;
+  - `Div Block 71` -> `sub-inda-lpo__body` (`bcc0efbf-42db-0058-5a82-0e17ea816c14`), preserving the column flex layout and 6px gaps;
+  - `Image 229` -> `sub-inda-caps__image` (`0f96d236-6ac8-9de8-37e1-f6faa75d2dd1`), preserving 100% width and 12px radius;
+  - `Image 232` -> `sub-inda-lpo__image` (`9f6d9a93-079f-bcdb-4f80-a71e5829135d`), preserving 8px radius and small-breakpoint 100% width;
+  - `sub-inda-caps__media Copy` -> `sub-inda-caps__media-reverse` (`4b1e8070-aac4-0b3a-b324-af6794f7747b`), preserving its surface variable, radius, reverse order, and medium override;
+  - `sub-inda-caps__inner Copy` -> `sub-inda-caps__content` (`fa4a5bf7-084a-2063-cdbb-e58ef9069721`), preserving Base/medium/tiny spacing and inherited color variable;
+  - `sub-inda-out` -> `sub-inda-lpo` (`a5a36bf4-06d2-6c85-47f6-8636ea690083`).
+- Consolidated the second and third LPO images from `Image 233` and `Image 234` onto the same existing `sub-inda-lpo__image` selector. The three legacy image definitions had identical Base radius and small-breakpoint width values.
+- Created the empty identity selector `sub-inda-lpo__item` (`1f355568-e05d-bff4-7f64-ce1568188dfe`) and applied it to all three previously unclassified LPO card wrappers. This adds ownership without changing layout.
+- Style registry read-back confirmed all renamed selector IDs and exact Base/main/medium/small/tiny properties. Element mutation responses confirmed the two image consolidations and three item identities were applied.
+- Full element-tree read-back and post-change element snapshots were retried but Webflow returned repeated asset API `429` and empty snapshot responses. Therefore responsive stored-style verification is complete, while a fresh rendered snapshot remains pending and is not reported as visually complete.
+- `sub-intro Copy` remains because two different style definitions share that same display name/selector, so name-based rename is ambiguous. It was not forced. The unused `Image 233` and `Image 234` style definitions were not deleted because sitewide zero-use could not be established during the asset API rate-limit window.
+- No component, component prop, CMS binding, content, asset, page structure, or publish state was changed. No production publish was performed.
+
+### INDA FullDiscovery title hierarchy completion (2026-08-28)
+
+- Completed the remaining safe title cleanup without changing the shared components or CMS gallery.
+- Converted the previously unclassified duplicate H1 `INDA FullDiscovery®` (`1e5405ee-5ff8-c9ee-e470-1974829b33d7`) to heading level 3 and the exact class list `section-content-title text-title`. This removes the duplicate page-level H1 while using the existing 28/26/24/22px responsive content-title hierarchy, its stored 700 weight, 141% line-height, -2% letter spacing, and explicit white title token.
+- Added explicit light-surface color ownership to the expertise heading `c36f8376-cdab-fac7-3fbd-5d44d5435310`: `section-content-title text-title-invert`. The content-title size/weight hierarchy is unchanged and the color now resolves directly to `color/text/title-invert` (`#000000`) instead of relying on a wrapper.
+- The canonical `section-micro-title` is 26/24/22/20px, while the legacy typo selector used by INDA owns a smaller 24/22/20/18-class scale. A direct swap would change the current design, so the original selector definition was renamed in place from `section-icro-title` to `section-micro-title-24` (`db3f385d-5b9a-2797-f400-ba410da41482`).
+- Style registry read-back confirmed the renamed selector retains the original font-family, font-size, line-height, letter-spacing, and all main/medium/small/tiny references. Its existing `bold`, `text-title`, and `text-title-invert` combo descendants were automatically reparented to the renamed selector.
+- Element-tree read-back confirmed the representative dark process heading is `section-micro-title-24 bold text-title`, the representative light LPO heading is `section-micro-title-24 bold text-title-invert`, the former unclassified heading is `section-content-title text-title`, and the expertise heading is `section-content-title text-title-invert`.
+- Post-change Designer snapshots were retried but returned an empty Webflow response. Stored selector and element state is fully verified; fresh rendered visual verification remains pending and is not reported as complete.
+- No production publish was performed.
+
+### Data Analytics typo-selector removal follow-up (2026-08-28)
+
+- Removed `section-icro-title` from all 11 Data Analytics page headings. Page-scoped MCP read-back confirmed zero remaining matches and 11 matches for `section-micro-title`.
+- The site's existing canonical micro-title selector is registered under the exact path `Heading 100 > section-micro-title > bold`; therefore the final base/semantic/weight order on all migrated headings is `Heading 100 section-micro-title bold`.
+- Four dark-surface headings use the existing exact color path `Heading 100 section-micro-title bold text-title`.
+- The standard `text-title-invert` color step could not be created at the canonical path because Webflow returned an internal style-path collision error. Created the page-scoped final color combo `sub-data-analytics-text-title-invert` (`ea844734-1176-b248-db2f-5549b46f537b`) under `Heading 100 section-micro-title bold`, bound to the same existing inverse title variable `variable-759fb0ac-b062-9f1b-b699-9c1f9109159b`. Seven light-surface headings use this path.
+- Exact final read-back:
+  - seven headings: `Heading 100 section-micro-title bold sub-data-analytics-text-title-invert`;
+  - four headings: `Heading 100 section-micro-title bold text-title`.
+- Two unused global pilot styles were created while determining the connector's combo-path syntax: `section-micro-title.bold.text-title-invert` (`0171d771-ac72-9585-7854-211d405ba608`) and `section-micro-title.bold.text-title` (`e92d2208-9b04-1c35-648c-6662014af3be`). Neither is attached to a page element. The current connector exposes no accepted remove/delete action, so they remain registry-only cleanup candidates.
+- No production publish was performed.
+
+### Data Analytics micro-title hierarchy finalization (2026-08-28)
+
+- Replaced the intermediate `Heading 100` and page-scoped color path with the standalone global semantic typography selector.
+- Added the two missing standard combo continuations while preserving existing variables:
+  - `section-micro-title text-title-invert bold` (`8a1164f8-458a-7feb-cee7-41152a890d0b`) uses the existing bold variable `variable-6921fef4-aed5-e816-85a4-79b62889fa2c`;
+  - `section-micro-title text-title bold` (`6026afb8-5508-0b28-acb3-830ff1f90346`) uses the same bold variable.
+- Final element classes:
+  - seven light-surface headings: `section-micro-title text-title-invert bold`;
+  - four dark-surface headings: `section-micro-title text-title bold`.
+- Page-scoped read-back confirmed 11 `section-micro-title` matches and zero matches for `section-icro-title`, `Heading 100`, and `sub-data-analytics-text-title-invert`.
+- The standalone `section-micro-title` responsive hierarchy remains 26 / 24 / 22 / 20 with 141% line-height. Existing title color variables and bold variable are preserved.
+- The intermediate page-scoped combo and two unused pilot global selectors remain unattached registry cleanup candidates because the current connector exposes no accepted style-delete action.
+- No production publish was performed.
+
+## Sitewide section-icro-title usage migration (2026-08-28)
+
+- Audited all 41 site pages with page-scoped element queries. Before mutation, `section-icro-title` had 16 remaining page usages: 15 on Nymi Band and one on Release Notes. The other 39 pages, including Data Analytics, had zero.
+- Nymi Band (`6a531d264cd6203ae8486fef`, `/page/Nymi_Band`) is a dark-body page. Migrated 13 Paragraph labels to `section-micro-title text-title regular`, preserving their prior 400 paragraph weight, and two H3 regulation titles to `section-micro-title text-title bold`, preserving heading emphasis.
+- The same audit exposed three additional Nymi H3 headings using `Heading 94 section-micro-title` (GAMP, GDPR, CCPA). Removed `Heading 94` and normalized all three to `section-micro-title text-title bold`.
+- Release Notes (`6a48b6c27b53afca3f2c8f38`, `/release-notes`) migrated its dark-page H2 from `section-icro-title` to `section-micro-title text-title bold`.
+- Added the missing standard regular continuation `section-micro-title text-title regular` (`82db8161-17b1-a2db-b8b8-440e28d4ed90`) with `font-weight: 400`.
+- Exact read-back confirmed zero `section-icro-title` matches on Nymi Band and Release Notes. Combined with the unchanged zero results on the other 39 audited pages, page-level usage is zero across all 41 pages.
+- Designer snapshots returned empty responses for Nymi and Release Notes representative elements. Stored-state, tag, visibility, exact class-list, and surface-token read-back passed; rendered verification remains pending.
+- Registry-only audit still contains unused or separately scoped cleanup candidates: 26 names containing `legacy`, 44 names containing `Copy`, and 209 auto-generated names matching `Div Block/Heading/Paragraph/Image/Section/List + number`. Registry presence does not prove live usage; each requires page/component usage and breakpoint-property verification before rename or deletion.
+- The old selector definitions were not deleted. Component-definition usage and exact style deletion support must be verified separately before registry cleanup.
+- No component, component prop, content, asset, CMS data, or publish state was changed. No production publish was performed.
+
+## Sitewide numeric badge style migration (2026-08-28)
+
+- Audited all 41 pages and the numeric components `num-card`, `icon-num-card`, `num-row`, `stat`, and `stats-band`.
+- Added the shared numeric badge selector system:
+  - base `num-badge` (`4a08eee0-43f9-4915-85a8-00b66667ce69`): flex center/center, no shrink, 50% radius, line-height 1;
+  - sizes `size-md` 48, `size-lg` 64, `size-xl` 88, `size-lg-responsive` 64/56/48, and `size-about` preserving About's prior 64 base, 48x64 small, and 54x48 tiny behavior;
+  - surface paths `is-brand`, `is-ghost`, `is-plain`, and the Nymi-preserving `is-nymi`. Brand variants use existing brand/title variables; ghost preserves the previous white 8% surface; Nymi preserves the previous 12px bottom margin and 1px token border.
+- Component definitions:
+  - `num-row` badge -> `num-badge size-lg is-brand`;
+  - `num-row` title -> `section-micro-title text-title bold`, removing the component-definition `section-icro-title`;
+  - `icon-num-card` number -> shared class path `num-badge size-lg`; visual tokens are controlled by the component variant layer, not by a fixed surface modifier;
+  - `num-card` number -> `num-badge size-lg is-plain`.
+- Page-direct migrations:
+  - Nymi Band five badges -> initially `num-badge is-nymi`, then corrected to `num-badge size-lg is-brand` after rendered-shape review (details below);
+  - About Us three badges -> `num-badge size-about is-ghost`;
+  - eDiscovery four process badges -> `num-badge size-lg-responsive is-brand`;
+  - Data Analytics three 88px badges -> `num-badge size-xl is-ghost`.
+- Nymi, About, and eDiscovery element read-back confirmed all exact final class lists and zero matches for their page-specific legacy badge selectors. The element tool's style filter is substring-based, so a query for `num` also matches `num-badge`; exact `styleNames` were used for verification.
+- Data Analytics initially hit Webflow asset API `429 Too Many Requests` during verification. After backoff, exact element read-back succeeded and confirmed all three badges as `num-badge size-xl is-ghost`.
+- Newsroom's apparent `num` hit was a fuzzy match on `cms-pagination__numbers`; it is pagination UI, not a numeric badge, and was not changed.
+- Added actual `num-card`, `icon-num-card`, and `num-row` instances to the draft `/components` catalog shared-UI content area:
+  - `771e5d1a-0dc5-136a-24ed-18a3d543f77d`;
+  - `b7e585f3-a954-6b67-c9d1-64bd759d27de`;
+  - `2bf4be25-09f3-7613-1a3a-be6074bf3703`.
+- Existing props, component instance IDs, content, and assets were preserved. `stat` and `stats-band` were excluded from badge conversion because they are large statistic typography, not circular badges.
+- Old selector definitions were not deleted. Zero-use across component definitions and a supported exact style-delete action are required before registry cleanup.
+- Designer snapshots remained unavailable. No production publish was performed.
+
+### Nymi numeric badge rendered-shape correction (2026-08-28)
+
+- User visual review found that `num-badge is-nymi` had no square size class, so the 50% radius did not render as a circle around the number.
+- Attempts to create `num-badge size-lg is-nymi` were blocked twice by Webflow `429 Too Many Requests`.
+- Immediately corrected all five Nymi feature numbers to the already verified exact path `num-badge size-lg is-brand`.
+- This restores 64x64 dimensions, 50% radius, flex center/center, brand background, and title-color token. Exact element read-back confirmed the final class list on all five elements.
+- The previous Nymi-specific 12px bottom margin and 1px border are not included in this fallback path. A dedicated Nymi surface combo may be added after rate-limit recovery only if rendered comparison shows those details are still required.
+- No production publish was performed.
+
+### `icon-num-card` variant-owned badge correction (2026-08-28)
+
+- Removed the incorrectly fixed `is-brand` modifier from the component definition. The interim `num-badge size-lg` path was subsequently superseded by the full numeric-component ownership audit below; the final number element uses only `icon-num-card__num` in every component variant.
+- Preserved the original component variant logic on the component-owned `icon-num-card__num` style path:
+  - `light` (`base`) owns the existing brand background, title color, font-family, font-size, line-height, weight, letter-spacing, and tabular-number settings;
+  - `white` has no local number override and continues to inherit the base badge values;
+  - `dark` overrides only the existing dark-variant background token and title color token.
+- Final MCP read-back confirmed the component element has exactly `icon-num-card__num`; fixed `is-brand`, `is-plain`, and shared `num-badge` classes are absent from its `styleNames`.
+- Variant-style read-back confirmed the base token set, empty white override, and dark-only color override. The shared `size-lg` path remains 64x64 with a 64px minimum width.
+- Designer rendered snapshot was not returned, so this correction is stored-state and variant-style verified; visual snapshot verification remains pending. No production publish was performed.
+
+### Numeric component variant ownership audit and correction (2026-08-28)
+
+- Re-audited the numeric component set by component metadata and definition trees: `num-card`, `icon-num-card`, `num-row`, and non-badge `stat`. `stats-band` remains excluded because it is large statistic typography rather than a circular number badge.
+- Found two additional fixed surface modifiers and one shared-selector contamination:
+  - `num-card`: `num-badge size-lg is-plain` was fixed in the definition;
+  - `num-row`: `num-badge size-lg is-brand` was fixed in the definition;
+  - `num-badge` had temporarily inherited `icon-num-card` base background and typography tokens during the preceding correction.
+- Corrected each component so every variant now keeps one identical component-owned role selector on the number element:
+  - `num-card` -> `num-card-num`;
+  - `icon-num-card` -> `icon-num-card__num`;
+  - `num-row` -> `num-row__badge`.
+- Removed all fixed `is-brand`, `is-plain`, `num-badge`, and size modifier classes from those three component-definition number elements. Existing component role styles and variant overrides were preserved instead of recreating values.
+- Restored the shared `num-badge` selector to geometry-only ownership: flex centering, no shrink, 50% radius, and line-height 1. Removed the accidentally introduced background, font-family, text color, font size, weight, letter-spacing, and tabular-number properties.
+- Variant read-back:
+  - `num-card`: dark base retains the original 64x64 centered role style and title-color token; light and brand retain empty local overrides and inherit the component base;
+  - `icon-num-card`: light base retains the original 64x64 token-based badge style, white inherits base, and dark retains its existing dark background/color override;
+  - `num-row`: dark base retains the original 64x64 brand badge role style and light retains its existing empty local role override.
+- Exact component-tree read-back confirmed each number element has only its corresponding role selector and no fixed surface modifier.
+- Responsive read-back passed for every `num-card`, `icon-num-card`, and `num-row` variant at `medium`, `small`, and `tiny`. `icon-num-card` keeps its existing 48x48 small override and 20px tiny type override; `num-row` remains 64x64 across all three narrower breakpoints.
+- Designer snapshots confirmed the final base rendering for `icon-num-card` and `num-row` as centered circular 01 badges. The `num-card` snapshot returned its expected plain 01 treatment, although the preceding canvas-open response timed out; its stored-state and breakpoint checks passed.
+- Updated the draft `/components` catalog with the missing representative variants:
+  - `num-card` light `edcbf9e1-b278-f76a-cda4-6a1434612d66` and brand `746d8550-3c70-ee25-2496-b1673934eb8c`;
+  - `icon-num-card` white `d1b2be7b-3d7d-c4ab-bfd1-1f15d88b4f55` and dark `33236a83-3f13-2124-1d66-7f59350f1c65`;
+  - `num-row` light `fb81e05c-a460-43b4-966a-368eacd55977`.
+- Variant prop mutation responses returned the intended unique variant IDs for all five catalog instances. Independent resolved-prop read-back passed for both `num-card` instances; Webflow returned `429 Too Many Requests` for the two `icon-num-card` instances and the `num-row` instance, so those three catalog read-backs remain pending.
+- No production publish was performed.
+
+### Numeric badge surface-contrast correction (2026-08-28)
+
+- Rechecked the complete previously audited numeric set: 41 pages plus `num-card`, `icon-num-card`, `num-row`, `stat`, and `stats-band`. `stat` and `stats-band` remain large statistic typography, not circular badge targets. Page-direct Nymi, About, eDiscovery, and Data Analytics badges keep their verified shared `num-badge` geometry/surface paths; Newsroom `cms-pagination__numbers` remains excluded as pagination UI.
+- Root cause: component role selectors were structurally normalized, but several variants still inherited the card text color or had no badge background. This made a number disappear when the card and number resolved to the same surface/text family.
+- Applied a single contrast matrix without changing component structure, props, content, instance IDs, or badge sizes:
+  - light/white card or row context -> brand-primary badge surface (`variable-cc80bdda-e1aa-a20e-c421-28db0ffef6b3`) + light number (`variable-b90879fd-bc66-1d32-d73c-675a5d8414f2`);
+  - dark/brand card or row context -> white/light badge surface (`variable-26444bb2-0ad8-a411-43bf-4b3e499b0fc7`) + dark number (`variable-759fb0ac-b062-9f1b-b699-9c1f9109159b`).
+- `num-card`: dark base and brand now use white/light badge + dark number; light uses primary badge + light number. Base `num-card-num` now also owns `flex-shrink:0` and 50% corner radii while preserving 64x64 and flex center/center.
+- `icon-num-card`: light base already had primary + light contrast; white now explicitly owns the same pair instead of relying on inheritance; dark now uses white/light badge + dark number. Existing 64px main and 48px small sizes, typography, and centering were preserved.
+- `num-row`: dark base now uses white/light badge + dark number; light uses primary badge + light number. The nested `section-micro-eyebrow` number receives the matching explicit color per variant so paragraph color cannot override the badge-level contrast. Existing 64px size and flex centering were preserved.
+- Exact variant-style read-back passed for all eight badge variants at `main`, `medium`, `small`, and `tiny`. Narrow breakpoints contain only the pre-existing size overrides and otherwise inherit the corrected main contrast pair.
+- Draft `/components` catalog read-back reconfirmed the representative instances and exact variants: `icon-num-card` white `d1b2be7b-3d7d-c4ab-bfd1-1f15d88b4f55`, dark `33236a83-3f13-2124-1d66-7f59350f1c65`, and `num-card` light `edcbf9e1-b278-f76a-cda4-6a1434612d66`. No catalog structure change was necessary because these actual variant instances already exist.
+- Designer element snapshot calls for the three catalog representatives returned empty responses. Stored variant IDs, exact token read-back, component trees, geometry, and breakpoint inheritance passed; rendered snapshot verification remains pending and is not reported as passed.
+- No production publish was performed.
+
+### Numeric badge typography consistency correction (2026-08-28)
+
+- Full typography read-back found that only `icon-num-card__num` owned a complete number typography token set. Shared page badge `num-badge` owned geometry only, `num-card-num` inherited surrounding card text, and the `num-row` number reused global `section-micro-eyebrow`. This caused visually smaller numbers inside otherwise identical 64px circles.
+- Standardized `num-badge`, `num-card-num`, `icon-num-card__num`, and the new `num-row__number` on the existing verified icon-number token set: font family `variable-9597f4fe-89fb-5854-de16-968abd065eb3`, font size `variable-e8ca801c-9892-23ed-7ccd-42e9ebe4f5ee`, line height `variable-51b66c59-950d-47cd-6b59-3df4102ce456`, weight `variable-6921fef4-aed5-e816-85a4-79b62889fa2c`, letter spacing `variable-a41ecc80-09d7-d533-cfb7-751b1e97f3a1`, and `tabular-nums`.
+- Responsive number sizing is now consistent: main/medium inherit the number font-size token, small is 24px, and tiny is 20px. Existing badge dimensions remain unchanged, including `icon-num-card`'s existing 48x48 small badge.
+- Removed the `num-row` number paragraph's global `section-micro-eyebrow medium` class path and replaced it with the sole component-owned selector `num-row__number` (`03ef886c-598b-e309-8238-b19850da24d5`). This selector owns zero margins/padding, centered line box, number typography, and variant text color.
+- Restored global `section-micro-eyebrow` to its original font-family, font-size, line-height, 600 weight, and letter-spacing tokens and confirmed it has no number-specific margin, padding, color, alignment, tabular-number, small, or tiny overrides.
+- Exact component-tree read-back confirmed the `num-row` paragraph now has exactly `num-row__number`. Typography read-back passed for shared page badges and all three numeric components at main, small, and tiny; medium has no local override and inherits main as intended.
+- Card surface contrast rules from the preceding correction remain intact. Content, props, instance IDs, dimensions, CMS data, and publish state were not changed. No production publish was performed.
+
+### Data Analytics Structured Analytics brand badge correction (2026-08-28)
+
+- Corrected the three direct page badges under `Structured Analytics` from `num-badge size-xl is-ghost` to the exact light-surface path `num-badge size-xl is-brand`.
+- The required triple combo did not previously exist, so created only `.num-badge.size-xl.is-brand` with the established contrast pair: brand-primary background `variable-cc80bdda-e1aa-a20e-c421-28db0ffef6b3` and light number `variable-b90879fd-bc66-1d32-d73c-675a5d8414f2`.
+- Preserved the existing 88x88 `size-xl` geometry and shared number typography. Medium, small, and tiny contain no local surface overrides and inherit the corrected main pair.
+- Exact element read-back confirmed all three final class lists. Designer snapshot confirmed a circular primary badge with centered white `01`.
+- No card structure, image, copy, typography, component variant, CMS data, or publish state was changed.
+- Follow-up visual sizing: reduced all three badges one scale from `size-xl` 88px to `size-lg` 64px while preserving `is-brand`. Final exact class list is `num-badge size-lg is-brand`; Designer snapshot confirmed the smaller circle and centered number.
+
+### Section semantic hierarchy revalidation and breakpoint correction (2026-08-28)
+
+- Re-read all 24 canonical `section-[head|lead|normal|content|micro|ui]-[title|subtitle|body|eyebrow]` selectors at main and audited their medium/small/tiny overrides. Title values and embedded default weights still match the approved hierarchy: head 60, lead 48, normal 36, content 28, micro 24, UI 18 at main; titles 700 except UI 600, subtitles/eyebrows 600, bodies 400.
+- Confirmed the reported body pair was not numerically inverted: `section-content-body` is `18/17/16/15px`; `section-micro-body` is `16/16/15/14px`. Both use 171% line height and -0.02em letter spacing. Rewrote both selectors at all four breakpoints to their own semantic font-size, line-height, and letter-spacing sources so they no longer reference legacy Body scale variables at narrower breakpoints.
+- Found and corrected an actual lower-tier inversion in `section-micro-eyebrow`: small/tiny had no font-size override, so the medium 15px cascaded into both widths, making tiny micro eyebrow larger than tiny content eyebrow 14px. Its narrower breakpoint line-height also incorrectly referenced a body 171% variable.
+- Final eyebrow hierarchy: `section-content-eyebrow` `18/16/15/14px`; `section-micro-eyebrow` `16/15/14/13px`. Micro eyebrow medium/small/tiny now reference its semantic 141% line-height and -0.02em letter-spacing variables.
+- Four-breakpoint read-back passed for the corrected content/micro body selectors and content/micro eyebrow selectors. The first combined verification hit HTTP 504, so the reads were retried in smaller selector groups and completed successfully.
+- No text color, content, component prop/variant, layout, CMS data, or publish state was changed. No production publish was performed.
+
+## Homepage Hero typography migration (2026-08-28)
+
+- Page: homepage (`6a38f3a0e95d43bbdbe5c758`). Scope was limited to the static `main-hero` text elements; layout, content, media, alignment, interactions, and components were not changed.
+- Added Typography variables that preserve the measured Hero values:
+  - `type/section/display/title/font-size`: `148px`;
+  - `type/section/display/title/line-height`: `110%`;
+  - `type/section/display/title/letter-spacing`: `-0.02em`;
+  - `type/section/ui/label/font-size`: `22px`;
+  - `type/section/ui/label/line-height`: `141%`;
+  - `type/section/ui/label/letter-spacing`: `0px`.
+- Added global semantic selectors `section-display-title` and `section-ui-label`, plus the required `fm-en` / `regular` / text-color combo continuations.
+- Exact final element read-back:
+  - Hero H1 `b25c3ebb-f213-6f52-a378-25f661901844`: `fm-en section-display-title regular text-title`;
+  - Hero description `b8e06e9f-8ce3-1a4a-6467-1eb23c134cc3`: `section-head-body regular text-body`;
+  - Scroll label `f96b5029-8424-b904-72fd-275887e541aa`: `fm-en section-ui-label regular text-body`.
+- Removed page usage of `display-188`, `main-hero__scroll-title`, and `section-micro-body--context-03` from these three text elements. Their registry definitions were not deleted because sitewide zero-use was not established.
+- Webflow accepted the stored DOM and style changes. The Designer snapshot endpoint returned repeated `status:false` responses for both the Hero root and its static content wrapper, so rendered verification remains pending and this pass is not reported as visually complete.
+- No production publish was performed.
+
+### Homepage main-why typography migration (2026-08-28)
+
+- Scope: homepage `main-why` section only. Structure, copy, icons, assets, spacing, card surfaces, and responsive layout were not changed.
+- Surface mapping was preserved: `main-why__card` uses `Color/Brand/Primary` (`#002539`), so card titles use `color/text/title` (`#FFFFFF`) and body copy uses `color/text/body` (`#FFFFFFC7`).
+- Exact final headline classes:
+  - first and third H2: `section-head-title bold text-title`;
+  - emphasized `eDiscovery` H2: `Heading 70 section-head-title bold text-title`.
+- Exact final card typography:
+  - three H4 titles: `section-micro-title text-title bold`;
+  - two existing descriptions: `section-micro-body regular text-body`.
+- Removed `section-micro-title-24` from all three `main-why` card titles. No new size-suffixed selector or variable was created; the cards now use the existing canonical responsive `section-micro-title` hierarchy.
+- `Heading 70` was retained only on the emphasized H2 because its existing combo removes the global `section-head-title` box shadow. Removing it without first correcting and auditing the global title selector would change the rendered appearance outside this page.
+- MCP query read-back confirmed all eight modified elements have the exact final class lists and retained their original tags and visibility.
+- The post-change section snapshot ended with Webflow HTTP `504`; rendered verification remains pending and is not reported as visually complete.
+- No production publish was performed.
+
+## Legal, Private Resources, and residual class migration (2026-08-28)
+
+- Site: `6a38f39fe95d43bbdbe5c71c`. Production publish was not performed.
+- Terms of Use (`6a48bf39f4a8532139b6c0f3`): renamed `sub-terms Copy` to `sub-terms` in place, preserving selector ID `1f238d6a-dc79-dee2-0a4c-5cb63540cab5` and the existing secondary-background token. Seven headings now read back exactly as `section-content-title text-title-invert`; fourteen paragraphs read back exactly as `section-micro-body regular text-body-invert`. Page read-back found no remaining `Copy`, `Paragraph 19`, numbered auto-generated, or `eyeblow` class.
+- Privacy and Cookie Policy (`6a48bf3823d56c4e12728cf2`): renamed `sub-privacy Copy` to `sub-privacy` in place, preserving selector ID `688205fe-de20-4043-1fc9-acfb8f55cb1b` and the existing secondary-background token. Six headings now read back exactly as `section-content-title text-title-invert`; twenty-three paragraphs read back exactly as `section-micro-body regular text-body-invert`. `sub-ai-adopt-process` remains on the root because its existing `u-section-padding` combo owns the measured responsive padding; removing it before a verified replacement path exists would change layout. No `Copy`, `Paragraph 19`, numbered auto-generated, or `eyeblow` class remains on the page.
+- Private Resources list (`6a587d49ad6bb9a4a35cea16`): renamed `Section 25` to `sub-private-resources` in place, preserving selector ID `80dd9c0f-a62b-0578-7da0-d115743a5b97`, the 80px top margin, and its existing `u-section-padding bg-secondary` combo chain. The CMS card title is `section-micro-title text-title-invert bold`; the summary is `section-micro-body regular text-body-invert`. Read-back preserved four CMS nodes, the empty state, and both detail/PDF links.
+- Private Resources template (`6a587ccd5538ad94bffb2767`): renamed `Section 13` to `sub-private-detail__spacing` in place, preserving selector ID `b380ae68-70dd-f208-aeb4-9985114065b4` and the existing 120px bottom spacing. CMS-bound title, summary, and navigation structure were not changed.
+- Re-audited all 32 sitemap-listed static pages after the legal/private changes. Zero page usages of `sub-visual-eyeblow` and `section-title-eyeblow` were found. The current `sub-visual` and `section-title` component definitions already use `section-head-eyebrow medium`, not either typo selector. Removed the unused typo families from the style registry in child-first order; registry read-back returned zero remaining `eyeblow` selector or name.
+- Residual static-page renames preserve the original selector IDs and every stored breakpoint property: `Div Block 155` -> `sub-news-featured__heading`, `Div Block 160` -> `section-contents__heading`, `Section 24` -> `sub-news-list`, `Div Block 161` -> `sub-news-list__heading`, `Div Block 168` -> `sub-insights__heading`, `Div Block 96` -> `sub-locations__visual`, `Div Block 173` -> `sub-locations__content`, `Section 22` -> `sub-litera-products`, `Div Block 153` -> `sub-litera-products__sticky`, `Image 257` -> `sub-litera-products__logo-image`, and `Image 258` -> `sub-litera-products__logo-image-alt` before consolidating the second image element onto `sub-litera-products__logo-image`.
+- Litera product-feature paragraphs: eleven `Paragraph 11 section-micro-body` elements now use `section-micro-body regular text-body-invert`. Three registry selectors shared the same legacy name `banner-box-1 Copy Copy`; the first two (`3a8d3f12-e8cc-a12d-5a35-73ca6883ec43`, `aa84eee5-28e7-f4c4-528b-ee084e394a7b`) were confirmed not to change the Litera target when renamed and were removed as unused duplicates. The remaining selector `c6003fc1-965f-44d7-bd04-4bd302c6ab24`, which retains the measured Litera background, 64px top margin, and tiny breakpoint values, was renamed to `sub-litera-products__banner`. Final element read-back confirmed the target uses exactly `sub-litera-products__banner`, both logos use `sub-litera-products__logo-image`, all eleven bodies use the canonical body path, and no numbered/Copy/eyeblow class remains on Litera.
+- Designer snapshots now pass for Terms, Privacy/Cookies, and Private Resources. They confirm the secondary light surface, dark title/body contrast, preserved legal-document rhythm, preserved CMS list rows, and the existing detail/PDF actions. Litera's element snapshot endpoint returned `status:false`; its stored DOM and full main/tiny style read-back passed.
+
+### Full 41-page completion audit (2026-08-28)
+
+- Read the live Designer Pages panel to include pages excluded from sitemap. Final scope is 41 real pages: 32 sitemap-listed static pages, seven CMS collection templates, Search Results utility, and Password utility. The `page` and `board` rows are folders; the temporary `mint-*` 404 row is not a persisted page ID.
+- CMS template IDs audited: Newsroom `6a50840a1b7df41d1cf52e7e`, Insights `6a508428578978d6ae556d00`, Solutions `6a51b6af8538aa1c6ae856c1`, Release Notes `6a51b6b07ac4cedebadca69b`, Careers Jobs `6a51d9909532a35d28ba4d80`, Private Resources `6a587ccd5538ad94bffb2767`, and Insight Categories `6a6079e6e3638d2a83ab40e1`.
+- Template migrations preserve selector IDs and measured styles:
+  - Newsroom `Section 13 Copy` -> `cms-detail__spacing` (`f5c4088c-14a9-cb0d-a541-88a5671d6f2f`, 120px bottom padding);
+  - Insights duplicate `Section 13 Copy` -> `sub-insights-detail__spacing` (`256f2b4d-5fb9-cdf3-0d22-4e06fff7c455`, 120px bottom padding);
+  - Release Notes `sub-ai-adopt-process Copy Copy` -> `sub-release-detail__surface` (`2811e2c3-3ef5-166a-c8b6-41bce27e36dd`), preserving its existing `u-section-padding` responsive combo chain;
+  - Careers Jobs `sub-careers-detail__head Copy` -> `sub-careers-detail__head` (`2b65b2c9-0ccd-630e-320a-12ff1ce0dc17`), preserving flex, token spacing/border, and the small breakpoint row-gap.
+- Password utility (`6a59ec5f666955b924ba14b8`): renamed `Image 261` to `password-access__logo` in place (`8359c27f-c599-8ebb-77ff-30c0ef462ca1`), preserving its 256px width. Final read-back confirmed the password form/action, input, button, and error structure remain intact.
+- Exact post-change tree read-back found zero live class names matching `eyeblow`, `section-icro`, a whitespace-delimited `Copy`, or numbered `Div Block/Image/Heading/Paragraph/Section/List/List Item/Text Block` on all 41 pages. Representative changed pages were re-read after every duplicate-selector resolution.
+- Registry audit contains zero `eyeblow` or `section-icro` selectors. It still contains 59 `Copy`-named and 203 numbered historical selectors with no live page usage proven by this audit. These registry-only entries were not bulk-deleted because component variant usage and selector ancestry must be independently proven before deletion; their presence is not a live-page migration defect.
+- Responsive source read-back passed for all selectors changed in this pass. In-place renames retain the same selector IDs and breakpoint records; canonical legal body uses 17px main, 16px medium, and the existing small token; title-invert retains its small/tiny overrides; Litera banner retains 520px/64px/72px main geometry and 360px/32px/48px tiny geometry.
+- No content copy, CMS data, component props, form behavior, asset binding, link destination, or production publish state was changed.
+
+### Homepage `main-insights` title migration (2026-08-28)
+
+- Page: Home (`6a38f3a0e95d43bbdbe5c758`)
+- Element: Insights H2 (`bcce99ed-3936-ad17-f795-b16283c3fc2a`)
+- Final classes: `section-head-title bold text-title`
+- Removed legacy empty combo: `heading-84`
+- MCP read-back confirmed the exact final `styleNames`.
+- Designer element snapshot confirmed the white title and existing visual hierarchy remain intact.
+- No component structure, CMS content, interaction, or publish state was changed.
+
+### Homepage typography hierarchy migration (2026-08-28)
+
+- Page: Home (`6a38f3a0e95d43bbdbe5c758`)
+- Migrated confirmed semantic combinations across `main-why`, `main-num`, `main-refer`, `main-core`, `main-global-infra-webgl`, `main-core-services`, and `main-consulting`.
+- Canonical heading pattern: `section-head-title bold text-title`.
+- Canonical content title pattern: `section-content-title bold text-title`.
+- Canonical micro title pattern: `section-micro-title text-title bold`.
+- Canonical body patterns: `section-head-body|section-content-body|section-micro-body regular text-body`.
+- Removed confirmed text legacy selectors: `section-micro-title-24`, `Heading 83`, `Heading 85`, `Paragraph 16`, `Paragraph 17`, `Paragraph 24`, and `Text Block 7` from migrated elements.
+- MCP read-back confirmed final `styleNames` on representative elements after migration.
+- Preserved pending legacy selectors where removal would change rendering without selector property access: `Heading 70` on the emphasized eDiscovery heading, `Paragraph 9` on four statistic values, and `heading-52 text-center` on `main-consulting__head`.
+- `Heading 70` currently compensates for the global `section-head-title` box-shadow pollution; remove only after the global selector is normalized.
+- `heading-52 text-center` cannot be reduced to `main-consulting__head text-center` because that selector path does not exist and style update access is unavailable in the current MCP schema.
+- `number-item Copy` remains a structural legacy wrapper and was not changed during typography migration.
+- No CMS content, component definition, interaction, or publish state was changed.
+### Homepage remaining typography cleanup follow-up (2026-08-28)
+
+- Removed `Heading 70` from the emphasized eDiscovery heading; final classes are `section-head-title bold text-title`.
+- Replaced four `Paragraph 9` statistic values with `fm-en section-display-title regular text-title`.
+- Replaced the `number-item Copy` structural wrapper with the existing `number-item number-item-2` combination used by sibling items.
+- MCP read-back confirmed all four statistic values and the removed legacy selectors.
+- The only remaining typography/layout legacy on the homepage is `main-consulting__head heading-52 text-center`.
+- It remains because the current Webflow MCP workspace schema does not expose existing-style update/create operations, and removing `heading-52` through element class assignment would also remove the centered alignment. No unsafe inline style, custom code, or temporary selector was introduced.
+- No publish was performed.
+
+### 2026-08-28 LPO navigation registration follow-up
+
+- Target draft page: `해외소송 지원(LPO)` (`6a90e69e85b0d836c3e1cd94`, `/LPO`).
+- The LPO page already had its local `sub-nav` entry enabled with label `해외소송 지원(LPO)` and URL `/LPO` after `K-디스커버리`.
+- The `sub-visual` instance already exposes `eDiscovery > 해외소송 지원(LPO)` through `bcDepth1Label` and `bcDepth2Label`, with both breadcrumb depths visible.
+- Added one shared Footer navigation link after `eDiscovery`: element `8825fcf1-1ed6-7f52-5570-a5311e461980`, text `해외소송 지원(LPO)`, URL `/LPO`, class `footer__link`. The connector rejects the sibling `u-body-18` combo in component scope, so exact sibling typography and visual rendering remain unverified.
+- Shared Header desktop/mobile insertion calls repeatedly returned HTTP 504. Lightweight component-content read-back found no LPO node, so Header registration is not marked complete and no duplicate retry should occur without a fresh Header tree/content check.
+- No publish was performed.
+
+### `section-micro-title-24` final migration audit (2026-08-28)
+
+- Hard rule: micro titles use the existing canonical `section-micro-title`; size-suffixed `section-micro-title-24` must not be created or reused.
+- Migrated the Private Resources CMS title to `section-micro-title text-title-invert bold` and all eleven INDA headings plus the Homepage `End-to-End eDiscovery` heading to their surface-correct canonical combinations.
+- Full Designer DOM audit covered all 41 discoverable static, CMS-template, search, password, and catalog pages. Thirty-eight pages have zero direct or rendered matches.
+- Remaining rendered matches are component-propagated only: Components catalog 7, Litera 11, Luminance 6, and Docusign 3. The source definitions are `review-card` (quote and author elements) and `icon-card-cms` (title element).
+- Webflow MCP component-scoped `set_style` resolves the elements but currently rejects the already-existing global `section-micro-title` and `bold` selectors as not found. A one-element clear/reapply probe was immediately restored to its original class list after the connector rejected the canonical path; no visual state was left changed.
+- The forbidden selector family has not been deleted because those component definitions still reference it. Delete only after the three definition elements are migrated and the `/components` catalog plus downstream pages read back with zero matches.
+- No publish was performed.
+### Homepage statistic font and alignment correction (2026-08-28)
+
+- Corrected the four statistic values (`150`, `55`, `566`, `3`) after visual feedback.
+- Removed `fm-en` and the polluted combo chain from all four values.
+- Renamed the previously unused standalone global `section-display-title` selector to `section-stat-value`; the existing hero combo `.fm-en.section-display-title` was preserved.
+- Final statistic value classes: `section-stat-value` only.
+- Updated global `number-item-body` at `main / noPseudo` with `align-items: center` and `text-align: center`; existing flex-column and gap properties were preserved.
+- Updated global `main-consulting__head` with centered alignment, then removed `heading-52 text-center` from the element.
+- Final Consulting wrapper classes: `main-consulting__head` only.
+- MCP style read-back and element-tree read-back confirmed the saved values and exact final class lists.
+- No publish was performed.
+
+### Homepage statistic weight and center-axis correction (2026-08-28)
+
+- Root cause: `number-item-head` still used `justify-content: flex-start`, while `section-stat-value` had no explicit weight.
+- Updated `section-stat-value` to `font-weight: 400`.
+- Updated `number-item-head` to `width: 100%`, `justify-content: center`, and `text-align: center`; preserved `align-items: flex-end` for value/unit baseline alignment.
+- Existing `number-item-body` center alignment remains active.
+- MCP style read-back confirmed saved values, and the first complete `number-item` snapshot confirmed value, label, and description share the same center axis.
+- No publish was performed.
+
+### Global section typography normalization (2026-08-28)
+
+- Updated semantic variables: head title `60px`, lead title `48px`, UI title `18px`; display and normal tiers remain unchanged. Micro body is `16px` and micro/UI eyebrow bases are `16px`/`14px`.
+- Updated all section body line-height variables and the four legacy Body variables from `161.8%` to `171%`.
+- Normalized title, subtitle, body, and eyebrow selectors across `main`, `medium`, `small`, and `tiny`; direct color/opacity declarations were removed so surface-aware text utilities or component inheritance own contrast.
+- Updated text colors to a readable four-step hierarchy: dark surfaces title `#FFFFFF`, subtitle `#FFFFFFE6`, body `#FFFFFFD1`, desc `#FFFFFFB3`; light surfaces title `#011926`, subtitle `#18313D`, body `#354A54`, desc `#53636B`.
+- Full read-only audit covered all 41 pages and all 54 component definitions. Live explicit legacy findings were limited to one About Us auto-heading combo, one Insights RichText body combo, and component definitions in footer, card, review-card, icon-card-cms, and stats-band.
+- Completed migrations: cookie body -> `section-ui-body regular`; card definition -> single `card-title` / `card-desc` roles with canonical content typography at every breakpoint; stats-band labels -> `section-content-subtitle semibold`; Insights RichText -> single `cms-detail__body` role with canonical content-body scale and `171%` line-height.
+- Remaining connector-blocked definitions: review-card quote/author and icon-card-cms title still reference `section-micro-title-24`; About Us H2 still includes `Heading 91`; footer subscribe H3 still includes `Heading 97`. The MCP resolves each element but rejects the already-existing global canonical path as `style not found` because duplicate combo selectors share the same class name. They were not force-cleared, renamed, or given fixed color utilities because that would risk variant breakage.
+- No global vertical-centering rule was added to text. Existing explicit flex/panel wrappers retain their alignment; line-height is used only for text rhythm.
+- Read-back confirmed the successful class replacements and responsive style writes. No publish was performed.
+
+### Semantic typography default-weight normalization (2026-08-28)
+
+- Embedded default weights directly into all 24 canonical section typography roles: head/lead/normal/content/micro title `700`; UI title, all subtitle, and all eyebrow roles `600`; all body roles `400`.
+- Preserved display typography weights and all existing responsive font-size, line-height, letter-spacing, color inheritance, and component variant behavior.
+- Applied the same rule to canonical component-only roles created during migration: `card-title` `700`, `card-desc` `400`, and `cms-detail__body` `400`.
+- Main-breakpoint MCP read-back confirmed each representative and boundary role stores the requested weight. Weight inherits through medium/small/tiny because no breakpoint-specific weight overrides were added.
+- Existing same-value weight utility classes on legacy element combinations are now redundant migration candidates; they were not bulk-removed in this pass because duplicate Webflow combo paths can clear an element's full style list when canonical resolution fails.
+- No publish was performed.
+
+### Final legacy-title application retry (2026-08-28)
+
+- Re-read the current shared definitions after the parallel session. `review-card` quote is clean `section-micro-title`; its embedded 700 weight means no `bold` utility is required.
+- Retried exact canonical assignment for `review-card` author, `icon-card-cms` title, About Us lead H2, and Footer subscribe H3. The headless MCP again returned `style not found` for the existing standalone `section-micro-title`, `section-lead-title`, and `section-content-title` selectors.
+- Immediate read-back confirmed all four elements retained their original class lists; the rollback guard restored any target whose observed list differed. Current remaining lists are `section-micro-title-24 bold` on two component elements, `Heading 91 section-lead-title` on About Us, and `Heading 97 section-content-title` in Footer.
+- Inspected the registry and confirmed the collision source is multiple historical combo children sharing each canonical final class name. Attempts to address a combo by selector path or selector ID through `rename_style` were rejected as not found; no broad ambiguous rename/remove was executed.
+- The connected Designer UI fallback could not initialize because the local browser-control runtime failed before opening Webflow. No unsafe registry deletion, fixed component color utility, custom code, or publish was performed.
+
+### Compatibility-alias finalization (2026-08-28)
+
+- Per final direction, no selector-registry deletion was performed. Existing names may remain for compatibility but must not define a separate typography hierarchy or be used on new elements.
+- Synchronized `section-micro-title-24` to the canonical `section-micro-title` values: base font variable, 24/22/20/18px responsive scale, 141% line-height, -2% letter-spacing variable, zero vertical margins, and embedded 700 weight. Direct color and opacity were removed.
+- Four-breakpoint read-back confirmed the alias now renders identically to the canonical role. The existing `bold` on the two old component elements is redundant but does not change the computed 700 weight.
+- Registry read-back shows the About Us `.heading-91.section-lead-title` and Footer `.heading-97.section-content-title` combo records contain no stored properties. They therefore do not override the canonical lead/content title variables or embedded 700 weight and are treated as inert compatibility paths.
+- Final source of truth remains `section-micro-title`, `section-lead-title`, and `section-content-title`. New elements must not use `section-micro-title-24`, `Heading 91`, or `Heading 97`.
+- No content, component variant, CMS data, structure, link, or publish state was changed.
+
+### `section-micro-title-24` zero-use completion (2026-08-28)
+
+- Supersedes the compatibility-alias note above: `section-micro-title-24` is no longer permitted as an alias and has zero registry entries.
+- Resolved the MCP name collision by renaming historical combo children away from the canonical name, promoted selector ID `db3f385d-5b9a-2797-f400-ba410da41482` to the sole standalone `section-micro-title`, and retained the approved 24/22/20/18px, 141%, -2%, 700 scale.
+- Migrated the original review-card author and icon-card-cms title plus every affected former-canonical reference found across pages and component definitions back to `section-micro-title`. Removed redundant `bold`/`regular` on migrated elements and preserved page surface color utilities; component definitions use the role class alone.
+- Affected live surfaces included Private Resources, Newsroom, Insights, Careers, Data Analytics, Docusign, Locations, About Us, Reveal, Nymi Band, INDA FullDiscovery, Newsroom Template, Release Notes, Home, and seven shared card/number component definitions.
+- Registry read-back returned zero selectors whose name or selector contains `section-micro-title-24`, and exactly one standalone global `section-micro-title` selector.
+- No selector deletion, content change, CMS mutation, component variant change, or publish was performed.
+
+### LPO page scaffold (2026-08-28)
+
+- Created draft static page `해외소송 지원(LPO)` (`6a90e69e85b0d836c3e1cd94`) with slug and staged path `/LPO`.
+- Added the verified shared page sequence: `edge-gradient`, `header`, `sub-visual`, `sub-nav`, LPO body scaffold, `banner`, and `footer`.
+- Configured `sub-visual` for the eDiscovery context with title `해외소송 지원(LPO)`, description `Legal Process Outsourcing`, matching K-Discovery background media, breadcrumbs, and expert-consultation CTA label.
+- Added `해외소송 지원(LPO)` as visible item 5 in both the new LPO page and K-Discovery page `sub-nav`, linked to `/LPO`; item 6 remains hidden.
+- Added the page-owned body scaffold `sub-lpo-body > sub-lpo-content > no-container > sub-lpo-content__inner > sub-section-txt + sub-lpo-content__body` for later content insertion.
+- The actual Webflow Body element rejects style assignment through the current MCP, so `sub-lpo-body` is a page content wrapper rather than a Body selector.
+- The existing `section-contents` name is present only through an unusable selector path in the current MCP and could not be applied as a standalone global class; the clean page-specific `sub-lpo-content__body` wrapper was used instead.
+- The current page-creation connector rejected folder/parent parameters, so the page is currently root-level rather than nested under the eDiscovery folder. Navigation placement reflects the requested K-Discovery-following relationship.
+- MCP metadata and full DOM read-back confirmed the page remains `draft: true`, the final component order, LPO prop overrides, and exact body scaffold class lists.
+- No publish was performed.
+
+### LPO Korean content and numbered-flow implementation (2026-08-28)
+
+- Replaced the empty LPO body placeholder with four native sections in this order: `sub-lpo-intro`, `sub-lpo-proof`, `sub-lpo-services`, and `sub-lpo-facility`.
+- Used only the supplied Korean source copy. No sentence was summarized, rewritten, translated, or omitted.
+- Updated `sub-visual` to the supplied title `해외소송 지원(Legal Process Outsourcing)` and description `해외 소송 과정을 지원하는 종합 법률 아웃소싱 서비스`.
+- Updated the shared banner instance title to the supplied Korean CTA sentence; the existing shared button label and link remain unchanged.
+- Implemented the customer-preferred fully expanded reading flow rather than sticky, tab, or accordion UI: proof `01–03`, services `01–04`, and facilities `01–02`.
+- Added nine reusable 64px circular number markers using the existing brand-primary and base-white variables.
+- Added fluid page structure styles using `auto-fit`, `minmax`, and `clamp` so desktop rows collapse naturally to one-column reading order without temporary breakpoint classes.
+- Existing canonical `section-*` typography selectors are present in the site but the current MCP rejects them as unavailable when assigned to new elements. To prevent unstyled text and avoid numeric suffix utilities, five LPO role selectors were created: `sub-lpo-head-title`, `sub-lpo-head-body`, `sub-lpo-content-title`, `sub-lpo-content-subtitle`, and `sub-lpo-content-body`. They reference the existing `type/section/*` and `color/text/*` variables.
+- MCP DOM read-back confirmed all four section titles, the final facility sentence, nine number elements, and correct section order.
+- Designer element snapshots could not be completed because the active Designer MCP app timed out. Visual verification remains pending; DOM/state verification succeeded.
+- No publish was performed.
+
+## 2026-08-28 LPO page detail correction
+
+- Draft page: `6a90e69e85b0d836c3e1cd94` (`/LPO`), not published.
+- Preserved all supplied Korean copy without rewriting.
+- Reused shared `sub-visual`, `sub-nav`, `intro-title`, `section-title`, `num-card`, `banner`, and `footer` components.
+- Verified all four body sections use `no-container`; the live reference eDiscovery page has no existing `section-padding` selector, so no new global padding selector was introduced.
+- Corrected service sequence numbers to `01`-`04`.
+- Service hierarchy: topic `sub-lpo-content-title` bound to existing section content title size/line-height/letter-spacing and light-surface title variable; body `section-content-body text-body-invert`; detail title `section-micro-title text-title-invert`.
+- Applied light card surface and border variables across `main`, `large`, `xl`, `medium`, `small`, and `tiny`.
+- On `small`/`tiny`, removed service-body indentation and collapsed detail/card grids to one column.
+- Designer snapshot verified the representative service row after canvas reload. Full-section snapshot returned an empty Designer response; no publish was performed.
+
+### LPO service list component reuse
+
+- Replaced four page-specific `sub-lpo-service-row` elements with four shared `num-row` component instances from the eDiscovery page.
+- Preserved every supplied Korean sentence and original ordering in the component props.
+- Used the `dark/base` variant because the LPO service section is a dark surface; Designer snapshot confirmed white text, white number circles, and divider contrast.
+- Removed the wrapper's duplicated gap at all six breakpoints so spacing is owned by `num-row`.
+- Existing proof and facility sections continue to use the shared `num-card` component.
+- No publish was performed.
+
+## 2026-08-28 LPO 전문성 카드 레이아웃 교체
+
+- 대상 페이지: `해외소송 지원(LPO)` (`6a90e69e85b0d836c3e1cd94`)
+- 대상 섹션: `검증된 전문성과 체계로 완성하는 해외소송 LPO`
+- 기존 `num-card` 3개를 제거하고, `기업용 AI 도입` 페이지의 이미지 교차 그리드 구조와 기존 이미지 자산 3개를 재사용했다.
+- 카드 제목과 본문은 기존 LPO 원문을 변경하지 않고 그대로 이전했다.
+- 상위 레이아웃은 `sub-ai-adopt-consulting__grid`를 재사용했으며, 어두운 LPO 배경에 맞춰 제목은 `section-content-title + text-title`, 본문은 `section-content-body + regular + text-body`로 적용했다.
+- MCP read-back에서 새 카드 3개, 이미지 asset ID, 전체 원문, 최종 selector 목록을 확인했고 Designer element snapshot으로 교차 배치와 텍스트 대비를 검증했다.
+- Publish는 수행하지 않았다.
+
+## 2026-08-28 LPO 서비스 섹션 surface inverse
+
+- 대상: `sub-lpo-services` (`db5d8e69-5cda-731f-e321-190d344f0bf0`)
+- `background-color`를 global `bg-secondary`와 동일한 `variable-811bec04-ba1b-1e66-30e6-adcb79e2a126`에 직접 연결했다. 신규 combo selector는 만들지 않았다.
+- 내부 `section-title` 인스턴스를 `invert` variant로 변경했다.
+- 내부 `num-row` 4개를 모두 `light` variant로 변경했다.
+- style read-back과 Designer element snapshot에서 밝은 배경, 어두운 텍스트, 번호 배지 및 구분선 대비를 확인했다.
+- Publish는 수행하지 않았다.
+
+## 2026-08-28 Native YouTube scroll and playback remediation
+
+- Scope: Docusign page `6a531d0c85ba94997412b0ce` and Luminance page `6a531d0dd02345c985f7c974`; no content, URL, title, CMS, component variant, or publish state was changed.
+- Removed Docusign page HtmlEmbed `2bf0cdde-e4e7-ebfa-6f7e-598625ab23b0`. It contained the legacy click-to-enable buttons and `pointer-events` switching, including CSS priority overrides.
+- Preserved all four Webflow-native `YouTubeVideo` elements and their native controls. Docusign videos remain `kViCtIzCDe8`, `rL8lPWy3E6A`, and `1nM30uwBBw0`; Luminance remains `BioPZqbot8A`.
+- Added standalone global `youtube-native-player` and applied it as the exact sole style to all four native video elements. It fills the parent frame with absolute inset, 100% width/height, and zero padding.
+- Updated `youtube-video-wrap` to `position: relative`, 100% width, 16:9 aspect ratio, and hidden overflow while preserving its existing 16px radius.
+- Preserved Luminance's existing 100%, 16:9, variable-radius, hidden-overflow frame and added only the required relative positioning context.
+- Added one idempotent site-footer manager marked `id-youtube-native-manager:v1`. It normalizes all YouTube embed iframes with `enablejsapi`, `playsinline`, `rel`, and `origin`; pauses other players when one plays; pauses players on hidden/pagehide; and cues the initial video after the ended state.
+- Footer read-back confirmed one manager marker, all required lifecycle hooks, zero `!important`, and zero `pointer-events` rules. Existing search and release-board scripts were preserved.
+- Element read-back confirmed exact `youtube-native-player` style lists on all four videos and zero matches for the removed legacy HtmlEmbed.
+- Style read-back confirmed main values and empty local overrides at `medium`, `small`, and `tiny`, so all responsive breakpoints inherit the canonical main frame.
+- Designer element snapshot returned an empty MCP response after the page canvas opened. DOM, settings, exact class, breakpoint, and custom-code read-back passed; post-publish browser verification remains pending because publish was not authorized.
+- Native YouTube focus behavior remains subject to the cross-origin iframe: mouse and trackpad page scrolling are restored by removing the legacy pointer-event interception, but arrow keys intentionally continue to operate YouTube controls while the iframe itself owns keyboard focus.
+- No publish was performed.
+
+## 2026-08-28 Body typography and contrast normalization
+
+- Normalized both canonical body roles to the same hierarchy: `section-content-body` and `section-micro-body` now resolve to `18px`, `161.8%`, and regular weight. `section-content-body` keeps its existing typography variables; `section-micro-body` now uses `type/section/micro/body/font-size` at `18px`.
+- Removed the explicit responsive font-size overrides from the canonical `section-content-body` and `section-micro-body` globals so `main`, `medium`, `small`, and `tiny` inherit the same 18px source of truth.
+- Increased body contrast without collapsing the title/body hierarchy: `color/text/body` changed from `#FFFFFFD1` to `#FFFFFFE0`, and `color/text/body-invert` changed from `#354A54` to `#263A44`.
+- Audited all 42 site pages after isolating duplicate `section-micro-body` combo selectors. No page element referenced the isolated combos. Ten unused legacy combos were removed.
+- One unused combo remains as `.text-body-invert.migration-temp-micro-body-4` (`69bcd822-3d2e-c64b-b65d-cd20543c517b`). Site-wide usage scan found zero element references, but Webflow MCP `remove_style` currently returns an internal error for this selector. It has no visual effect and remains a cleanup item rather than a runtime dependency.
+- Variable and style read-back confirmed the stored 18px sizes and updated body colors. Designer snapshot of `sub-lpo-services` confirmed the brighter body contrast and preserved layout.
+- No publish was performed.
+
+### Site-wide YouTube completion
+
+- Audited all 42 discoverable static, utility, CMS-template, catalog, and draft pages for both native `YouTubeVideo` elements and page-level `HtmlEmbed` elements.
+- Additional video surfaces found after the Docusign/Luminance pass: Kiteworks native video `942e8289-3d4d-9834-3de6-cf45377e21a8` (`9M0a6DBdWP0`, `What Is Kiteworks`) and Reveal iframe embed `094ef9bb-a915-145b-afff-4c0d09ec2f8e` (`ROOKpNDYSUY`, `Reveal overview`).
+- Applied exact sole style `youtube-native-player` to the Kiteworks native video. Its existing `youtube-video-wrap` parent inherits the already-verified canonical 16:9 frame.
+- Reveal's existing `sub-reveal-intro__media` parent already stores relative positioning, 100% width, 16:9 ratio, hidden overflow, 20px radius, variable border, and variable background with no medium/small/tiny overrides; those values were preserved.
+- The current MCP can create a native YouTube element but rejected writing its required video setting. The empty probe element was immediately removed and read back at zero matches. The working Reveal iframe and its URL/title were therefore preserved, assigned only `youtube-native-player`, and remain covered by the site-level YouTube IFrame API manager.
+- Other audited HtmlEmbeds were non-video code: Careers presentation CSS/SVG, Insights hover CSS, Locations Google Maps, Litera marquee CSS, and an empty Release Notes attachment hook. They were not changed.
+- Final read-back confirmed Kiteworks and Reveal exact class lists, the removed probe at zero matches, and no changes to video copy, URLs, page structure, component variants, CMS data, or publish state.
+- Reveal Designer snapshot returned `status: false` after the canvas opened; DOM, class, settings, wrapper-style, and breakpoint read-back passed, while browser-level visual verification remains pending until an authorized publish or preview is available.
+- No publish was performed.
+
+### Docusign hidden-tab thumbnail quality correction
+
+- Confirmed all three source videos provide real 1280x720 `maxresdefault.jpg` assets, so the blurred poster was not caused by missing high-resolution source thumbnails.
+- Root cause was lifecycle timing: the eSignature and CLM panels start with `hidden` and `aria-hidden=true`, while YouTube manager v1 normalized and initialized every iframe at DOM ready. Hidden iframe viewports therefore had no usable rendered size, and tab activation reused that early player state.
+- Replaced the single site-footer marker `id-youtube-native-manager:v1` with idempotent `v2`. V2 skips frames inside `[hidden]`, requires a rendered viewport of at least 200x200, observes `hidden`, `aria-hidden`, and `class` changes, and waits two animation frames after activation before normalizing and connecting the player.
+- Preserved native YouTube controls, 16:9 wrapper geometry, API parameters, one-player-at-a-time pause behavior, hidden/pagehide pause behavior, and ended-state cue reset.
+- Footer read-back confirmed zero v1 markers, exactly one v2 marker, the hidden/viewport guards, tab-state observer, double-frame scheduling, lifecycle controls, zero `!important`, and zero `pointer-events` rules.
+- Live tab-flow capture could not run because the Codex in-app browser runtime failed to write its local kernel assets. Stored Webflow tab attributes, player settings, wrapper styles, source thumbnail dimensions, and custom-code read-back passed. Final customer-visible validation remains pending until preview/publish can execute the updated footer code.
+- No publish was performed.
+
+### 2026-08-28 Safe legacy migration gate audit
+
+- Rechecked the Data Analytics `Structured Analytics` surface in the live Designer. The section root `ae7b77f7-fd29-e102-eafe-777fc213583b` resolves as a light `bg-secondary` surface, and the rendered headings, body copy, and three `num-badge size-lg is-brand` markers have readable dark/brand contrast. No color-class mutation was made from selector names alone.
+- The same Data Analytics section still stores legacy/combo structure names including `sub-ai-adopt-process Copy`, `u-section-padding`, and `u-no-container`. The relevant padding selector is a combo path (`.sub-ai-adopt-process.u-section-padding`), so replacing the class list before selector-layer normalization could remove layout values. The root/container migration remains intentionally gated.
+- Rechecked Docusign product tab panels. IAM remains `product-tabs__panel product-tabs__panel--active`; the hidden eSignature and CLM panels still store only `product-tabs__panel--active` together with `hidden` and `aria-hidden=true`.
+- Attempted to normalize the two hidden panels to standalone `product-tabs__panel`, but Webflow rejected both writes with `One or more styles not found: product-tabs__panel`. No panel class, attribute, content, video, or interaction state changed. A global base selector must be normalized or recreated before retrying this migration.
+- No temporary selector, custom CSS, `!important`, destructive cleanup, CMS mutation, component variant change, or publish was performed.
+
+### 2026-08-28 Docusign product-tab selector normalization
+
+- Completed the previously gated Docusign panel-class migration on page `6a531d0c85ba94997412b0ce` without changing tab content, attributes, videos, or interaction code.
+- Registry inspection found one valid standalone base selector (`product-tabs__panel`, `23cc9c0b-5811-3783-921b-6de26282c846`), one valid active combo (`.product-tabs__panel.product-tabs__panel--active`, `9bdb176d-28fc-3131-ced1-7d3be12c233d`), and one reversed combo that reused the base name (`.product-tabs__panel--active.product-tabs__panel`, `5f3cf619-3f7c-cb82-a8a2-9d85f1a50054`). The reversed combo caused name-based MCP writes to reject the standalone base as ambiguous.
+- Preserved the reversed combo and its stored properties but isolated its name as `migration-temp-product-tabs-panel-order`; it was not deleted. Docusign page usage read-back returned zero elements using the isolated name.
+- Final exact panel state:
+  - IAM `49ce6b20-e756-8d5d-e849-bf27fccf0044`: `product-tabs__panel product-tabs__panel--active`, `aria-hidden=false`;
+  - eSignature `04ea9fcf-f013-3437-dc4a-adba61f5aca4`: `product-tabs__panel`, `hidden`, `aria-hidden=true`;
+  - CLM `f032750f-b131-7ef5-f477-e8526a18f0eb`: `product-tabs__panel`, `hidden`, `aria-hidden=true`.
+- Stored-state and selector-registry read-back passed. Designer snapshots of both the product-tabs root and active IAM panel returned empty MCP responses, so rendered verification remains pending and this normalization is not claimed as visually complete.
+- No custom CSS, `!important`, selector deletion, CMS mutation, component variant change, or publish was performed.
+
+### 2026-08-28 Insights CMS whitespace normalization
+
+- Audited all seven CMS collections (122 staged items total). High-confidence visible whitespace defects were isolated to the 78-item Insights collection `6a508428578978d6ae556cfa`; Rich Text tag-boundary whitespace in Newsroom, Release Notes, and Careers was excluded as non-visible structure rather than edited.
+- Used staged partial updates only. A one-item pilot confirmed omitted fields remained unchanged before the remaining work was applied in batches of at most five items.
+- Updated 39 Insights items: 35 `summary` fields, 35 matching `seo-description` fields, two each of `name`, `seo-title`, and `thumbnail-alt`, and seven Rich Text `body` fields. These totals include the one-item pilot.
+- Plain-text normalization removed only whitespace immediately before `. , ? !` and their CJK equivalents plus zero-width characters (`U+200B`–`U+200D`, `U+FEFF`). The two title records collapsed only repeated ASCII spaces. Numeric, parenthetical, English/product-name spacing, and `&nbsp;` were intentionally preserved.
+- Rich Text normalization tokenized the stored HTML and changed text segments only; tag markup, attributes, links, lists, emphasis, and other structure were preserved.
+- Full 78-item staged read-back returned zero mismatches against every requested field value. Remaining checks returned zero Summary punctuation-space rows, zero Summary zero-width rows, zero SEO-description punctuation-space rows, zero SEO-description zero-width rows, zero title-family repeated-space rows, and zero selected Body text-node punctuation-space matches.
+- Completed the two previously missing-content cases without inventing legacy article copy. Slug `305` received a source-grounded Summary and matching SEO description, and its dedicated thumbnail alt, thumbnail image alt, and OG image alt were corrected from the unrelated robot-vacuum title to the article title. Slug `191` had its complete Rich Text Body restored from the public legacy `/post/191` source; Webflow resolved the lead image to the existing CDN asset on save.
+- Extended the same text-node-only normalization to the remaining 49 Rich Text bodies in batches of at most five items. This removed only zero-width characters and ASCII whitespace immediately before punctuation while preserving HTML tags, attributes, links, images, emphasis, lists, and non-breaking spaces.
+- Final full 78-item staged read-back returned: zero empty Summary fields, zero empty Body fields, zero preview/SEO punctuation-space rows, zero preview/SEO zero-width rows, zero repeated-title-space rows, zero Body punctuation-space rows, zero Body zero-width rows, and zero duplicate slugs. Slug `191` retained the expected heading and CDN image; all three slug `305` alt values exactly match its article title.
+- A representative Insights card Designer snapshot returned an empty MCP response. Stored CMS verification passed, while rendered Designer verification remains pending.
+- No CMS item publish, site publish, schema change, slug change, date/category/reference change, or custom CSS was performed.
+
+### 2026-08-28 Weight variable mapping correction
+
+- Confirmed the canonical Base collection scale: `Weight/Regular` 400 (`--weight--regular`), `Weight/Medium` 500 (`--weight--medium`), `Weight/SemiBold` 600 (`--weight--semibold`), and `Weight/Bold` 700 (`--weight--bold`). No `Font/Weight/*` variables existed before this correction.
+- The stored style registry contained five invalid references: `.bold-parent.bold` and `.bold` used undefined `--font--weight-bold`; `.section-content-eyebrow.medium` used undefined `--font--weight-medium`; `.semibold-1-parent.semibold-1` used undefined `--font--weight-semibold`; `.regular-1-parent.regular-1` used undefined `--font--weight-regular`.
+- Rebound `.bold-parent.bold`, `.semibold-1-parent.semibold-1`, and `.regular-1-parent.regular-1` directly to the canonical Bold, SemiBold, and Regular variable IDs. A same-value update also bound `.section-micro-eyebrow.medium` to canonical `Weight/Medium`; this does not change its computed value.
+- Because the style API resolves duplicate selector names by name rather than the supplied selector ID, the remaining `.bold` and `.section-content-eyebrow.medium` rules could not be safely targeted without renaming classes. Added exact compatibility variables `Font/Weight-Bold` (`--font--weight-bold`, 700) and `Font/Weight-Medium` (`--font--weight-medium`, 500) instead. These make both stored references valid without changing element class lists or selector names.
+- A mistakenly shaped trial alias `--font--weight--bold` was removed immediately. Final read-back contains only the two exact compatibility CSS names above, and every remaining `font--weight` string reference now resolves to an existing Number variable with the expected value.
+- No element class, component, variant, breakpoint value, content, custom CSS, `!important`, publish, or selector deletion was performed.
+
+### 2026-08-28 `intro-title` language variant font mapping
+
+- Re-audited the active `intro-title` component (`43352630-4ca3-722b-7270-ff62ac820a04`) and its six variants. `English`, `English White`, and `English invert` already mapped `lang-variant` to `Font/En` (`variable-ad9aed0c-874f-af62-a7ff-0c57090bb8e1`), while `Base`, `KO White`, and `KO invert` had no stored font-family override and therefore fell back to the Base font.
+- Mapped the three KO variants' `lang-variant` selector to `Font/Ko` (`variable-594caf2b-9394-0f5f-2379-2c30cab5c727`) at `main`. Existing EN mappings, surface colors, typography scale, weight, content props, visibility props, variant IDs, and structure were preserved.
+- Read-back confirmed the final language matrix: Base / KO White / KO invert = `Font/Ko`; English / English White / English invert = `Font/En`. `medium`, `small`, and `tiny` contain no language override for the three modified KO variants and therefore inherit the `main` mapping consistently.
+- The shared `/components` catalog instances inherit the updated component variants automatically; no catalog structure or prop change was required.
+- A Designer snapshot of the known Data Analytics `intro-title` instance returned an empty MCP response. Variant stored-state and all modified breakpoint read-backs passed, but rendered snapshot verification remains pending.
+- No page content, instance prop, class list, component structure, custom CSS, `!important`, or publish was changed.
+
+## 2026-08-28 Typography and color override audit
+
+- Site-wide audit scope: 42 pages, 54 component definitions, and 1,974 style selectors.
+- Normalized active body typography paths so `section-content-body` and `section-micro-body` retain their variable-backed base size, 161.8% line-height, and regular weight without breakpoint-specific size or color contamination.
+- Removed active duplicate weight/color overrides from canonical section typography combinations and neutralized the legacy `lang-variant` font-family override.
+- Replaced the sole `intro-title-v2` catalog instance with the canonical `intro-title` component while preserving Variant, eyebrow, title, subtitle, body, and all visibility prop values.
+- Unregistered the deprecated `intro-title-v2` component and removed its dedicated `heading-64 regular text-title-v2` selector.
+- Read-back verification: `intro-title-v2` is no longer discoverable by component name; the replacement instance resolves to component `43352630-4ca3-722b-7270-ff62ac820a04` (`intro-title`) with the preserved content and visibility props.
+- Visual snapshot verification was attempted twice after selecting the replacement instance, but Webflow returned HTTP 504 and then `status:false`. Structural and prop read-back passed; no publish was performed.
+- Connector limitation: duplicate leaf selector names cannot always be targeted as a true global path through name-only style updates. Zero-use legacy selectors were not modified when exact targeting could not be verified.
+
+## 2026-08-28 Final section typography variable scale
+
+- Updated only the existing Typography collection semantic `type/section/*/*/font-size` variables. No selector, element class, component, content, CMS data, layout, color, weight, line-height, or custom code was changed.
+- Final order is `Base / Tablet / Mobile L / Mobile`:
+  - Head: eyebrow `22/20/19/18`, title `60/44/38/32`, subtitle `32/28/26/24`, body `26/24/23/22`.
+  - Lead: eyebrow `20/18/17/16`, title `48/36/32/28`, subtitle `28/25/24/22`, body `24/22/21/20`.
+  - Content: eyebrow `18/16/15/15`, title `30/27/25/24`, subtitle `24/22/21/20`, body `22/20/19/18`.
+  - Micro: eyebrow `16/15/14/14`, title `26/23/21/20`, subtitle `22/20/19/18`, body `20/18/18/17`.
+  - UI: eyebrow `14/13/13/12`, title `18/17/16/16`, subtitle `16/15/14/14`, body `16/15/14/14`.
+- Base variable read-back confirmed all 20 semantic font-size variables. Each mode update response confirmed the corresponding stored value; the timed-out Tablet eyebrow batch was retried successfully.
+- Designer element snapshots for the homepage head title and head body returned an empty response, so rendered snapshot verification remains pending. No production publish was performed.
+
+## 2026-08-28 Header `#top` interaction boundary correction
+
+- The supplied rendered DOM confirmed the shared header root is `div#top.header`, while the existing desktop expansion selector was limited to `.header__nav:hover` / `.header__nav:focus-within`. The language dropdown lives under `.header__actions`, outside `.header__nav`, so opening or entering the language list did not own the expanded header region.
+- Added one idempotent site-head block, `id-header-top-boundary`, scoped to desktop pointer environments. `#top.header:hover` and `#top.header:focus-within` now own the expanded padding and surface state, so navigation, language, logo, CTA, and other header descendants share one continuous boundary.
+- The expanded padding uses `max(var(--header-content-height, 0px), 65px) + 12px`: measured navigation panels can still grow the header further, while the language dropdown receives a stable minimum interaction corridor even before a navigation menu has been measured.
+- Leaving the actual `#top` box removes `:hover` and collapses through the existing header transition. Native Webflow Dropdown markup, menu links, language links, search, mobile drawer, component props, and DOM structure were preserved.
+- Site-head read-back confirmed exactly one marker, both `#top` selectors, the 65px minimum-height fallback, desktop-only scope, zero `!important`, and zero new `:has()` selector. Runtime hover traversal remains pending because the change is unpublished. No production publish was performed.
+
+### Superseded after interaction regression
+
+- The `id-header-top-boundary` hover block above was removed after testing exposed a self-retaining hover region: expanding `#top` enlarged the same hit area that owned `:hover`, preventing collapse and conflicting with native Dropdown click state.
+- Root-cause audit found two additional controller conflicts. Applied `id_header_dropdown_boundary` 1.0.2 captured `mouseout`, called `stopImmediatePropagation()`, and invoked `toggle.click()` while moving between menu items. Applied `id_header_overlay_states` 1.0.2 created a hidden fake `.header__menu-list` beside the real language dropdown to mirror `w--open`.
+- Replaced the applied scripts with `id_header_dropdown_boundary` 1.0.4 and `id_header_overlay_states` 1.0.3. Webflow native Dropdown now owns normal open/close behavior. The boundary controller only observes the real `.header__menu-list.w--open` and `.header__lang-list.w--open`, synchronizes `has-open-menu` and the body-level backdrop, and closes real open dropdowns when the pointer or keyboard focus leaves the complete Header.
+- Removed all capture-level `mouseout` suppression, menu `mouseenter` forced clicks, and the fake language-menu mirror. Overlay 1.0.3 retains only the required search-open and native language-list display rules.
+- Added one state-only head block, `id-header-open-surface-state`. Header expansion now depends on `#top.header.has-open-menu`, not `#top:hover`; therefore the expanded area cannot keep itself open. The existing measured panel height remains supported with a 65px minimum for the compact language menu.
+- Final read-back: boundary `1.0.4`, overlay `1.0.3`, all 15 pre-existing applied script entries preserved, no `mouseout` capture, no menu-enter click, real language selector present, fake mirror absent, one state marker, no hover-owned expansion, and no `!important`. Runtime pointer traversal remains pending because the changes are unpublished. No production publish was performed.
+
+### Header close-position shift correction
+
+- The remaining close-time position jump came from animating `padding-bottom` on the `#top.header` layout box. Collapsing that padding changed the header's actual box height, so the document/reference position moved while the dropdown was closing.
+- Reworked `id-header-open-surface-state` so the Header root remains at its stable 80px layout height with `padding-bottom: 0`. Desktop overflow is visible for the existing absolute dropdown panels.
+- The existing first child `.header__surface` now owns the visual expansion: 80px closed and `80px + measured content height + 12px` while `has-open-menu` is active. Surface height and colors retain the existing easing, but the page flow no longer changes.
+- Read-back confirmed one state marker, fixed root padding, visible overflow, 80px closed surface, open-state expansion only on `.header__surface`, no open-state root padding, and zero `!important`. Runtime pointer/position validation remains pending because the changes are unpublished. No production publish was performed.
+
+### 2026-08-28 Careers interview modal visibility repair
+
+- Diagnosed the Careers `보러가기` failure as a presentation-state mismatch rather than a broken trigger. The trigger stores `data-modal-open="interview-ediscovery-pm"`, and the dialog root stores the matching `data-modal="interview-ediscovery-pm"`; the existing controller opens the root, applies scroll lock and focus handling, and supports backdrop, close-button, and Escape dismissal.
+- The Careers panel was left at `opacity: 0` and `filter: blur(12px)`, while the controller toggled the unstyled `is-careers-visible` state. The later shared `.ui-modal-surface` selector also stored `opacity: 0`, so changing only the page-specific selector would still lose in the cascade.
+- Normalized visibility ownership: `.sub-careers-modal__panel` now stores `opacity: 1`, `filter: blur(0px)`, and its existing geometry/transition values; `.ui-modal-surface` now stores `opacity: 1`. The modal root remains the sole closed/open owner through `hidden`, `aria-hidden`, backdrop opacity, pointer-event blocking, and the existing `is-visible` state.
+- Stored DOM read-back confirmed the exact trigger element, matching modal key, dialog accessibility attributes, exact root classes `sub-careers-modal ui-modal-backdrop`, and exact panel classes `sub-careers-modal__panel ui-modal-surface`. Style-registry read-back confirmed both relevant selectors at `opacity: 1` and the Careers panel at `blur(0px)` with no responsive overrides returned.
+- No modal copy, link target, media, DOM structure, component variant, custom JavaScript, `!important`, CMS data, or publish state changed.
+- Browser click-through validation could not run because the Codex in-app browser runtime failed to write its local kernel assets. Stored-state verification passed; customer-visible runtime verification remains pending until an authorized preview/publish is available.
+
+### 2026-08-28 Header submenu hover-boundary repair
+
+- Diagnosed the disappearing desktop submenu as a native Webflow Dropdown hit-area gap. The shared header is 80px tall, but `.header__menu` previously occupied only its text-height while `.header__menu-list` was absolutely positioned at `top: 50px`; moving from a toggle toward its panel could therefore leave the Dropdown root before reaching the panel.
+- Kept the native Webflow Dropdown structure and behavior. At `main`, `.header__nav` now uses `align-self: stretch`, `.header__menu` uses `align-self: stretch` with centered content, and `.header__menu-list` is anchored at `top: 100%` so the trigger, header-height hover region, and submenu form one continuous interaction boundary.
+- The submenu consequently remains open while the pointer moves from its top-level item into the panel and closes through Webflow's existing native leave behavior only after the pointer leaves the menu/panel boundary. No synthetic hover controller, custom JavaScript, `!important`, or arbitrary close timer was added.
+- MCP style read-back confirmed the three exact global selectors and their final `main` values. No medium, small, or tiny override was introduced; the existing separate mobile header behavior remains unchanged.
+- A Designer snapshot of the shared `header` component confirmed the desktop header layout remained aligned after the geometry change. Interaction click-through on unpublished state could not be exercised by the unavailable in-app browser runtime.
+- No header copy, links, component props or variants, mobile drawer, CMS data, or publish state changed.
+
+### 2026-08-28 Header-owned dropdown boundary and backdrop motion
+
+- Refined the desktop interaction boundary from each individual `.header__menu` to the complete shared `.header` region, including its open submenu descendants. Registered and applied the focused inline script `id_header_dropdown_boundary` version `1.0.0` at the site footer.
+- The controller preserves Webflow's native Dropdown elements and state. It suppresses only premature menu `mouseout` events whose destination remains inside the same header, closes sibling menus when entering another top-level menu, and closes all open menus on the shared header's actual `mouseleave`. Keyboard focus leaving the header closes the same state as an accessibility fallback.
+- Added the single site-head runtime style block `id-header-dropdown-layer`, because Webflow-generated `.w--open` and `.is-closing` runtime states and the header pseudo-element backdrop cannot be expressed as static component selectors through the Designer style layer.
+- While a desktop submenu is open, the header receives a denser inverse surface, stronger border, and restrained shadow. The fixed backdrop covers the complete viewport with `inset: 0`, `rgba(1, 10, 16, .56)`, 8px blur, and reduced saturation; the header container and open submenu remain on the higher internal layer. The backdrop uses `pointer-events: none` so it does not create a second interaction trap.
+- Submenu entry uses a 320ms `cubic-bezier(.16, 1, .3, 1)` opacity/translate/scale/blur transition. Exit uses the existing `is-closing` lifecycle with a 220ms `cubic-bezier(.4, 0, 1, 1)` reverse transition. The backdrop/header use the shared 280–320ms emphasized easing, and `prefers-reduced-motion` reduces all of these transitions to effectively immediate state changes.
+- Final script/code read-back confirmed exactly one applied `id_header_dropdown_boundary` v1.0.0, exactly one `id-header-dropdown-layer` marker, the internal-boundary guard, the header-level leave handler, both motion paths, reduced-motion support, zero `!important`, and preservation of the existing YouTube manager footer marker.
+- The changes are scoped to desktop pointer/hover environments at 992px and above. Mobile header/drawer behavior, header copy and links, components/variants, CMS data, and publish state were not changed.
+- Stored-state verification passed. Customer-visible runtime hover/backdrop verification remains pending until an authorized preview/publish is available; no publish was performed.
+
+- The pseudo-element backdrop did not render reliably through the header's Webflow stacking context, so it was replaced rather than layered over. Added one real `header__backdrop` Div as the first child of the shared `header` component (`02040faf-f7ea-693a-a90f-c3bd47d360a9`) with `data-header-backdrop="true"` and `aria-hidden="true"`; all component instances inherit it.
+- Created the standalone global `.header__backdrop` selector with fixed full-viewport `inset: 0`, hidden/zero-opacity base state, `rgba(1, 10, 16, .56)`, 8px blur with reduced saturation, no pointer events, and the existing 280ms visibility transition.
+- Upgraded `id_header_dropdown_boundary` to v1.0.1. A subtree class observer now synchronizes the real backdrop Div's `is-visible` and `aria-hidden` states and the header's `has-open-menu` state from native `.header__menu-list.w--open` changes.
+- Replaced the runtime block atomically: `.header__backdrop.is-visible` is now the sole open-state rule; the failed `header::before` and `:has(...)` paths are both zero. Final read-back confirmed one real backdrop selector, one runtime marker, v1.0.1 applied once, full-screen inset, explicit ARIA synchronization, zero pseudo backdrop rules, zero `:has`, and zero `!important`.
+- The `/components` catalog header instance inherits the shared component's new internal Div automatically; no instance prop, variant, or catalog slot topology changed.
+
+- Final topology correction: the backdrop must not inherit the header component's stacking context. Removed element `02040faf-f7ea-693a-a90f-c3bd47d360a9` from the shared header definition; exact-ID read-back now returns `Element not found`, so no static backdrop remains inside the component or its catalog instance.
+- Upgraded `id_header_dropdown_boundary` to v1.0.2. It creates or reuses one `.header__backdrop` element and moves it to `document.body` as the first direct child before synchronizing native Dropdown state. This keeps the backdrop outside every header instance while remaining site-wide and idempotent.
+- The body-level backdrop runtime geometry is explicit: `position: fixed`, `top: 0`, `left: 0`, `width: 100vw`, `height: 100vh`, and `z-index: 999`; the shared header remains at `z-index: 1000`. The base hidden/opacity/blur/transition values and pointer-event pass-through remain unchanged.
+- Final read-back confirmed v1.0.2 applied once, direct `document.body.insertBefore` placement, explicit Div creation, all viewport geometry values, zero pseudo backdrop rules, zero `:has`, and zero `!important`. No publish was performed.
+
+### 2026-08-28 Insights slider horizontal-overflow containment
+
+- Confirmed the shared Insights slider uses `sub-gallery__arrow-prev` / `sub-gallery__arrow-next` controls positioned beyond the viewport edge. The arrows themselves, Swiper track, card geometry, and navigation behavior were preserved.
+- Applied `overflow: hidden` only to the relevant section roots: shared INDA `sub-gallery`, homepage `main-insights`, eDiscovery `sub-ediscovery-insights`, K-Discovery `sub-kdisc-insights`, and Data Analytics `sub-data-analytics-insights`.
+- Each exact selector update returned the stored `main` value `overflow: hidden`. No medium, small, or tiny override was introduced, so all lower breakpoints inherit the same containment rule.
+- No inner viewport, slider track, arrow component/variant, CMS binding or content, custom CSS, `!important`, or publish state changed.
+
+### 2026-08-28 Header overlay containing-block migration
+
+- Migrated the shared Header component `ce592e07-2e11-1f60-55a0-dab536e25ba9` without changing header copy, links, typography, spacing, native Dropdown structure, component props, or variants.
+- Added one first-child decorative Div `5e3485e5-811d-9c65-d2b8-9e51e68df351` with the exact class list `header__surface` and `aria-hidden="true"`. The `/components` catalog and every Header instance inherit this shared component structure automatically.
+- Created the standalone global selector `.header__surface` (`17ce5416-1e83-bd49-f974-8bf289841a32`) with the former Header visual surface: `rgba(6, 9, 14, 0.72)`, `blur(16px) saturate(120%)`, absolute full inset, `z-index: 0`, and no pointer events.
+- Removed only `background-color` and `backdrop-filter` from the global `.header` selector (`c35018d6-3d74-037c-28ab-aa374c62fe8e`). The root retains its fixed positioning, top offset, `z-index: 1000`, full width, and existing bottom border. This removes the filtered ancestor that previously changed the containing block of the fixed search panel.
+- Set `.header__container` (`d6dfa21c-6053-590c-4370-eae0821f5c27`) to `position: relative` and `z-index: 1`, keeping all header content and native Dropdown controls above the decorative surface.
+- Exact element read-back confirmed one surface element, its exact class and ARIA attribute, and root order `header__surface` before `header__container`. Exact style-ID read-back confirmed the final values above. No `medium`, `small`, or `tiny` overrides exist on the three changed selectors, so those breakpoints inherit the verified `main` state.
+- Designer snapshot verification timed out with HTTP 504. Stored component topology and responsive selector state passed, but search centering, EN/KO dropdown extension below the bar, and mobile drawer behavior remain customer-visible runtime verification items and are not claimed as visually complete.
+- No script, CMS data, localization content, custom CSS block, `!important`, or publish state changed.
+
+### 2026-08-28 Header search visibility and language hover boundary
+
+- Reproduced the stored-state cause of the search backdrop-only result: native `.header__search-panel` opened, but `.header__search-inner` remained permanently at `opacity: 0`, `filter: blur(12px)`, and `transform: scale(0.985)`. The panel's base `display: none` also required an explicit flex value for its generated `.w--open` runtime state to use the stored centering properties.
+- Registered and applied `id_header_overlay_states` version `1.0.2` as the fifteenth and final footer script. Its scoped runtime rules set `.header__search-panel.w--open` to flex and reveal only its existing `.header__search-inner` through `opacity: 1`, `blur(0)`, and `scale(1)`. Existing panel dimensions, backdrop color, dialog surface, copy, form, close control, and responsive widths were preserved.
+- Kept the native language Dropdown structure. Updated wrapper `ced00009-1345-7c9c-8935-280ca29ab9c0` to the exact attributes `data-hover=true`, `data-delay=0`, and `data-dropdown-exit-motion=true`, so leaving its DOM hover boundary closes it without the previous 350ms linger.
+- The same applied `id_header_overlay_states` version bridges `.header__lang-list.w--open` into the already verified `id_header_dropdown_boundary` v1.0.2 body-level backdrop state. This makes the language control use the same Header DOM boundary and backdrop ownership as the desktop navigation without adding a second backdrop controller.
+- Site script read-back confirmed all fourteen previous footer scripts were preserved and `id_header_overlay_states` v1.0.2 is applied exactly once. CDN source read-back confirmed the search open-state selectors and language bridge code. Attribute read-back confirmed the exact final language wrapper values.
+- Two exploratory registered versions were not applied: an empty `id_header_dropdown_boundary` v1.0.3 and `id_header_language_backdrop_bridge` v1.0.0/v1.0.1. They remain inert registry history because registered-script deletion was not authorized; none appear in the site applied-script list.
+- Customer-visible click/hover verification still requires an available unpublished Designer runtime or an authorized preview/publish. No publish, CMS data, localization content, Header copy/link, component prop/variant, or `!important` change was performed.

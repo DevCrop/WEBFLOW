@@ -132,6 +132,26 @@ section.sub-xxx.section-padding
 
 ## Typography Classes
 
+`section-micro-title`은 micro title의 단일 canonical selector다. `section-micro-title-24`처럼 크기를 이름에 덧붙인 파생 selector는 생성하거나 재사용하지 않고, 기존 사용처도 `section-micro-title`로 이관한다.
+
+`section-micro-title-24`는 호환 alias로도 유지하거나 사용하지 않는다. micro title의 유일한 허용 selector는 `section-micro-title`이다.
+
+Section semantic typography는 아래 Typography collection 변수값을 source of truth로 사용한다. 순서는 `Base / Tablet / Mobile L / Mobile`이다. Display와 `normal` 계열은 기존 scale을 유지한다.
+
+| Tier | Eyebrow | Title | Subtitle | Body |
+| --- | --- | --- | --- | --- |
+| Head | `22/20/19/18` | `60/44/38/32` | `32/28/26/24` | `26/24/23/22` |
+| Lead | `20/18/17/16` | `48/36/32/28` | `28/25/24/22` | `24/22/21/20` |
+| Content | `18/16/15/15` | `30/27/25/24` | `24/22/21/20` | `22/20/19/18` |
+| Micro | `16/15/14/14` | `26/23/21/20` | `22/20/19/18` | `20/18/18/17` |
+| UI | `14/13/13/12` | `18/17/16/16` | `16/15/14/14` | `16/15/14/14` |
+
+모든 `section-*-body`는 `171%`, 400, `-0.02em`을 사용한다. Title은 head/lead/content/micro 700, UI 600이며, subtitle·eyebrow는 600이다. 색상은 타이포 selector가 아니라 현재 surface에 맞는 `text-title`/`text-title-invert`, `text-body`/`text-body-invert`가 담당한다. 좁은 breakpoint에서도 낮은 tier가 높은 tier보다 커지지 않아야 하며 eyebrow에 body용 `171%` line-height를 연결하지 않는다.
+
+Section semantic typography는 기본 weight까지 완결된 역할로 정의한다. `head`/`lead`/`normal`/`content`/`micro` title은 700, UI title과 모든 subtitle·eyebrow는 600, 모든 body는 400이다. 같은 값의 `bold`/`semibold`/`regular`를 요소에 중복 적용하지 않는다. 다른 weight가 실제 의미 역할이라면 임시 utility override 대신 별도 semantic role을 먼저 검토한다.
+
+컴포넌트 내부에서는 title/body 역할 class를 variant마다 바꾸지 않는다. 동일 내부 역할 class 하나에 타이포 변수만 연결하고, light/dark 및 언어 variant는 component root의 상속 또는 variant override로 색상과 font-family를 바꾼다.
+
 기본 폰트는 `fm-base`다. 특정 요소만 바꿀 때 `fm-ko`, `fm-en`을 추가한다.
 
 - `display-200`
@@ -160,6 +180,8 @@ section.sub-xxx.section-padding
 타이포 클래스 내부에서 breakpoint별 font size, line height, letter spacing을 조정한다. 별도 responsive typography utility는 기본으로 만들지 않는다.
 
 텍스트 요소에는 typography/color/weight class를 조합해서 쓴다. 타이포 값은 `heading-*`/`body-*`가 source of truth이고, 색은 `text-*`, 굵기는 weight class가 담당한다.
+
+Weight의 canonical 변수는 `Weight/Regular` 400 (`--weight--regular`), `Weight/Medium` 500 (`--weight--medium`), `Weight/SemiBold` 600 (`--weight--semibold`), `Weight/Bold` 700 (`--weight--bold`)이다. 기존 동명 combo selector가 문자열로 참조하는 `--font--weight-medium`과 `--font--weight-bold`는 각각 500과 700의 호환 변수로만 유지하며, 신규 selector에는 사용하지 않는다.
 
 현재 기준 Webflow global selector에 적용해야 하는 base scale은 다음과 같다.
 
@@ -445,6 +467,8 @@ Variant/state:
 
 모든 컴포넌트와 variant는 Webflow 변수를 기준으로 스타일링한다. 컴포넌트 내부에 색상, 배경, border, surface, text color, shadow, radius, spacing, typography 값을 hex나 임의 숫자로 직접 고정하지 않는다.
 
+variant가 내부 요소의 색상이나 surface를 바꾸는 경우, 그 요소는 모든 variant에서 동일한 component-role selector를 유지한다. 색상 modifier(`is-brand`, `is-plain`, `text-*-invert` 등)를 컴포넌트 정의에 고정하지 않고 base role selector와 variant style override가 값을 소유한다. 전역 atom은 여러 컴포넌트가 공유하는 geometry만 담당하며 특정 컴포넌트의 base 색상이나 typography를 흡수하지 않는다.
+
 예:
 
 - `fill-brand` background: `color/brand/primary`
@@ -603,8 +627,13 @@ Webflow에서 `heading-*`, `body-*`, `display-*`, `text-*`, `fm-*` 같은 utilit
 ## Icon / Num Utilities
 
 - `icon-wrap`은 SVG 또는 Image가 들어갈 수 있는 범용 아이콘 슬롯 wrapper다. 기본 64×64, flex-center, overflow hidden으로 둔다.
-- 번호 뱃지는 base/size/color를 분리한다: `num` + `num-64`/`num-88` + `num-primary` 같은 조합을 쓴다.
-- `num-primary`처럼 색을 포함한 유틸은 배경과 텍스트 색을 반드시 변수에 연결한다.
+- 페이지의 독립 번호 뱃지는 `num-badge` geometry base와 `size-*`, `is-*` surface 조합을 사용한다.
+- variant가 있는 Webflow Component 내부 번호는 예외적으로 component-role selector(`num-card-num`, `icon-num-card__num`, `num-row__badge`, 내부 텍스트 `num-row__number`)를 모든 variant에서 유지하고, 색상·surface·typography 값은 해당 selector의 variant override가 소유한다.
+- 컴포넌트 정의 요소에 `is-brand`나 `is-plain`을 고정해 variant 로직을 우회하지 않는다.
+- 원형 번호 배지는 가장 가까운 실제 card/surface와 반대 대비를 사용한다. white/light surface에서는 brand/primary 배경 + light 숫자색, dark/brand surface에서는 white/light 배경 + dark 숫자색을 쓴다.
+- 번호 배지의 배경색과 숫자색은 반드시 한 쌍으로 variant override에 지정한다. 카드의 상속 color만 믿거나 배경만 바꾸지 않는다.
+- component-role selector의 width/height는 기존 component 크기를 보존하고, `display:flex`, `align-items:center`, `justify-content:center`, `flex-shrink:0`, 완전한 원형 radius를 base에서 소유한다. variant는 크기나 정렬을 중복하지 않고 surface/color만 override한다.
+- 원형 번호의 타이포는 주변 body/eyebrow에서 상속하지 않는다. `num-badge`와 component number role이 동일한 숫자 전용 font-family, font-size, line-height, weight, letter-spacing, `tabular-nums` 토큰을 직접 소유한다. 현재 반응형 크기는 main/medium에서 숫자 전용 base token, small 24px, tiny 20px이다.
 
 ## Common Structure / Section BEM Rule
 
@@ -769,9 +798,37 @@ Rules:
 - The twelve `sub-visual-media-*` desktop/mobile components are media-only slot children. They must not contain text or title styles; the parent `sub-visual` owns and renders the title.
 - Do not create page-specific or media-specific title-size selectors for these variants.
 
+## Static display and UI label roles (2026-08-28)
+
+- `section-display-title` is the semantic title tier for exceptional static-page display copy that is larger than `section-head-title`. It must use `type/section/display/title/*` variables rather than legacy `display-*` selectors.
+- `section-ui-label` is the semantic role for prominent interface guidance labels that are not content body copy. It must use `type/section/ui/label/*` variables rather than page-scoped `*--context-*` selectors.
+- Font family, weight, and color remain separate utilities. English display or UI labels may add `fm-en`; weight and surface-aware color must still be explicit.
+- Current homepage Hero reference paths are `fm-en section-display-title regular text-title` and `fm-en section-ui-label regular text-body`.
+- These roles do not authorize page-specific typography selectors. Add a new role only when an existing semantic role cannot preserve the intended hierarchy without changing other consumers.
+
 Official references:
 
 - https://developers.webflow.com/mcp/tools/data-tools
 - https://help.webflow.com/hc/en-us/articles/33961268146323-Variables
 - https://help.webflow.com/hc/en-us/articles/33961300305811-Breakpoints-overview
 - https://help.webflow.com/hc/en-us/articles/33961311094419-Classes
+
+## Homepage statistic typography
+
+- Homepage statistic values use the standalone `section-stat-value` role.
+- `section-stat-value` inherits the base font family; do not add `fm-en` or language-specific font utilities.
+- Statistic labels and descriptions are centered by the `number-item-body` layout wrapper through `align-items: center` and `text-align: center`.
+- Do not create numbered typography selectors or attach alignment through legacy size classes.
+
+- `section-stat-value` uses `font-weight: 400` directly and inherits the base font family.
+- `number-item-head` owns statistic-value alignment with `width: 100%`, `justify-content: center`, and `text-align: center`.
+- `number-item-body` owns label/description alignment with `align-items: center` and `text-align: center`.
+
+## Native YouTube video
+
+- Use Webflow's native `YouTubeVideo` element and keep the native YouTube controls. Do not add click-to-enable overlays, custom play/scroll buttons, or pointer-event switching.
+- The media wrapper owns `position: relative`, `width: 100%`, `aspect-ratio: 16 / 9`, `overflow: hidden`, and the approved radius.
+- The native video element uses the single global `youtube-native-player` class to fill its wrapper. Do not add page-specific player classes.
+- The site-level player manager may add `enablejsapi=1`, `playsinline=1`, `rel=0`, and `origin` at runtime, pause other players when one begins, pause on page hide, and cue the initial frame after playback ends.
+- Do not use `!important`, `pointer-events` overrides, or replace the native player controls with custom UI.
+- Do not initialize a YouTube player while it is inside a `hidden` tab panel or below the 200x200 minimum rendered viewport. Observe tab visibility changes and connect the player only after the active panel has completed layout; hidden players must wait until their first visible activation.

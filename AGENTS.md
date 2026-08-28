@@ -86,6 +86,7 @@ Codex는 이 파일을 직접 읽고, Claude Code는 `CLAUDE.md`에서 이 파�
 - `body-24`, `body-20`, `body-18`
 - letter spacing은 `-2%` 기준으로 관리합니다.
 - `body-20`은 단독 global typography utility여야 합니다. `body-2` 또는 `legacy-body-20-combo`는 이전 selector 마이그레이션 잔여물로 보고 새 작업에 사용하지 않습니다.
+- micro title은 기존 global `section-micro-title`만 사용합니다. `section-micro-title-24` 같은 크기 suffix 파생 selector는 생성·재사용하지 않으며, 발견 시 canonical `section-micro-title`로 마이그레이션합니다.
 
 ### Text Class Rule
 
@@ -98,6 +99,7 @@ Codex는 이 파일을 직접 읽고, Claude Code는 `CLAUDE.md`에서 이 파�
 - 기본 작업 중 `body-* text-body regular`를 먼저 넣었더라도, 배경 검토 후 dark 영역에서는 `text-body`를 제거하고 `text-body-invert`만 남깁니다.
 - 섹션별 `*-title`, `*-desc` 텍스트 전용 클래스를 새로 만들지 않습니다. 레이아웃 wrapper가 필요할 때만 섹션 prefix BEM을 씁니다.
 - `display-*`/`heading-*`/`body-*`는 typography source of truth이며, 색은 `text-*`, 굵기는 `regular`/`medium`/`semibold`/`bold`로 분리합니다.
+- `section-*` semantic typography는 역할 자체에 기본 weight를 포함합니다. `section-head|lead|normal|content|micro-title`은 700, `section-ui-title`과 모든 `section-*-subtitle`/`section-*-eyebrow`는 600, 모든 `section-*-body`는 400입니다. 같은 값의 weight utility를 반복 조합하지 않습니다.
 - `fm-ko`/`fm-en` 같은 font-family utility는 필요한 경우에만 텍스트 태그에 추가할 수 있습니다.
 - `sub-visual` H1에는 `fm-en`, `sub-intro` H2에는 `fm-ko`를 사용해 제품명과 한국어 인트로의 톤을 통일합니다.
 - `sub-normal-banner-desc`, `section-title`, `legal-card__title`, `sub-legal-*__title` 같은 구조/섹션 전용 class는 텍스트 태그가 아니라 wrapper에만 씁니다.
@@ -117,6 +119,7 @@ Codex는 이 파일을 직접 읽고, Claude Code는 `CLAUDE.md`에서 이 파�
 Component variable rule:
 
 - 모든 컴포넌트 스타일은 Webflow 변수를 우선 사용합니다.
+- variant가 내부 요소의 색상이나 surface를 바꾸는 컴포넌트는 모든 variant에서 동일한 component-role class를 유지하고, 값만 variant style override로 변경합니다. `is-brand`, `is-plain`, `text-*-invert` 같은 시각 modifier를 컴포넌트 정의 요소에 고정해 variant 소유권을 우회하지 않습니다.
 - 색상, 배경, surface, border, text color, shadow, radius, spacing, typography 값은 컴포넌트에 hex나 임의 숫자로 직접 고정하지 않습니다.
 - 예: `fill-brand`는 `color/brand/primary`, `outline-brand`의 border도 `color/brand/primary`를 참조합니다.
 - `fill-white`, `outline-white`, `fill-black`, `outline-black`도 각각 `color/base/white`, `color/base/black`, `color/text/*`, `color/border/*` 토큰을 사용합니다.
