@@ -1,834 +1,94 @@
-# Webflow Design System
+# Webflow Design System Overview
 
-이 문서는 Webflow 사이트를 다시 정리하기 위한 최종 클래스, 변수, 컴포넌트 기준이다. 목표는 페이지마다 클래스를 늘리는 방식이 아니라 범용 유틸리티, 실제 Webflow Component, 공통 구조 클래스, 필요한 경우의 섹션 prefix BEM과 컴포넌트 내부 역할 클래스로 유지보수 가능한 구조를 만드는 것이다.
-실제 페이지/섹션/카드/CTA 구조를 짜기 전에는 `docs/webflow-layout-flow-examples.md`의 케이스를 반드시 먼저 확인한다.
+contract_version: `2026-08-30.1`
 
-## 방향
+This is the human-readable overview of the Intellectual Data Webflow design system. Exact selector composition, values, breakpoints, and variables live only in:
 
-- 범용 클래스만 기본 시스템에 남긴다.
-- 섹션은 같은 골격으로 반복한다.
-- 섹션 고유 디자인은 전역 클래스로 흩뿌리지 않고 해당 섹션 root prefix의 BEM으로 제한한다.
-- 폰트, spacing, grid, color, border는 변수와 유틸리티로 관리한다.
-- Webflow native element와 feature를 먼저 쓴다.
-- 기존 레거시 이름은 사용하지 않는다.
+`.agents/skills/webflow-design-system/references/class-contract.md`
 
-## Native First Rule
+## Goals
 
-Webflow가 제공하는 native element와 feature가 있으면 그것을 먼저 사용한다. native 기능은 Designer에서 구조와 설정을 읽기 쉽고, 접근성/상태/반응형 관리가 custom code보다 안전하다.
+- predictable semantic typography
+- variable-backed colors and responsive values
+- stable reusable component internals
+- root-owned component color inheritance
+- minimal page-specific CSS
+- measurable MCP migrations with read-back
+- no accidental publish
 
-- slider/carousel: Webflow `Slider`를 먼저 사용한다.
-- navigation/menu: `Navbar`, `Dropdown`, link block, component variant/property를 먼저 사용한다.
-- tabs/accordion 성격의 전환 UI: `Tabs` 또는 Webflow interaction이 적합한지 먼저 검토한다.
-- form/newsletter/contact: Webflow `Form` element를 먼저 사용하고, 외부 저장이나 API write가 필요하면 서버 사이드 연동으로 분리한다.
-- 반복 콘텐츠: CMS Collection/List 또는 Component instance를 먼저 사용한다.
-- 재사용 UI: 실제 Webflow `Component`와 variant/property를 먼저 만든다.
-
-임의 `Div Block` 조합, custom JS, HtmlEmbed는 native 기능으로 요구사항을 충족할 수 없을 때만 쓴다. fallback을 쓰면 이유, 대상 page/element ID, 대체 불가 조건을 `docs/webflow-implementation-status.md`에 남긴다.
-
-## Standard Section
+## Architecture
 
 ```text
-section.sub-xxx.section-padding
-  no-container
-    sub-xxx__inner
-      sub-section-txt
-        sub-section-txt-eyebrow
-        sub-section-txt-title
-          h2 ~ h6
-        sub-section-txt-body
-          p
-      section-contents
-        ul / li / grid / CMS list / dynamic content
+section.[main-*|sub-*].section-padding
+  no-container | no-container-xl
+    [main/sub]-scope__inner
+      text group
+      section contents
 ```
 
-메인 페이지 고유 섹션은 `main-*`, 서브 페이지 고유 섹션은 `sub-*`로 시작한다.
-`impact`, `security`, `features`, `trust`처럼 여러 제품 페이지에서 반복될 수 있는 역할명은 페이지 약어를 함께 넣는다.
-예: Luminance 고객 사례 섹션은 `sub-impact`가 아니라 `sub-lumi-impact`를 사용한다.
-섹션 root class는 고유해야 하며, 공통 재사용 섹션인 `sub-visual`, `sub-intro`, `main-cta`, `sub-cta`만 예외다.
-`sub-section-txt`와 `section-contents`는 형제 요소다. `section-contents`를 `sub-section-txt` 안에 넣지 않는다.
-공통 구조 클래스(`no-container`, `sub-section-txt`, `section-contents`, typography/color/weight utilities)는 그대로 재사용한다.
-섹션별 디자인/레이아웃 커스텀 클래스는 root prefix와 일치하는 BEM을 쓴다.
-예: `sub-legal-problems__grid`, `main-services__card`.
-섹션별 card wrapper는 해당 카드의 단일 소유 class만 사용한다.
-예: `sub-lumi-impact__card`.
-이 wrapper에 `bg-*`, `surface-*`, `border-*`, `radius-*` utility를 조합하지 않는다.
+Use shared structural classes for repeatable layout and short root-owned roles for custom section internals. Avoid generated, numeric, vague, and page-specific typography selectors.
 
-텍스트 태그에는 구조/섹션 전용 class를 붙이지 않는다.
-`h1`~`h6`는 `display-*` 또는 `heading-*` + `text-*` + weight class 조합만 사용하고,
-`p`는 `body-*` + `text-*` + weight class 조합만 사용한다.
-예: `display-88 text-title bold`, `heading-54 text-title bold`, `body-20 text-body regular`.
-텍스트 컬러 utility는 반드시 배경을 먼저 판정한 뒤 확정한다.
+## Typography model
 
-1. 섹션 root의 background/surface를 확인한다.
-2. 텍스트가 실제 `card` 컴포넌트, 패널, 리스트 아이템, 배너 안에 있으면 가장 가까운 명시적 surface wrapper의 background를 다시 확인한다. 섹션별 `sub-xxx__card` wrapper는 별도 배경 surface로 보지 않는다.
-3. dark background/surface 위의 제목은 `text-title-invert`, 본문은 `text-body-invert`를 사용한다.
-   `bg-primary`는 section이나 명시적 surface wrapper에 붙었을 때만 dark surface context로 본다.
-   `p`, `h1`~`h6`, text span 같은 텍스트 태그에 `bg-*`가 직접 붙어 있으면 의도된 surface가 아니라 sticky combo 오염으로 보고 제거하거나 배경만 neutralize한다.
-4. light/white background/surface 위의 제목은 `text-title`, 본문은 `text-body`를 사용한다.
-5. 같은 텍스트 태그에 `text-body`와 `text-body-invert`, 또는 `text-title`과 `text-title-invert`를 동시에 남기지 않는다.
-6. 기본 작업 중 `body-* text-body regular`를 먼저 넣었더라도 dark surface로 판정되면 `set_style: []` 후 `body-* regular text-body-invert`만 재적용한다.
+Standalone text combines:
 
-`fm-ko`/`fm-en` 같은 font-family utility는 필요한 경우에만 텍스트 태그에 추가할 수 있다.
-서브 페이지 공통 hero인 `sub-visual`의 제품/솔루션명 H1에는 `fm-en`을 붙인다.
-`sub-intro`의 한국어 H2에는 `fm-ko`를 붙여 인트로 톤을 통일한다.
-`sub-normal-banner-desc`, `section-title`, `legal-card__title`, `sub-legal-*__title` 같은 구조/섹션 전용 class는 텍스트 태그가 아니라 wrapper에만 쓴다.
-이미지나 로고가 필요한 자료는 실제 에셋이 없어도 media/bg/icon placeholder wrapper를 먼저 잡는다.
+`semantic tier + weight + color`
 
-`container`/`*__container`는 섹션에서 절대 쓰지 않는다. 페이지/섹션 폭 래퍼는
-`no-container` 또는 폭 variant인 `no-container-xl`을 사용한다. Header만 예외로
-`header__container`를 쓴다.
+A text group uses one tier consistently. Content is at least 18px; the 16px floor is reserved for independent UI. Shared title hierarchy, responsive sizes, line heights, letter spacing, and approved weights are defined only in the class contract.
 
-## Variables
+Every semantic selector uses `Font/Base`. Language-specific selectors and typography variants are not part of the canonical system.
 
-### Color
+## Color model
 
-- `color/base/black`
-- `color/base/white`
-- `color/brand/primary`
-- `color/brand/secondary`
-- `color/brand/accent`
-- `color/text/primary`
-- `color/text/secondary`
-- `color/text/muted`
-- `color/text/inverse`
-- `color/background/primary`
-- `color/background/secondary`
-- `color/background/inverse`
-- `color/surface/primary`
-- `color/surface/secondary`
-- `color/surface/elevated`
-- `color/border/default`
-- `color/border/weak`
-- `color/border/strong`
-- `color/border/inverse`
-- `color/state/success`
-- `color/state/warning`
-- `color/state/error`
-- `color/state/info`
-- `color/overlay/dark`
-- `color/overlay/light`
+Normal selectors are white-family text for dark surfaces. Invert selectors are black-family text for light surfaces. Invert never means white.
 
-### Space
+Standalone text applies the correct color selector. Reusable components do not apply global `text-*` selectors internally: their owned root binds inherited text variables and variants switch those root variables.
 
-- `space/0`
-- `space/2xs`
-- `space/xs`
-- `space/sm`
-- `space/md`
-- `space/lg`
-- `space/xl`
-- `space/2xl`
-- `space/3xl`
-- `space/4xl`
+## Component model
 
-### Other Tokens
-
-- `radius/none`, `radius/sm`, `radius/md`, `radius/lg`, `radius/xl`, `radius/full`
-- `border/width/default`, `border/width/strong`
-- `shadow/sm`, `shadow/md`, `shadow/lg`
-- `layout/container`, `layout/container/narrow`, `layout/container/wide`, `layout/gutter`
-- `font/base`, `font/en`, `font/ko`
-- `weight/regular`, `weight/medium`, `weight/semibold`, `weight/bold`
-
-## Typography Classes
-
-`section-micro-title`은 micro title의 단일 canonical selector다. `section-micro-title-24`처럼 크기를 이름에 덧붙인 파생 selector는 생성하거나 재사용하지 않고, 기존 사용처도 `section-micro-title`로 이관한다.
-
-`section-micro-title-24`는 호환 alias로도 유지하거나 사용하지 않는다. micro title의 유일한 허용 selector는 `section-micro-title`이다.
-
-Section semantic typography는 아래 Typography collection 변수값을 source of truth로 사용한다. 순서는 `Base / Tablet / Mobile L / Mobile`이다. Display와 `normal` 계열은 기존 scale을 유지한다.
-
-| Tier | Eyebrow | Title | Subtitle | Body |
-| --- | --- | --- | --- | --- |
-| Head | `22/20/19/18` | `60/44/38/32` | `32/28/26/24` | `26/24/23/22` |
-| Lead | `20/18/17/16` | `48/36/32/28` | `28/25/24/22` | `24/22/21/20` |
-| Content | `18/16/15/15` | `30/27/25/24` | `24/22/21/20` | `22/20/19/18` |
-| Micro | `16/15/14/14` | `26/23/21/20` | `22/20/19/18` | `20/18/18/17` |
-| UI | `14/13/13/12` | `18/17/16/16` | `16/15/14/14` | `16/15/14/14` |
-
-모든 `section-*-body`는 `171%`, 400, `-0.02em`을 사용한다. Title은 head/lead/content/micro 700, UI 600이며, subtitle·eyebrow는 600이다. 색상은 타이포 selector가 아니라 현재 surface에 맞는 `text-title`/`text-title-invert`, `text-body`/`text-body-invert`가 담당한다. 좁은 breakpoint에서도 낮은 tier가 높은 tier보다 커지지 않아야 하며 eyebrow에 body용 `171%` line-height를 연결하지 않는다.
-
-Section semantic typography는 기본 weight까지 완결된 역할로 정의한다. `head`/`lead`/`normal`/`content`/`micro` title은 700, UI title과 모든 subtitle·eyebrow는 600, 모든 body는 400이다. 같은 값의 `bold`/`semibold`/`regular`를 요소에 중복 적용하지 않는다. 다른 weight가 실제 의미 역할이라면 임시 utility override 대신 별도 semantic role을 먼저 검토한다.
-
-컴포넌트 내부에서는 title/body 역할 class를 variant마다 바꾸지 않는다. 동일 내부 역할 class 하나에 타이포 변수만 연결하고, light/dark 및 언어 variant는 component root의 상속 또는 variant override로 색상과 font-family를 바꾼다.
-
-기본 폰트는 `fm-base`다. 특정 요소만 바꿀 때 `fm-ko`, `fm-en`을 추가한다.
-
-- `display-200`
-- `display-188`
-- `display-108`
-- `display-88`
-- `heading-64`
-- `heading-54`
-- `heading-48`
-- `heading-36`
-- `heading-28`
-- `body-24`
-- `body-20`
-- `body-18`
-- `body-20` is the canonical global 20px body utility. Do not use `body-2` or `legacy-body-20-combo` for new work; migrate old usage to `body-20 text-* regular/medium` during page cleanup.
-- Do not use CSS priority override keywords in Webflow style selectors or custom code. Resolve priority issues by fixing class order, selector paths, and wrapper structure.
-- Section root classes put the identity class first and utilities after it: `sub-lumi-impact section-padding`, `sub-nymi-workflow section-padding`. If Webflow shows `section-padding` first, treat that root as a combo-selector hygiene issue.
-- `regular`
-- `medium`
-- `semibold`
-- `bold`
-- `fm-base`
-- `fm-ko`
-- `fm-en`
-
-타이포 클래스 내부에서 breakpoint별 font size, line height, letter spacing을 조정한다. 별도 responsive typography utility는 기본으로 만들지 않는다.
-
-텍스트 요소에는 typography/color/weight class를 조합해서 쓴다. 타이포 값은 `heading-*`/`body-*`가 source of truth이고, 색은 `text-*`, 굵기는 weight class가 담당한다.
-
-Weight의 canonical 변수는 `Weight/Regular` 400 (`--weight--regular`), `Weight/Medium` 500 (`--weight--medium`), `Weight/SemiBold` 600 (`--weight--semibold`), `Weight/Bold` 700 (`--weight--bold`)이다. 기존 동명 combo selector가 문자열로 참조하는 `--font--weight-medium`과 `--font--weight-bold`는 각각 500과 700의 호환 변수로만 유지하며, 신규 selector에는 사용하지 않는다.
-
-현재 기준 Webflow global selector에 적용해야 하는 base scale은 다음과 같다.
-
-| Class | font-size | line-height | letter-spacing |
-| --- | ---: | ---: | ---: |
-| `display-200` | 200px | 1.1 | -0.02em |
-| `display-188` | 188px | 1.1 | -0.02em |
-| `display-108` | 108px | 1.1 | -0.02em |
-| `display-88` | 88px | 1.1 | -0.02em |
-| `heading-64` | 64px | 1.2 | -0.02em |
-| `heading-54` | 54px | 1.25 | -0.02em |
-| `heading-48` | 48px | 1.3 | -0.02em |
-| `heading-36` | 36px | 1.35 | -0.02em |
-| `heading-28` | 28px | 1.4 | -0.02em |
-| `body-24` | 24px | 1.5 | -0.02em |
-| `body-20` | 20px | 1.5 | -0.02em |
-| `body-18` | 18px | 1.5 | -0.02em |
-
-기존 scale을 새 scale로 줄일 때는 같은 카테고리 안에서 font-size 차이가 가장 작은 토큰으로 보낸다. 동률이면 계층을 덜 낮추는 쪽을 우선한다.
-
-## Utility Classes
-
-### Structure
-
-- `Section`
-- `no-container`
-- `no-container-xl`
-- `inner`
-- `sub-section-txt`
-- `sub-section-txt-eyebrow`
-- `sub-section-txt-title`
-- `sub-section-txt-body`
-- `section-contents`
-
-### Spacing
-
-- `padding-top-sm`
-- `padding-top-md`
-- `padding-top-lg`
-- `padding-top-xl`
-- `padding-top-2xl`
-- `padding-bottom-sm`
-- `padding-bottom-md`
-- `padding-bottom-lg`
-- `padding-bottom-xl`
-- `padding-bottom-2xl`
-- `padding-left-sm`
-- `padding-left-md`
-- `padding-left-lg`
-- `padding-right-sm`
-- `padding-right-md`
-- `padding-right-lg`
-- `padding-x-sm`
-- `padding-x-md`
-- `padding-x-lg`
-- `padding-x-xl`
-- `padding-y-sm`
-- `padding-y-md`
-- `padding-y-lg`
-- `padding-y-xl`
-- `padding-y-2xl`
-- `margin-0`
-- `margin-x-auto`
-- `margin-top-sm`
-- `margin-top-md`
-- `margin-top-lg`
-- `margin-top-xl`
-- `margin-bottom-sm`
-- `margin-bottom-md`
-- `margin-bottom-lg`
-- `margin-bottom-xl`
-- `gap-sm`
-- `gap-md`
-- `gap-lg`
-- `gap-xl`
-- `stack-sm`
-- `stack-md`
-- `stack-lg`
-- `stack-xl`
-
-### Layout
-
-- `grid`
-- `grid-2`
-- `grid-3`
-- `grid-4`
-- `grid-12`
-- `grid-2-10`
-- `grid-3-9`
-- `grid-4-8`
-- `grid-5-7`
-- `grid-6-6`
-- `grid-7-5`
-- `grid-8-4`
-- `grid-9-3`
-- `grid-10-2`
-- `span-1` through `span-12`
-- `flex`
-- `flex-row`
-- `flex-col`
-- `flex-center`
-- `flex-between`
-- `flex-start`
-- `flex-end`
-- `flex-wrap`
-
-Grid rule:
-
-- `grid-*` and `grid-*-*` are parent layout utilities.
-- `grid-12` creates a 12-column parent grid. Use child `span-1` through `span-12` for column placement.
-- ratio grids such as `grid-3-9`, `grid-4-8`, `grid-7-5` are two-column parent grids and use `fr` ratios directly.
-- spacing between grid items is controlled separately with `gap-*`; grid classes should not carry gap by default.
-
-### Responsive
-
-Breakpoint prefixes:
-
-- `lg-*`: Webflow `medium` breakpoint, max 991px.
-- `md-*`: Webflow `small` breakpoint, max 767px.
-- `sm-*`: Webflow `tiny` breakpoint, max 479px.
-
-- `md-grid-1`
-- `md-grid-2`
-- `md-grid-3`
-- `md-grid-4`
-- `md-grid-12`
-- `md-grid-2-10`
-- `md-grid-3-9`
-- `md-grid-4-8`
-- `md-grid-5-7`
-- `md-grid-6-6`
-- `md-grid-7-5`
-- `md-grid-8-4`
-- `md-grid-9-3`
-- `md-grid-10-2`
-- `sm-grid-1`
-- `sm-grid-2`
-- `sm-grid-3`
-- `sm-grid-4`
-- `sm-grid-12`
-- `sm-grid-2-10`
-- `sm-grid-3-9`
-- `sm-grid-4-8`
-- `sm-grid-5-7`
-- `sm-grid-6-6`
-- `sm-grid-7-5`
-- `sm-grid-8-4`
-- `sm-grid-9-3`
-- `sm-grid-10-2`
-- `lg-grid-1` through `lg-grid-4`
-- `lg-grid-12`
-- `lg-grid-2-10`, `lg-grid-3-9`, `lg-grid-4-8`, `lg-grid-5-7`, `lg-grid-6-6`, `lg-grid-7-5`, `lg-grid-8-4`, `lg-grid-9-3`, `lg-grid-10-2`
-- `lg-span-1` through `lg-span-12`
-- `md-span-1` through `md-span-12`
-- `sm-span-1` through `sm-span-12`
-- `md-flex-col`
-- `md-flex-row`
-- `sm-flex-col`
-- `sm-flex-row`
-- `md-text-left`
-- `md-text-center`
-- `md-text-right`
-- `sm-text-left`
-- `sm-text-center`
-- `sm-text-right`
-- `md-padding-y-lg`
-- `sm-padding-y-md`
-
-Responsive grid rule:
-
-- responsive grid/span utilities should only define values at their target breakpoint.
-- desktop layout stays on the base class, then `lg-*`, `md-*`, `sm-*` progressively override at narrower breakpoints.
-- example: `grid-12 md-grid-6-6 sm-grid-1` on the parent, `span-7 md-span-6 sm-span-12` on a child.
-
-### Text And Color
-
-- `text-left`
-- `text-center`
-- `text-right`
-- `text-primary`
-- `text-secondary`
-- `text-muted`
-- `text-inverse`
-- `bg-primary`
-- `bg-secondary`
-- `bg-inverse`
-- `surface-primary`
-- `surface-secondary`
-- `surface-elevated`
-
-### Border And Size
-
-- `border`
-- `border-top`
-- `border-bottom`
-- `border-weak`
-- `border-strong`
-- `border-inverse`
-- `radius-sm`
-- `radius-md`
-- `radius-lg`
-- `radius-xl`
-- `radius-full`
-- `w-full`
-- `h-full`
-- `self-start`
-- `self-end`
-
-## Component Classes
-
-- `header`
-- `footer`
-- `breadcrumb`
-- `sub-visual`
-- `button`
-- `button-inner`
-- `button-label`
-- `button-icon`
-- `card`
-- `card-media`
-- `card-body`
-- `card-title`
-- `card-desc`
-- `card-num`
-- `banner`
-- `banner-inner`
-- `banner-body`
-- `banner-title`
-- `banner-desc`
-- `banner-actions`
-
-Breadcrumb:
-
-- `breadcrumb`는 위치/정렬 wrapper다.
-- depth별 선택 메뉴는 custom hover CSS나 HtmlEmbed가 아니라 Webflow native `Dropdown`을 먼저 사용한다.
-- 내부 클래스는 `breadcrumb-item`, `breadcrumb-trigger`, `breadcrumb-arrow`, `breadcrumb-list`, `breadcrumb-link`까지만 허용한다.
-- 현재 페이지 leaf는 dropdown 없이 `breadcrumb-trigger`를 적용한 TextLink/TextBlock으로 둔다.
-
-Sub Nav:
-
-- `sub-nav`는 같은 depth의 형제 페이지를 이동하는 horizontal local navigation이다.
-- 구조는 native `nav > sub-nav-inner > Link`로 만든다. HtmlEmbed나 custom JS를 쓰지 않는다.
-- 클래스는 `sub-nav`, `sub-nav-inner`, `sub-nav-link`, `sub-nav-active`까지만 허용한다.
-- 현재 페이지 링크에만 `sub-nav-active`를 추가한다.
-- 모바일에서는 줄바꿈 대신 horizontal scroll을 허용한다.
-
-Product Tabs:
-
-- 제품 상세 안의 하위 탭은 `product-tabs > product-tabs-inner > product-tabs-menu / product-tabs-content` 구조를 쓴다.
-- tab trigger는 `product-tab-link`, active trigger는 `product-tab-active`를 쓴다.
-- content pane은 `product-tabs-panel`을 기본으로 숨기고, 현재 pane에만 `product-tabs-panel-active`를 추가해 보인다.
-- MCP로 Webflow native Tabs element 생성이 불가능할 때만 registered page-level footer script fallback을 허용한다.
-- fallback script는 `register_inline_script` + `set_page_scripts`로 등록한다. `set_page_freeform_code`에 순수 JS를 넣지 않는다.
-- fallback script는 trigger의 `data-product-tab-trigger`와 pane의 `data-product-tab-panel`만 토글해야 하며 publish 전 문서에 기록한다.
-- fallback을 쓰는 경우 dummy/test content는 실제 content로 교체하기 전까지 `product-tab-demo-*` scope class 안에만 둔다.
-
-Variant/state:
-
-- `is-fill`
-- `is-outline`
-- `is-brand`
-- `is-white`
-- `is-black`
-- `is-xs`
-- `is-sm`
-- `is-md`
-- `is-lg`
-- `has-icon`
-- `icon-front`
-- `icon-end`
-- `is-primary`
-- `is-secondary`
-- `is-dark`
-- `is-light`
-- `is-small`
-- `is-large`
-- `is-disabled`
-- `is-featured`
-- `is-link`
-- `is-active`
-
-## Component Variable Rule
-
-모든 컴포넌트와 variant는 Webflow 변수를 기준으로 스타일링한다. 컴포넌트 내부에 색상, 배경, border, surface, text color, shadow, radius, spacing, typography 값을 hex나 임의 숫자로 직접 고정하지 않는다.
-
-variant가 내부 요소의 색상이나 surface를 바꾸는 경우, 그 요소는 모든 variant에서 동일한 component-role selector를 유지한다. 색상 modifier(`is-brand`, `is-plain`, `text-*-invert` 등)를 컴포넌트 정의에 고정하지 않고 base role selector와 variant style override가 값을 소유한다. 전역 atom은 여러 컴포넌트가 공유하는 geometry만 담당하며 특정 컴포넌트의 base 색상이나 typography를 흡수하지 않는다.
-
-예:
-
-- `fill-brand` background: `color/brand/primary`
-- `fill-brand` text: `color/text/primary`
-- `outline-brand` border: `color/brand/primary`
-- `outline-white` border/text: `color/base/white`
-- `fill-white` background: `color/base/white`
-- `fill-black` background/border: `color/base/black`
-- card/banner border: `color/border/*`
-- card/banner surface: `color/background/*` 또는 `color/surface/*`
-
-필요한 토큰이 없으면 컴포넌트에 값을 직접 넣지 말고 먼저 변수 scale에 추가한다.
-
-## Button Rule
-
-버튼은 하나의 `button` 컴포넌트에서 확장한다. 형태나 색상별로 컴포넌트를 분리하지 않는다.
-
-Component variants:
-
-- `fill-brand`
-- `outline-brand`
-- `fill-white`
-- `outline-white`
-- `fill-black`
-- `outline-black`
-- `size-xs`
-- `size-sm`
-- `size-md`
-- `size-lg`
-- `icon-none`
-- `icon-front`
-- `icon-end`
-
-구조는 다음을 유지한다.
+Components keep stable internal role selectors:
 
 ```text
-button
-  button-inner
-    button-label
-    button-icon
+component-root
+  component-media
+  component-body
+    component-title
+    component-desc
+    component-actions
 ```
 
-`is-fill`은 채워진 버튼, `is-outline`은 투명 배경의 라인 버튼이다. `is-brand`, `is-white`, `is-black`은 색상 축이다. `is-xs`, `is-sm`, `is-md`, `is-lg`는 크기 축이다. 아이콘은 `button-inner`에 `has-icon icon-front` 또는 `has-icon icon-end`를 붙여 제어한다.
+Props own content. Variants own approved state and root variables. Internal classes do not change between light/dark variants. Media-only variants do not duplicate text styles owned by the parent component.
 
-## Card Rule
+## Variables and responsive behavior
 
-카드는 하나의 `card` 컴포넌트에서 확장한다. 이미지 카드와 텍스트 카드를 별도 컴포넌트로 만들지 않는다.
-`post-card`, `news-card`, `product-card`처럼 콘텐츠 타입별 컴포넌트도 만들지 않는다. 콘텐츠 타입은 CMS 데이터나 섹션 prefix BEM으로 구분하고, 컴포넌트 차이는 레이아웃 기준 variant로만 처리한다.
-섹션별 카드 wrapper가 실제 `card` 컴포넌트가 아니라 레이아웃용 wrapper라면 `sub-xxx__card` 같은 단일 소유 class만 사용한다.
-그 wrapper에는 배경/surface/border/radius utility를 추가하지 않는다.
+Search before creating. Bind a semantic variable once on the base style and prefer automatic responsive variable modes for Tablet, Mobile Landscape, and Mobile Portrait. Use explicit breakpoint bindings only when verified inheritance requires them.
 
-Component variants:
+Keep typography, weights, colors, spacing, radius, border, shadow, and layout values variable-backed. Create a scoped semantic variable when an existing variable has different ownership.
 
-- `image-card`
-- `text-card`
-- `link-card`
-- `featured-card`
+## Native-first rule
 
-구조는 다음을 유지한다.
+Prefer native Webflow Components, CMS, Forms, Navbar, Dropdown, Tabs, Slider, and Interactions. Custom code is a documented fallback with an owner, exact target, reason, verification path, and removal condition.
 
-```text
-card
-  card-media
-  card-body
-    card-title
-    card-desc
-```
+## Migration and verification
 
-## Banner Rule
+Use the Webflow design-system skill for all changes. Record:
 
-배너는 하나의 `banner` 컴포넌트에서 확장한다. CTA는 Banner variant가 아니라 `main-cta`/`sub-cta` 공통 섹션으로 만든다.
+- observed current state in `docs/webflow/audit-baseline.md`
+- migration lifecycle in `docs/webflow/migration-register.md`
 
-Component variants:
+A successful mutation is not completion. Read back exact IDs, selector paths, variables, breakpoints, and variants, then verify visible output in Designer.
 
-- `default-banner`
+## Safety
 
-구조는 다음을 유지한다.
+Do not delete until usage and custom-code references are zero, replacement verification passes, and separate approval is given. Do not publish without separate explicit approval.
 
-```text
-banner
-  banner-inner
-    banner-body
-      banner-title
-      banner-desc
-    banner-actions
-```
+## Related documents
 
-배너 안에 액션이 필요하면 `banner-actions` 영역에 `button` 컴포넌트 인스턴스를 조합한다.
-
-## CTA Rule
-
-CTA는 `main-cta`와 `sub-cta` 두 공통 섹션/컴포넌트 구조만 사용한다. 페이지마다
-`sub-legal-cta`, `sub-luminance-cta`처럼 page-specific CTA root를 새로 만들지 않는다.
-
-페이지별로 달라지는 값은 콘텐츠와 에셋뿐이다.
-
-- title
-- description
-- button label/link
-- background image
-- logo/image asset
-
-구조는 다음을 우선한다.
-
-```text
-sub-cta.section-padding
-  no-container
-    sub-cta__inner
-      sub-cta__bg or sub-cta__media
-      sub-cta__body
-        sub-cta__title
-        sub-cta__desc
-      sub-cta__actions
-        button
-```
-
-메인 페이지는 같은 구조에서 prefix만 `main-cta`로 바꾼다. 최종 이미지가 없더라도 `sub-cta__bg`/`main-cta__bg`
-또는 `sub-cta__media`/`main-cta__media` placeholder를 먼저 만든다. 이후 작업에서는
-구조/클래스를 바꾸지 않고 텍스트와 이미지 에셋만 교체한다.
-
-## Text Class Rule
-
-텍스트 태그에는 구조/섹션 전용 class를 붙이지 않는다.
-`h1`~`h6`는 `display-*` 또는 `heading-*` + `text-*` + weight class 조합만 사용한다.
-`p`는 `body-*` + `text-*` + weight class 조합만 사용한다.
-섹션별 `*-title`, `*-desc` 텍스트 전용 클래스를 새로 만들지 않는다. 레이아웃 wrapper가 필요할 때만 섹션 prefix BEM을 쓴다.
-예: `display-88 text-title bold`, `heading-54 text-title bold`, `body-20 text-body regular`.
-텍스트 컬러 utility는 가장 가까운 배경/surface를 판정한 뒤 확정한다.
-dark background/surface 위에서는 `text-title-invert`/`text-body-invert`, light background/surface 위에서는 `text-title`/`text-body`를 사용한다.
-`bg-primary`는 실제 section 또는 명시적 surface wrapper에 있을 때만 dark context다. 섹션별 `sub-xxx__card` wrapper와 텍스트 태그에 직접 붙은 `bg-*`는 sticky combo 오염으로 보고 제거하거나 배경만 neutralize한다.
-한 텍스트 태그에 일반 컬러와 invert 컬러를 동시에 남기지 않는다. 예: `body-20 text-body text-body-invert regular` 금지.
-기본으로 `body-* text-body regular`를 붙인 뒤 dark surface로 판정되면 `set_style: []` 후 `body-* regular text-body-invert`만 재적용한다.
-`fm-ko`/`fm-en` 같은 font-family utility는 필요한 경우에만 텍스트 태그에 추가할 수 있다.
-서브 페이지 공통 hero인 `sub-visual`의 제품/솔루션명 H1에는 `fm-en`을 붙인다.
-`sub-intro`의 한국어 H2에는 `fm-ko`를 붙여 인트로 톤을 통일한다.
-`sub-normal-banner-desc`, `section-title`, `legal-card__title`, `sub-legal-*__title` 같은 구조/섹션 전용 class는 텍스트 태그가 아니라 wrapper에만 쓴다.
-
-### Text Utility Migration
-
-Webflow에서 `heading-*`, `body-*`, `display-*`, `text-*`, `fm-*` 같은 utility selector가
-기존 combo selector로 저장되어 있으면, 요소에 재적용하는 순간 old class가 다시 붙을 수 있다.
-이 경우 요소 단위로 계속 덮어쓰지 않고 selector layer를 먼저 정규화한다.
-
-- clean utility는 global selector여야 하며 `isComboClass: false` 상태여야 한다.
-- combo로 오염된 utility는 새 섹션 작업에 재사용하지 않는다.
-- 오염된 utility가 필요한 경우 `docs/webflow-implementation-status.md`에 기록하고,
-  별도 style-selector migration pass에서 global utility로 정리한 뒤 요소에 다시 적용한다.
-- 요소 정리 중 색상/타이포 utility가 old combo를 되살리면, 임시로 size/weight만 남기고
-  완전한 `text-*` 재적용은 selector 정규화 이후로 미룬다.
-
-## Card Num
-
-- `card-num`은 카드 번호(01, 02 …)를 담는 범용 atom이다. `card` 컴포넌트 내부 구조가 아니라 어느 섹션에서나 재사용하는 독립 클래스다.
-- 고정 width/height + flex-center로 숫자를 가운데 정렬한다. 숫자는 typography/color/weight utility를 조합하고, 섹션마다 새 번호 클래스를 만들지 않는다.
-
-## Icon / Num Utilities
-
-- `icon-wrap`은 SVG 또는 Image가 들어갈 수 있는 범용 아이콘 슬롯 wrapper다. 기본 64×64, flex-center, overflow hidden으로 둔다.
-- 페이지의 독립 번호 뱃지는 `num-badge` geometry base와 `size-*`, `is-*` surface 조합을 사용한다.
-- variant가 있는 Webflow Component 내부 번호는 예외적으로 component-role selector(`num-card-num`, `icon-num-card__num`, `num-row__badge`, 내부 텍스트 `num-row__number`)를 모든 variant에서 유지하고, 색상·surface·typography 값은 해당 selector의 variant override가 소유한다.
-- 컴포넌트 정의 요소에 `is-brand`나 `is-plain`을 고정해 variant 로직을 우회하지 않는다.
-- 원형 번호 배지는 가장 가까운 실제 card/surface와 반대 대비를 사용한다. white/light surface에서는 brand/primary 배경 + light 숫자색, dark/brand surface에서는 white/light 배경 + dark 숫자색을 쓴다.
-- 번호 배지의 배경색과 숫자색은 반드시 한 쌍으로 variant override에 지정한다. 카드의 상속 color만 믿거나 배경만 바꾸지 않는다.
-- component-role selector의 width/height는 기존 component 크기를 보존하고, `display:flex`, `align-items:center`, `justify-content:center`, `flex-shrink:0`, 완전한 원형 radius를 base에서 소유한다. variant는 크기나 정렬을 중복하지 않고 surface/color만 override한다.
-- 원형 번호의 타이포는 주변 body/eyebrow에서 상속하지 않는다. `num-badge`와 component number role이 동일한 숫자 전용 font-family, font-size, line-height, weight, letter-spacing, `tabular-nums` 토큰을 직접 소유한다. 현재 반응형 크기는 main/medium에서 숫자 전용 base token, small 24px, tiny 20px이다.
-
-## Common Structure / Section BEM Rule
-
-공통 구조는 공통 클래스로 조립한다.
-
-```text
-section.sub-xxx.section-padding
-  no-container
-    sub-xxx__inner
-      sub-section-txt
-      section-contents
-```
-
-특정 섹션만의 비주얼이나 인터랙션이 필요할 때만 섹션 prefix BEM을 추가한다.
-
-```text
-sub-legal-problems__grid
-sub-legal-problems__card
-main-services__media
-```
-
-단독 전역 `item`, `list`, `link`, `txt`, `cnt`, `left`, `mid`, `right`는 만들지 않는다.
-
-## Scope-Specific Class Rule
-
-일부 클래스는 특정 섹션 전용이다. 다른 섹션에서 재사용하지 않는다.
-
-- `hero-arrow` (position:absolute; bottom:80px) 는 **Hero 섹션 전용**이다. 다른 섹션의
-  인너 세로 정렬에는 쓰지 않는다. 대신 `inner` + `flex-center` + `flex-col` + `gap-*` 조합을 쓴다.
-- `data_element_builder` / `whtml_builder` 로 새 요소를 만들 때 인접 요소의 클래스(특히 `hero-arrow`)가
-  복사되어 붙는 경우가 있다. 빌드 직후 `set_style` 로 의도한 클래스만 남기도록 클린업한다.
-- 겹치는 원형 레이아웃 등 폭 계산이 중요한 배치는 `transform` 대신 음수 `margin` 을 써서
-  실제 레이아웃 폭을 줄인다(컨테이너 넘침 + 겹침 동시 해결). 자세한 값은
-  `webflow-implementation-status.md` 3.5 Consulting 참고.
-
-현재 구현 상태·변수·컴포넌트 제약은 `docs/webflow-implementation-status.md` 를 우선 참조한다.
-
-## Documentation Update Rule
-
-Webflow 변수, style selector, 컴포넌트, variant, page structure, CMS schema/content가 바뀌면 같은 작업 안에서 문서를 갱신한다.
-
-- 현재 구현 상태: `docs/webflow-implementation-status.md`
-- 유지할 디자인 시스템 규칙: `docs/webflow-design-system.md`
-- 에이전트 공통 운영 규칙: `AGENTS.md`
-- 컴포넌트 생성/삭제/variant/property 변경: draft-only `/components` 카탈로그
-
-Codex 작업에서는 `.codex/hooks.json`의 PostToolUse hook이 Webflow MCP 변경 후 문서 싱크 알림을 추가 컨텍스트로 제공한다. hook은 알림 장치일 뿐이며, 문서 갱신은 작업의 일부로 완료한다.
-
-## Do Not Use
-
-- `legacy-*`
-- `deprecated-*`
-- `deprecate-*`
-- `delete-*`
-- `Div Block*`
-- `*__container`
-- `bg-wave`
-- `split-fill`
-- `pb-8`
-- `txt`
-- `cnt`
-- `left`
-- `mid`
-- `right`
-- `lang`
-- `footer-info`
-- `footer-bottom`
-- `newsroom-*`
-- `about-standard-*`
-- `news-card`
-- `post-card`
-- `solution-card`
-- `product-card`
-- `people-card`
-- `location-card`
-- `cta-band`
-
-CTA는 `main-cta`와 `sub-cta` root로만 허용한다. page-specific CTA root(`sub-legal-cta`,
-`sub-luminance-cta`)나 `cta`, `cta-band` 같은 변형 이름은 만들지 않는다.
-필요하면 옛 이름을 되살리지 말고 최종 시스템 클래스, 섹션 prefix BEM, 또는 컴포넌트 내부 역할 클래스로 다시 만든다.
-
-## Header Build Rule
-
-Header는 다음 순서로 만든다.
-
-```text
-header
-  header__container
-    inner
-      logo/link
-      nav
-      actions
-```
-
-`logo`, `nav`, `actions` 같은 역할 이름은 header 내부 scope combo로만 쓴다. 전역 유틸리티로 만들지 않는다.
-Header는 새 구조 기준으로 다시 만들며, 섹션용 `container`/`*__container`를 쓰지 않고 `header__container`만 쓴다.
-
-예:
-
-```text
-header logo
-header nav
-header nav-link
-header actions
-button is-primary
-```
-
-## Publish Rule
-
-Publish는 별도 승인 전까지 하지 않는다. Designer 정리는 draft 검증 후에만 publish를 요청한다.
-
-## Components Catalog Rule
-
-`/components` 페이지는 실제 Webflow 컴포넌트 인스턴스를 모아두는 draft-only 카탈로그다. 검색 색인 대상이 되지 않도록 draft/noindex 상태를 유지한다.
-
-컴포넌트를 추가, 삭제, 이름 변경, variant 변경, prop 변경, 내부 구조 변경할 때는 같은 작업 안에서 `/components` 페이지도 갱신한다. 이 페이지의 슬롯은 자동 갱신을 쉽게 하기 위해 다음 속성으로 관리한다.
-
-- `data-component-slot`
-- `data-button-slot`
-- `data-card-slot`
-- `data-banner-slot`
-
-버튼, 카드, 배너처럼 variant가 있는 컴포넌트는 base 인스턴스만 두지 말고 대표 variant를 모두 렌더한다.
-
-## Board detail back action
-
-- Board detail templates use the master `button` component with the `board-back` variant for back-to-list actions on dark surfaces.
-- `board-back` is an outline-white pill with a leading back arrow, `56px` desktop height, `52px` mobile height, and token-based white/inverse hover colors.
-- The back arrow stays before the label, points left, and uses difference blending so it remains visible when the button surface changes from dark to white on hover.
-- The canonical internal structure is `button > button-inner > button-label + button-icon`. Do not attach typography utilities or legacy classes to `button-inner`.
-- Do not create Release Notes, Newsroom, or Insights-specific back-button selectors. When those templates expose a back action, set only the shared component props for label, link, and icon visibility.
-
-## Banner language variants
-
-- The shared `banner` component provides `en`, `ko`, `en-invert`, and `ko-invert` variants.
-- `en` uses the existing `font/en` variable and `ko` uses `font/ko`; the font family is set once on the `banner` root so title, description, and nested CTA typography inherit consistently.
-- `en-invert` and `ko-invert` use `Color/Base/White`, `color/text/title-invert`, and `color/text/body-invert` variables in addition to their language font variable.
-- Language variants do not alter spacing, typography scale, media, CTA content, or responsive layout.
-
-## Shared component display-title hierarchy (2026-08-28)
-
-The shared component title hierarchy is:
-
-```text
-sub-visual > intro-title > section-title
-```
-
-These are approved component-scoped title-size exceptions. They do not repurpose the global semantic `head`, `lead`, or `normal` variables.
-
-| Component | Variable | Desktop | Tablet | Mobile Landscape | Mobile Portrait | Weight |
-| --- | --- | ---: | ---: | ---: | ---: | --- |
-| `sub-visual` | `type/component/sub-visual/title/font-size` | 72 | 64 | 54 | 44 | `regular` 400 |
-| `intro-title` | `type/component/intro-title/title/font-size` | 64 | 56 | 48 | 40 | `regular` 400 |
-| `section-title` | `type/component/section-title/title/font-size` | 48 | 42 | 36 | 32 | `bold` 700 |
-
-Rules:
-
-- Bind each title style once to its component-scoped Typography variable.
-- Use the existing automatic Typography modes for `medium`, `small`, and `tiny`.
-- Eyebrow, subtitle, and body retain the component's canonical semantic tier.
-- The exception changes title scale only. Color remains owned by the component root, alignment by the structural parent, and weight by the approved weight selector.
-- The twelve `sub-visual-media-*` desktop/mobile components are media-only slot children. They must not contain text or title styles; the parent `sub-visual` owns and renders the title.
-- Do not create page-specific or media-specific title-size selectors for these variants.
-
-## Static display and UI label roles (2026-08-28)
-
-- `section-display-title` is the semantic title tier for exceptional static-page display copy that is larger than `section-head-title`. It must use `type/section/display/title/*` variables rather than legacy `display-*` selectors.
-- `section-ui-label` is the semantic role for prominent interface guidance labels that are not content body copy. It must use `type/section/ui/label/*` variables rather than page-scoped `*--context-*` selectors.
-- Font family, weight, and color remain separate utilities. English display or UI labels may add `fm-en`; weight and surface-aware color must still be explicit.
-- Current homepage Hero reference paths are `fm-en section-display-title regular text-title` and `fm-en section-ui-label regular text-body`.
-- These roles do not authorize page-specific typography selectors. Add a new role only when an existing semantic role cannot preserve the intended hierarchy without changing other consumers.
-
-Official references:
-
-- https://developers.webflow.com/mcp/tools/data-tools
-- https://help.webflow.com/hc/en-us/articles/33961268146323-Variables
-- https://help.webflow.com/hc/en-us/articles/33961300305811-Breakpoints-overview
-- https://help.webflow.com/hc/en-us/articles/33961311094419-Classes
-
-## Homepage statistic typography
-
-- Homepage statistic values use the standalone `section-stat-value` role.
-- `section-stat-value` inherits the base font family; do not add `fm-en` or language-specific font utilities.
-- Statistic labels and descriptions are centered by the `number-item-body` layout wrapper through `align-items: center` and `text-align: center`.
-- Do not create numbered typography selectors or attach alignment through legacy size classes.
-
-- `section-stat-value` uses `font-weight: 400` directly and inherits the base font family.
-- `number-item-head` owns statistic-value alignment with `width: 100%`, `justify-content: center`, and `text-align: center`.
-- `number-item-body` owns label/description alignment with `align-items: center` and `text-align: center`.
-
-## Native YouTube video
-
-- Use Webflow's native `YouTubeVideo` element and keep the native YouTube controls. Do not add click-to-enable overlays, custom play/scroll buttons, or pointer-event switching.
-- The media wrapper owns `position: relative`, `width: 100%`, `aspect-ratio: 16 / 9`, `overflow: hidden`, and the approved radius.
-- The native video element uses the single global `youtube-native-player` class to fill its wrapper. Do not add page-specific player classes.
-- The site-level player manager may add `enablejsapi=1`, `playsinline=1`, `rel=0`, and `origin` at runtime, pause other players when one begins, pause on page hide, and cue the initial frame after playback ends.
-- Do not use `!important`, `pointer-events` overrides, or replace the native player controls with custom UI.
-- Do not initialize a YouTube player while it is inside a `hidden` tab panel or below the 200x200 minimum rendered viewport. Observe tab visibility changes and connect the player only after the active panel has completed layout; hidden players must wait until their first visible activation.
+- `AGENTS.md`
+- `.agents/skills/webflow-design-system/SKILL.md`
+- `.agents/skills/webflow-design-system/references/class-contract.md`
+- `rules/design-system.md`
+- `docs/official-workflow.md`
+- `docs/webflow/audit-baseline.md`
+- `docs/webflow/migration-register.md`
+- `docs/webflow-layout-flow-examples.md`
