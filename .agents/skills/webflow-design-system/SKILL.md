@@ -5,6 +5,8 @@ description: Audit and migrate typography, color, spacing, variables, classes, a
 
 # Webflow Design System
 
+contract_version: `2026-08-30.1`
+
 Use this skill for every Webflow class, variable, typography, color, spacing, component, or page-migration task in this repository.
 
 ## Required context
