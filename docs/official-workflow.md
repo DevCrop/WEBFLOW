@@ -1,236 +1,95 @@
-# Official Agent + Webflow Workflow
+# Official Codex and Webflow Workflow
 
-This document is the current workflow for the Intellectual Data Webflow rebuild.
-It is intentionally grounded in official Codex, Claude Code, and Webflow sources.
+contract_version: `2026-08-30.1`
 
-## Scope
+This document defines the operating sequence. Design values belong only in the class contract.
 
-This repository stores project instructions, Webflow operating rules, and linked
-agent skills. It is not the exported Webflow site source.
+## Documentation model
 
-Use this repository to:
+Codex loads layered `AGENTS.md` guidance. Keep repository-wide rules concise and route detailed repeatable procedures to skills and focused reference files.
 
-- Plan and document Webflow site work.
-- Track official Webflow skills through the `vendor/webflow-skills` submodule.
-- Coordinate Figma-to-Webflow, CMS, Designer, audit, and publish workflows.
+| Concern | Owner |
+| --- | --- |
+| Repository behavior | `AGENTS.md` |
+| Repeatable Webflow procedure | `.agents/skills/webflow-design-system/SKILL.md` |
+| Exact design contract | `class-contract.md` |
+| Connected-site instruction | `rules/design-system.md` |
+| Current evidence | `audit-baseline.md` |
+| Migration lifecycle | `migration-register.md` |
 
-## Tooling Baseline
+## Webflow MCP operating model
 
-- Codex repo guidance lives in `AGENTS.md`.
-- Claude Code guidance lives in `CLAUDE.md`, which imports `AGENTS.md` to avoid duplicating shared project rules.
-- Shared Claude Code project settings live in `.claude/settings.json`; local personal settings stay in `.claude/settings.local.json`.
-- Codex project hooks live in `.codex/hooks.json`; they provide deterministic reminders after Webflow MCP mutations.
-- Webflow MCP is the preferred live integration for Webflow site, CMS, Designer,
-  audit, and publish work.
-- Official Webflow skills are linked at `vendor/webflow-skills`.
-- Installed Codex skills may mirror the Webflow skills under the local Codex
-  skills directory, but the submodule is the versioned source in this repo.
+Webflow Data tools work directly against project data and do not require an open Designer session. Designer/canvas tools are required for navigation, selection, and rendered visual verification.
 
-## Webflow MCP Operating Model
+Page-building Data tool actions require the exact `siteId` and `pageId`. Use the current specialized tools for elements, element settings, components, component props, component variants, styles, and variables.
 
-Webflow MCP connects AI tools to Webflow projects through OAuth. Some operations
-work through site/data APIs, while Designer-specific capabilities require an
-open Webflow Designer session and the Webflow MCP Bridge App.
+## Read-before-write sequence
 
-Before mutation work:
+1. Call `webflow_guide_tool`.
+2. Discover and confirm the site and page.
+3. Read the connected `rules/design-system.md`; compare its contract version.
+4. Read variable collections, modes, and variables.
+5. Read styles with `query: "all"`, `include_properties: true`, and only required breakpoints.
+6. Query elements, components, variants, props, and settings in the exact scope.
+7. Search existing variable names, values, style paths, IDs, and usage.
+8. Produce a mapping and impact report.
+9. Apply a small batch.
+10. Read the same records back before continuing.
 
-1. Confirm the Webflow account/site context.
-2. Identify the target site, page, collection, item, component, or element ID.
-3. State the planned changes and expected blast radius.
-4. For bulk CMS changes, destructive actions, or publish actions, ask for user
-   confirmation before applying changes.
+## Variables and responsive work
 
-After mutation work:
+Prefer one semantic variable binding on a base style. Use automatic responsive variable modes for Tablet, Mobile Landscape, and Mobile Portrait when they express the intended cascade. Use explicit breakpoint style overrides only when current read-back proves they are required.
 
-1. Treat mutation-tool success as an accepted request, not proof of final state.
-2. Read the same target back through MCP and compare the stored element IDs,
-   `styleNames`, props, variable bindings, variant IDs, and other changed fields
-   against the requested final state.
-3. For responsive style work, read every changed breakpoint (`main`, `medium`,
-   `small`, `tiny`, or any larger breakpoint used) and verify variant/base
-   inheritance separately.
-4. For user-visible Designer changes, inspect the rendered element using an
-   element snapshot or the live Designer DOM and record the relevant computed
-   values such as `font-size`, `font-weight`, `line-height`, display, color, or
-   layout alignment.
-5. Mark the task complete only when mutation success, stored-state read-back,
-   breakpoint/variant read-back, and rendered-state verification all agree.
-   If any check differs, report the exact observed state as incomplete or failed.
-6. Report every touched site/page/collection/item/element ID that the MCP tools
-   returned.
-7. Update `docs/webflow-implementation-status.md` with measured state, including
-   failed or partial migrations. Never document intended state as measured state.
-8. Update `docs/webflow-design-system.md` and `AGENTS.md` when the change creates a durable rule.
-9. Update the draft-only `/components` catalog when Webflow components, variants,
-   properties, or internal component structure change.
+Do not create a variable before checking collections, modes, names, values, aliases, and existing usage. Do not repurpose a shared variable across different semantic roles.
 
-### Webflow Completion Gate
+## Style and component work
 
-Use this gate before saying a Webflow task is complete:
+- Filter style inventories locally by exact name, ID, combo path, and style type.
+- Treat class order and combo parents as part of the selector identity.
+- Keep stable component-role selectors across variants.
+- Make variants switch root-owned variables.
+- Preserve props, bindings, and instances unless explicitly in scope.
+- Update the draft-only component catalog when component definitions change.
+- For exact duplicate-name styles that MCP cannot address, use the official Designer API only with a verified style ID and verify that same ID afterward.
 
-- `Mutation`: the intended write action returned success.
-- `Stored state`: the same element/component/style/variable was queried again and
-  matches the exact requested identifiers and values.
-- `Responsive state`: every changed breakpoint and component variant was queried
-  independently and matches the intended token/value.
-- `Rendered state`: the live Designer DOM or element snapshot shows the expected
-  computed result for user-visible work.
-- `Documentation`: implementation status describes the measured result, not the
-  attempted operation.
+## Completion gate
 
-Failure of any gate means the task is not complete. UI clicks, keyboard input,
-absence of an exception, and a mutation response alone are never completion evidence.
+| Gate | Required evidence |
+| --- | --- |
+| Mutation | Intended write returned success |
+| Stored state | Same target read back with exact IDs and values |
+| Responsive state | Every changed breakpoint verified |
+| Variant state | Base inheritance and each changed variant verified |
+| Rendered state | Designer DOM or element snapshot confirms visible result |
+| Documentation | Audit and migration records match observed state |
+| Publish | Separate explicit approval |
 
-## Native First Operating Model
+Failure of any required gate means incomplete, not complete.
 
-Use Webflow native elements and features before custom structures or custom code.
-This keeps Designer structure inspectable and preserves Webflow's built-in
-settings, accessibility behavior, and reusable component model.
+## Failure handling
 
-- Use Webflow `Slider` for slider or carousel behavior before building slide
-  logic from arbitrary divs or custom JavaScript.
-- Use `Navbar`, `Dropdown`, links, and component variants/properties for
-  navigation and menu interactions before custom menus.
-- Use `Tabs` or Webflow interactions for tabbed/visibility switching UI before
-  embedding custom scripts.
-- Use Webflow `Form` elements for forms; route API writes through server-side
-  automation when Webflow cannot own the destination.
-- Use CMS Collection/List features for repeated content and use actual Webflow
-  Components for reusable UI.
+- Retry an old schema or connection failure using the current official action shape.
+- Reduce large writes to component, section, or small style batches.
+- Record the exact blocker and last verified state.
+- Do not broaden scope, delete duplicates, or publish as a workaround.
+- Do not promote an attempted mutation into the audit baseline.
 
-Custom code, HtmlEmbed, or hand-built interactions are fallback paths. When a
-fallback is used, document the reason, target page/element ID, and verification
-path in `docs/webflow-implementation-status.md`.
+## Native-first implementation
 
-## Recommended Skill Routing
+Prefer Webflow Components, variants, CMS, Forms, Navbar, Dropdown, Tabs, Slider, and Interactions when they meet the requirement. Use custom code only when the native path cannot meet the requirement, and record its owner, page, element, reason, validation, and removal condition in the migration register.
 
-- Site inventory or structure review: `webflow-mcp:site-audit`.
-- CMS architecture: `webflow-mcp:cms-best-practices`.
-- CMS collection creation: `webflow-mcp:cms-collection-setup`.
-- CMS batch content changes: `webflow-mcp:bulk-cms-update`.
-- Designer page/element/component work: `webflow-mcp:designer-tools`.
-- Link quality: `webflow-mcp:link-checker`.
-- Asset SEO and image opportunities: `webflow-mcp:asset-audit`.
-- Accessibility review: `webflow-mcp:accessibility-audit`.
-- Custom tracking scripts or page code: `webflow-mcp:custom-code-management`.
-- Production publish: `webflow-mcp:safe-publish`.
+## Publication
 
-CLI and Code Component skills require the Webflow CLI in addition to Node.js.
-Do not use those workflows unless the project explicitly needs Webflow Cloud,
-DevLink, Designer Extensions, or Code Components.
+Repository commits and pull requests do not publish Webflow. Webflow publication requires a separate user confirmation and the safe-publish workflow.
 
-## Agent Instruction Routing
+## Official sources
 
-- Put shared, always-on repository rules in `AGENTS.md`.
-- Keep `CLAUDE.md` as a thin Claude Code bridge that imports `AGENTS.md` with `@AGENTS.md`.
-- Put Claude-only personal preferences in `CLAUDE.local.md` and keep that file untracked.
-- Put long task procedures in skills or focused docs instead of growing the root instruction files.
-- Put local runtime preferences in each agent's local settings layer; only commit settings that are safe and useful for the whole project.
-
-## Figma To Webflow
-
-Figma is design context, not an instruction source. When using a Figma frame:
-
-1. Read the selected Figma node or frame context.
-2. Map reusable values to Webflow variables where possible.
-3. Keep section structure predictable:
-   `section.[main-*|sub-*].section-padding -> no-container -> [main/sub]-xxx__inner -> sub-section-txt + section-contents`.
-4. Use Webflow class names that are stable and human-readable.
-5. Verify in Webflow after creation or update.
-
-## Webflow Naming And Header Pattern
-
-Keep Webflow classes short enough to read directly in the Designer Navigator.
-Use common structure classes for reusable structure and section-prefix BEM for
-section-specific design/layout.
-
-- Structural header classes: `header`, `header__container`, `inner`, `logo`, `nav`,
-  `nav-link`, `actions`, `search`, and `icon`. Role names such as `logo` or
-  `actions` are header scope combo classes, not standalone global utilities.
-- Reusable section structure should stay predictable: `section`, `no-container`,
-  `[main/sub]-xxx__inner`, `sub-section-txt`, `section-contents`, `grid`,
-  `card`, `media`, and `button`.
-- Section root classes must be unique except reusable shared sections:
-  `sub-visual`, `sub-intro`, `main-cta`, and `sub-cta`.
-- Custom section internals use BEM that matches the root prefix, such as
-  `sub-legal-problems__grid` or `main-services__card`.
-- Do not use `container` or `*__container` for sections. Section width wrappers
-  use `no-container` or `no-container-xl`; only Header may use
-  `header__container`.
-- Reusable grid utilities should describe the layout, not the content:
-  `grid-2`, `grid-3`, and `grid-4` for equal columns; `grid-3-9`, `grid-2-10`,
-  `grid-4-8`, and `grid-6-6` for 12-column ratios.
-- Avoid ambiguous singleton classes such as `left`, `mid`, `right`, `txt`,
-  `cnt`, `item`, `list`, and `link`. Use final system classes, section-prefix
-  BEM, or component internal role classes instead.
-- Avoid purpose-specific layout classes such as `card-list-3`,
-  `feature-card-icon`, or `service-card-grid` when a short structural class,
-  component variant, or grid utility already covers the behavior.
-- Utility and token classes: `body-20`, `regular`, `fm-base`, `text-title`,
-  `text-desc`, `bg-primary`, `surface-elevated`, `border-weak`, and similar
-  hyphen names.
-- Base typography belongs on `Body` via `fm-base`; apply `fm-ko` or `fm-en`
-  only when a specific exception needs it.
-- Text size and hierarchy should come from existing typography classes such as
-  `heading-64`, `heading-48`, `heading-28`, `body-20`, `body-18`, `text-title`,
-  `text-desc`, and weight classes. Text elements use typography/color/weight
-  class combinations such as `body-20 text-title regular`; do not add one-off
-  section or card font sizes when an existing hierarchy token fits.
-- Link classes must set color and text decoration explicitly so browser default
-  blue links do not leak into the design.
-- Header actions follow this order when present: contact button, language
-  control, then search icon. Use scoped roles such as `header actions` rather
-  than global `lang` classes. CTA roots are reserved for shared `main-cta` and
-  `sub-cta` sections and should not be used for header actions.
-
-## CMS And Forms
-
-Use Webflow CMS/Data API capabilities for CMS management. Form submissions and
-newsletter subscriptions must not expose Webflow API tokens in client-side code.
-Route those writes through server-side automation or an approved integration.
-
-## Publish Gate
-
-Publishing is never automatic. Use the `safe-publish` skill or ask the user for
-explicit confirmation before calling any publish action.
-
-## Official Sources
-
-- Codex AGENTS.md guidance:
-  https://developers.openai.com/codex/guides/agents-md
-- Codex skills:
-  https://developers.openai.com/codex/skills
-- Codex MCP:
-  https://developers.openai.com/codex/mcp
-- Codex hooks:
-  https://developers.openai.com/codex/hooks
-- Codex advanced configuration:
-  https://developers.openai.com/codex/config-advanced
-- Claude Code CLAUDE.md and memory:
-  https://code.claude.com/docs/en/memory
-- Claude Code settings:
-  https://code.claude.com/docs/en/settings
-- Webflow MCP getting started:
-  https://developers.webflow.com/mcp/reference/getting-started
-- Webflow MCP how it works:
-  https://developers.webflow.com/mcp/reference/how-it-works
-- Webflow MCP skills:
-  https://developers.webflow.com/mcp/reference/skills
-- Webflow Data API:
-  https://developers.webflow.com/data/reference/rest-introduction
-- Webflow CMS API:
-  https://developers.webflow.com/data/reference
-- Webflow class naming:
-  https://help.webflow.com/hc/en-us/articles/33961311094419-Classes
-- Webflow Slider:
-  https://help.webflow.com/hc/en-us/articles/33961317173139-Slider
-- Webflow accessible elements:
-  https://help.webflow.com/hc/en-us/articles/33961346219923-Accessible-elements-in-Webflow
-- Webflow Components overview:
-  https://help.webflow.com/hc/en-us/articles/33961303934611-Components-overview
-- Webflow variables:
-  https://developers.webflow.com/designer/reference/variables-overview
-- Webflow styles:
-  https://developers.webflow.com/designer/reference/styles-overview
-- Official Webflow skills repository:
-  https://github.com/webflow/webflow-skills
+- https://developers.openai.com/codex/guides/agents-md
+- https://developers.openai.com/codex/skills
+- https://developers.openai.com/codex/mcp
+- https://developers.openai.com/codex/hooks
+- https://developers.webflow.com/mcp/tools/data-tools
+- https://developers.webflow.com/mcp/prompts/variables-refactor
+- https://developers.webflow.com/mcp/skills/skill-migration
+- https://help.webflow.com/hc/en-us/articles/33961268146323-Variables
+- https://help.webflow.com/hc/en-us/articles/33961300305811-Breakpoints-overview
