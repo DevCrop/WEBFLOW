@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="5700" viewBox="0 0 1440 5700">
+  <defs>
+    <style>
+      .page{fill:#fff}.navy{fill:#061b28}.navy2{fill:#0b2938}.blue{fill:#147df5}.light{fill:#eef3f6}.card{fill:#fff}.border{fill:none;stroke:#bfcbd2;stroke-width:2}.borderD{fill:none;stroke:#355364;stroke-width:2}.line{fill:#cbd5db}.lineD{fill:#536d7b}.keep{fill:#1d8f5a}.change{fill:#147df5}
+      .h1{font:700 52px 'Pretendard','Noto Sans KR',sans-serif;fill:#fff}.h2{font:700 36px 'Pretendard','Noto Sans KR',sans-serif;fill:#10242f}.h2w{font:700 36px 'Pretendard','Noto Sans KR',sans-serif;fill:#fff}.h3{font:700 26px 'Pretendard','Noto Sans KR',sans-serif;fill:#10242f}.h3w{font:700 26px 'Pretendard','Noto Sans KR',sans-serif;fill:#fff}.body{font:400 19px 'Pretendard','Noto Sans KR',sans-serif;fill:#3b505c}.bodyw{font:400 19px 'Pretendard','Noto Sans KR',sans-serif;fill:#d8e3e8}.meta{font:600 16px 'Pretendard','Noto Sans KR',sans-serif;fill:#147df5}.small{font:500 16px 'Pretendard','Noto Sans KR',sans-serif;fill:#667b86}.smallw{font:500 16px 'Pretendard','Noto Sans KR',sans-serif;fill:#9db1bc}.badge{font:700 14px 'Pretendard','Noto Sans KR',sans-serif;fill:#fff}.num{font:700 30px 'Pretendard','Noto Sans KR',sans-serif;fill:#147df5}
+    </style>
+  </defs>
+
+  <rect width="1440" height="5700" fill="#03131d"/>
+  <rect class="page" x="60" y="45" width="1320" height="5610" rx="16"/>
+
+  <!-- Header: existing -->
+  <rect class="navy" x="60" y="45" width="1320" height="92" rx="16"/>
+  <rect x="120" y="78" width="130" height="24" rx="4" fill="#dce6eb"/>
+  <rect x="875" y="82" width="70" height="12" rx="6" fill="#78909c"/><rect x="970" y="82" width="70" height="12" rx="6" fill="#78909c"/><rect x="1065" y="82" width="70" height="12" rx="6" fill="#78909c"/>
+  <rect class="keep" x="1225" y="72" width="90" height="30" rx="15"/><text class="badge" x="1247" y="93">기존 유지</text>
+
+  <!-- Hero: existing -->
+  <rect class="navy" x="60" y="137" width="1320" height="485"/>
+  <text class="meta" x="135" y="225">eDiscovery</text>
+  <text class="h1" x="135" y="305">해외소송 지원</text><text class="h1" x="135" y="372">(Legal Process Outsourcing)</text>
+  <rect class="lineD" x="135" y="420" width="500" height="11" rx="6"/><rect class="lineD" x="135" y="448" width="390" height="11" rx="6"/>
+  <rect class="blue" x="135" y="505" width="180" height="54" rx="27"/>
+  <rect class="borderD" x="750" y="185" width="535" height="365" rx="10"/><text class="smallw" x="945" y="380">현재 히어로</text>
+  <rect class="keep" x="1200" y="165" width="90" height="30" rx="15"/><text class="badge" x="1222" y="186">기존 유지</text>
+
+  <!-- Sub nav: existing -->
+  <rect class="light" x="60" y="622" width="1320" height="72"/>
+  <rect class="line" x="135" y="652" width="170" height="10" rx="5"/><rect class="line" x="340" y="652" width="130" height="10" rx="5"/><rect class="line" x="505" y="652" width="120" height="10" rx="5"/><rect class="line" x="660" y="652" width="130" height="10" rx="5"/><rect class="line" x="825" y="652" width="160" height="10" rx="5"/>
+
+  <!-- Intro: unchanged requested layout -->
+  <rect class="light" x="60" y="694" width="1320" height="625"/>
+  <rect class="keep" x="1205" y="730" width="100" height="30" rx="15"/><text class="badge" x="1222" y="751">그대로 사용</text>
+  <text class="meta" x="135" y="790">INTRO · 458자 / 2문단</text>
+  <text class="h2" x="135" y="850">해외소송 전반을 아우르는</text><text class="h2" x="135" y="900">전략적 법률 지원</text>
+  <text class="small" x="135" y="950">제목 4열 + 본문 7열</text>
+  <g transform="translate(610 785)">
+    <text class="h3" x="0" y="0">고객 원문 1문단 · 150자</text>
+    <rect class="line" x="0" y="38" width="650" height="11" rx="6"/><rect class="line" x="0" y="68" width="630" height="11" rx="6"/><rect class="line" x="0" y="98" width="645" height="11" rx="6"/><rect class="line" x="0" y="128" width="510" height="11" rx="6"/>
+    <text class="h3" x="0" y="205">고객 원문 2문단 · 306자</text>
+    <rect class="line" x="0" y="243" width="650" height="11" rx="6"/><rect class="line" x="0" y="273" width="635" height="11" rx="6"/><rect class="line" x="0" y="303" width="650" height="11" rx="6"/><rect class="line" x="0" y="333" width="620" height="11" rx="6"/><rect class="line" x="0" y="363" width="645" height="11" rx="6"/><rect class="line" x="0" y="393" width="610" height="11" rx="6"/><rect class="line" x="0" y="423" width="465" height="11" rx="6"/>
+  </g>
+
+  <!-- Strengths: changed, no images -->
+  <rect class="navy" x="60" y="1319" width="1320" height="1640"/>
+  <rect class="change" x="1190" y="1355" width="115" height="30" rx="15"/><text class="badge" x="1210" y="1376">이미지 제거</text>
+  <text class="meta" x="135" y="1420">STRENGTHS · 텍스트 전용 가변 높이</text>
+  <text class="h2w" x="135" y="1480">검증된 전문성과 체계로 완성하는 해외소송 LPO</text>
+  <rect class="lineD" x="135" y="1520" width="920" height="11" rx="6"/><rect class="lineD" x="135" y="1548" width="690" height="11" rx="6"/>
+
+  <!-- Strength 1 -->
+  <rect class="navy2" x="135" y="1620" width="1170" height="720" rx="10"/>
+  <text class="num" x="180" y="1695">01</text><text class="h3w" x="180" y="1750">검증된 전문 인력</text><text class="smallw" x="180" y="1790">901자 · 4문단</text>
+  <g transform="translate(540 1675)">
+    <text class="bodyw" x="0" y="0">고객 원문 1문단 · 237자</text><rect class="lineD" x="0" y="30" width="700" height="10" rx="5"/><rect class="lineD" x="0" y="57" width="680" height="10" rx="5"/><rect class="lineD" x="0" y="84" width="700" height="10" rx="5"/><rect class="lineD" x="0" y="111" width="580" height="10" rx="5"/>
+    <text class="bodyw" x="0" y="165">고객 원문 2문단 · 247자</text><rect class="lineD" x="0" y="195" width="700" height="10" rx="5"/><rect class="lineD" x="0" y="222" width="685" height="10" rx="5"/><rect class="lineD" x="0" y="249" width="700" height="10" rx="5"/><rect class="lineD" x="0" y="276" width="620" height="10" rx="5"/>
+    <text class="bodyw" x="0" y="330">고객 원문 3문단 · 140자</text><rect class="lineD" x="0" y="360" width="700" height="10" rx="5"/><rect class="lineD" x="0" y="387" width="670" height="10" rx="5"/><rect class="lineD" x="0" y="414" width="460" height="10" rx="5"/>
+    <text class="bodyw" x="0" y="468">고객 원문 4문단 · 271자</text><rect class="lineD" x="0" y="498" width="700" height="10" rx="5"/><rect class="lineD" x="0" y="525" width="680" height="10" rx="5"/><rect class="lineD" x="0" y="552" width="700" height="10" rx="5"/><rect class="lineD" x="0" y="579" width="650" height="10" rx="5"/><rect class="lineD" x="0" y="606" width="510" height="10" rx="5"/>
+  </g>
+
+  <!-- Strength 2 -->
+  <rect class="navy2" x="135" y="2370" width="1170" height="235" rx="10"/>
+  <text class="num" x="180" y="2445">02</text><text class="h3w" x="180" y="2500">프로젝트 팀 통합 관리</text><text class="smallw" x="180" y="2540">157자 · 1문단</text>
+  <g transform="translate(540 2430)"><rect class="lineD" width="700" height="10" rx="5"/><rect class="lineD" y="32" width="680" height="10" rx="5"/><rect class="lineD" y="64" width="700" height="10" rx="5"/><rect class="lineD" y="96" width="510" height="10" rx="5"/></g>
+
+  <!-- Strength 3 -->
+  <rect class="navy2" x="135" y="2635" width="1170" height="270" rx="10"/>
+  <text class="num" x="180" y="2710">03</text><text class="h3w" x="180" y="2765">검증된 보안 및 컴플라이언스 체계</text><text class="smallw" x="180" y="2805">267자 · 2문단</text>
+  <g transform="translate(540 2695)"><rect class="lineD" width="700" height="10" rx="5"/><rect class="lineD" y="30" width="680" height="10" rx="5"/><rect class="lineD" y="60" width="700" height="10" rx="5"/><rect class="lineD" y="90" width="560" height="10" rx="5"/><rect class="lineD" y="142" width="700" height="10" rx="5"/><rect class="lineD" y="172" width="500" height="10" rx="5"/></g>
+
+  <!-- Services: changed to chapter rows -->
+  <rect class="page" x="60" y="2959" width="1320" height="1665"/>
+  <rect class="change" x="1175" y="3000" width="130" height="30" rx="15"/><text class="badge" x="1197" y="3021">레이아웃 변경</text>
+  <text class="meta" x="135" y="3060">SERVICES · 원문 전체 노출 · 1열 챕터형</text>
+  <text class="h2" x="135" y="3120">인텔렉추얼데이터가 제공하는 해외소송 LPO 서비스</text>
+  <text class="small" x="135" y="3165">번호·제목 4열 / 고객 원문 7열 · 항목별 실제 분량에 따라 높이 자동</text>
+
+  <g transform="translate(135 3225)">
+    <rect class="light" width="1170" height="355" rx="10"/><text class="num" x="40" y="72">01</text><text class="h3" x="130" y="72">통역</text><text class="small" x="130" y="112">573자 · 5문단</text>
+    <g transform="translate(520 55)"><rect class="line" width="590" height="10" rx="5"/><rect class="line" y="27" width="570" height="10" rx="5"/><rect class="line" y="54" width="590" height="10" rx="5"/><rect class="line" y="95" width="470" height="10" rx="5"/><rect class="line" y="122" width="590" height="10" rx="5"/><rect class="line" y="149" width="560" height="10" rx="5"/><rect class="line" y="190" width="590" height="10" rx="5"/><rect class="line" y="217" width="575" height="10" rx="5"/><rect class="line" y="244" width="590" height="10" rx="5"/><rect class="line" y="271" width="480" height="10" rx="5"/></g>
+  </g>
+  <g transform="translate(135 3605)">
+    <rect class="light" width="1170" height="315" rx="10"/><text class="num" x="40" y="72">02</text><text class="h3" x="130" y="72">번역</text><text class="small" x="130" y="112">492자 · 5문단</text>
+    <g transform="translate(520 55)"><rect class="line" width="590" height="10" rx="5"/><rect class="line" y="27" width="560" height="10" rx="5"/><rect class="line" y="54" width="590" height="10" rx="5"/><rect class="line" y="95" width="490" height="10" rx="5"/><rect class="line" y="122" width="590" height="10" rx="5"/><rect class="line" y="163" width="570" height="10" rx="5"/><rect class="line" y="190" width="590" height="10" rx="5"/><rect class="line" y="217" width="455" height="10" rx="5"/></g>
+  </g>
+  <g transform="translate(135 3945)">
+    <rect class="light" width="1170" height="325" rx="10"/><text class="num" x="40" y="72">03</text><text class="h3" x="130" y="72">문서 리뷰</text><text class="small" x="130" y="112">531자 · 5문단</text>
+    <g transform="translate(520 55)"><rect class="line" width="590" height="10" rx="5"/><rect class="line" y="27" width="565" height="10" rx="5"/><rect class="line" y="68" width="480" height="10" rx="5"/><rect class="line" y="95" width="590" height="10" rx="5"/><rect class="line" y="122" width="570" height="10" rx="5"/><rect class="line" y="163" width="590" height="10" rx="5"/><rect class="line" y="190" width="575" height="10" rx="5"/><rect class="line" y="217" width="510" height="10" rx="5"/></g>
+  </g>
+  <g transform="translate(135 4295)">
+    <rect class="light" width="1170" height="275" rx="10"/><text class="num" x="40" y="72">04</text><text class="h3" x="130" y="72">포렌식 리포트 및 전문가 증언</text><text class="small" x="130" y="112">353자 · 3문단</text>
+    <g transform="translate(520 55)"><rect class="line" width="590" height="10" rx="5"/><rect class="line" y="27" width="540" height="10" rx="5"/><rect class="line" y="68" width="590" height="10" rx="5"/><rect class="line" y="95" width="570" height="10" rx="5"/><rect class="line" y="122" width="590" height="10" rx="5"/><rect class="line" y="149" width="460" height="10" rx="5"/></g>
+  </g>
+
+  <!-- Facilities onward: preserve current layout -->
+  <rect class="navy" x="60" y="4624" width="1320" height="540"/>
+  <rect class="keep" x="1185" y="4660" width="120" height="30" rx="15"/><text class="badge" x="1202" y="4681">이하 기존 유지</text>
+  <text class="h2w" x="135" y="4735">해외소송 실무를 뒷받침하는 전용 인프라</text>
+  <rect class="lineD" x="135" y="4780" width="980" height="10" rx="5"/><rect class="lineD" x="135" y="4808" width="940" height="10" rx="5"/><rect class="lineD" x="135" y="4836" width="720" height="10" rx="5"/>
+  <rect class="card" x="135" y="4900" width="555" height="205" rx="9"/><text class="num" x="170" y="4960">01</text><text class="h3" x="170" y="5010">데포지션 룸(Deposition Room)</text><rect class="line" x="170" y="5045" width="460" height="9" rx="5"/><rect class="line" x="170" y="5072" width="430" height="9" rx="5"/>
+  <rect class="card" x="735" y="4900" width="570" height="205" rx="9"/><text class="num" x="770" y="4960">02</text><text class="h3" x="770" y="5010">리뷰 룸 (Document Review Room)</text><rect class="line" x="770" y="5045" width="475" height="9" rx="5"/><rect class="line" x="770" y="5072" width="430" height="9" rx="5"/>
+
+  <!-- Existing banner -->
+  <rect x="60" y="5164" width="1320" height="295" fill="#063a5b"/>
+  <text class="h2w" x="230" y="5270">해외소송 대응을 위한 전문적인 지원이 필요하다면,</text><text class="h2w" x="390" y="5325">지금 바로 전문가와 상담하세요.</text>
+  <rect class="card" x="610" y="5365" width="220" height="50" rx="25"/><text class="body" x="660" y="5397">전문가 상담하기</text>
+
+  <!-- Existing footer -->
+  <rect class="navy2" x="60" y="5459" width="1320" height="196" rx="0 0 16 16"/>
+  <rect class="lineD" x="135" y="5510" width="180" height="16" rx="5"/><rect class="lineD" x="135" y="5550" width="280" height="9" rx="5"/><rect class="lineD" x="135" y="5575" width="240" height="9" rx="5"/>
+  <rect class="lineD" x="650" y="5510" width="110" height="10" rx="5"/><rect class="lineD" x="790" y="5510" width="110" height="10" rx="5"/><rect class="lineD" x="930" y="5510" width="110" height="10" rx="5"/><rect class="lineD" x="1070" y="5510" width="110" height="10" rx="5"/>
+</svg>

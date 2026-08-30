@@ -1,63 +1,52 @@
 ---
 name: webflow-design-system
-description: Audit and migrate typography, color, spacing, variables, classes, and reusable components on the Intellectual Data Webflow site.
+description: Audit and migrate typography, color, spacing, classes, variables, and shared components on the intellectualdata Webflow site. Use for design-system changes, INDA cleanup, legacy selector replacement, or class naming decisions; do not use for unrelated CMS content edits.
+metadata:
+  contract_version: "2026-08-31.1"
 ---
 
 # Webflow Design System
 
-contract_version: `2026-08-30.1`
+Use the connected Webflow site as the live implementation and the repository contract as the policy source.
 
-Use this skill for every Webflow class, variable, typography, color, spacing, component, or page-migration task in this repository.
+## Required workflow
 
-## Required context
+1. Read [`references/class-contract.md`](references/class-contract.md).
+2. Read `rules/design-system.md` from the connected Webflow site's Agent Instructions.
+3. Compare `contract_version`. If versions differ, synchronize the local contract and site rule before design implementation; instruction synchronization itself is allowed.
+4. Read [`references/migration-workflow.md`](references/migration-workflow.md) for migration, component, variable, or deletion work.
+5. Audit the scoped target's current styles, variables, breakpoints, and relevant consumers. Do not require an unrelated sitewide audit before a non-destructive scoped change.
+6. Record the source-to-target mapping and impact in [`../../../docs/webflow/migration-register.md`](../../../docs/webflow/migration-register.md).
+7. Migrate the smallest coherent batch. Reuse a variable only when its semantic meaning and responsive values match; otherwise create a scoped semantic variable and rebind the canonical style.
+8. Verify the affected breakpoints, representative component variants, behavior, and current usage counts.
+9. Update the migration register with observed evidence. Never advance a status without satisfying its exit condition.
 
-Read these files before any write:
+## Execution rules
 
-1. `references/class-contract.md`
-2. `../../../rules/design-system.md`
-3. `../../../docs/webflow/audit-baseline.md`
-4. `../../../docs/webflow/migration-register.md`
+- Start every Webflow workflow with `webflow_guide_tool`.
+- Prefer headless `data_style_tool` and `data_variable_tool` reads/writes. Do not wait for a Designer session unless canvas context or a snapshot is required.
+- For styles, use `get_styles` with `query: "all"` and filter exact global, non-combo records locally. Duplicated empty or combo records do not invalidate the canonical global record.
+- For responsive typography, prefer automatic variable modes linked to `medium`, `small`, and `tiny`, then bind each canonical style to its semantic variable once at Base.
+- For text color, normal selectors use white-family variables on dark surfaces and `-invert` selectors use the neutral black scale from `#000000` through `#333333` on light surfaces. Color roles do not receive breakpoint modes.
+- Reusable component internals use semantic and weight selectors only. Semantic selectors bind `Font/Base`; do not create or apply `lang-*` selectors. Bind one approved inherited text-color variable on the outermost owned component root; variants switch only that root color. Nested independently themed controls retain their own ownership.
+- Canonical titles use `bold`, except the approved `sub-visual` H1 and `intro-title` title, which use `regular` in every language variant.
+- If an action is rejected, compare the payload with the current Webflow MCP Data tool documentation and retry the exact documented shape. Record a blocker only after the documented action and a scoped fallback both fail.
+- When duplicate names prevent exact MCP mutation, use the official Designer API for that exact style ID; read back the same ID afterward.
+- The user's scoped implementation request is sufficient approval for non-destructive variable/style updates described by the task. Pause only for an unresolved semantic choice, an out-of-scope impact, deletion, or publication.
 
-Read the connected Webflow instruction `rules/design-system.md` before site writes. If its `contract_version` differs from the repository copy, treat synchronization as the first task.
+Stop before deletion or publication when:
 
-## Workflow
+- any page, component, variant, CMS template, or custom-code use remains;
+- the replacement has not passed responsive verification;
+- the user has not separately approved the exact deletion or publication target.
 
-1. Inspect the repository dirty tree and preserve unrelated user changes.
-2. Call `webflow_guide_tool` at the beginning of the Webflow workflow.
-3. Resolve the exact site, page, component, element, style, and variable IDs in scope.
-4. Read variables with `data_variable_tool.get_variable_collections` and `get_variables`.
-5. Read styles with `data_style_tool.get_styles`, using `query: "all"`, `include_properties: true`, and only the breakpoints required by the task.
-6. Filter locally by exact selector name, ID, and style type. Search existing variables and usage before creating anything.
-7. Report the intended mapping, affected IDs, variants, breakpoints, and rollback boundary.
-8. Apply small, scoped writes. Prefer a base variable binding plus responsive variable modes.
-9. Read every changed target back. Verify exact selector paths, variable IDs, component variants, and all changed breakpoints.
-10. For user-visible changes, verify the rendered Designer state or element snapshot.
-11. Record observed state in `docs/webflow/audit-baseline.md` and migration state in `docs/webflow/migration-register.md`.
-12. Do not publish without separate explicit approval.
+## Evidence boundary
 
-## Non-negotiable rules
+Policy belongs in the contract. Dated site facts belong in `audit-baseline.md`. Per-target progress belongs in `migration-register.md`. Do not copy volatile counts into this skill.
 
-- The class contract is the only source for selector composition and responsive values.
-- Standalone text uses semantic tier + weight + color.
-- Reusable component internals omit `text-*`; the owned root binds inherited text-color variables.
-- Variants switch root variables, not internal color selectors.
-- All semantic selectors bind `Font/Base`. Do not create or apply language selectors.
-- One text group uses one semantic tier consistently.
-- Content text never falls below 18px. Only independent UI text may use the 16px floor.
-- Normal text colors are white-family colors for dark surfaces. Invert colors are the neutral black scale for light surfaces.
-- Do not create numeric, page-specific, legacy, context, old, or new typography selectors.
-- Do not delete a class, variable, component, or variant until site usage and custom-code references are zero, replacement verification passes, and the user separately approves deletion.
-- Treat mutation success as acceptance, not proof. Completion requires read-back and rendered verification.
-
-## Fallbacks
-
-Retry a dated schema or connection failure with the current official action shape before declaring the capability unavailable. If an exact duplicate-name style cannot be addressed through MCP, use the official Webflow Designer API only for the verified style ID and confirm the same ID before and after. Never delete duplicates as a shortcut.
-
-## Official references
+Official references:
 
 - https://developers.webflow.com/mcp/tools/data-tools
 - https://developers.webflow.com/mcp/prompts/variables-refactor
-- https://developers.webflow.com/mcp/skills/skill-migration
 - https://help.webflow.com/hc/en-us/articles/33961268146323-Variables
 - https://help.webflow.com/hc/en-us/articles/33961300305811-Breakpoints-overview
-- https://help.webflow.com/hc/en-us/articles/33961311094419-Classes

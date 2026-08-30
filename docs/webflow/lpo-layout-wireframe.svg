@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="6000" viewBox="0 0 1440 6000">
+  <defs>
+    <style>
+      .bg{fill:#071823}.surface{fill:#ffffff}.dark{fill:#0a2433}.panel{fill:#102f40}.soft{fill:#eef3f6}.line{fill:#cbd5db}.lineDark{fill:#557080}.accent{fill:#1583ff}.stroke{stroke:#b8c6ce;stroke-width:2;fill:none}.strokeDark{stroke:#36566a;stroke-width:2;fill:none}
+      .h1{font:700 52px 'Pretendard','Noto Sans KR',sans-serif;fill:#fff}.h2{font:700 36px 'Pretendard','Noto Sans KR',sans-serif;fill:#0b1d27}.h2w{font:700 36px 'Pretendard','Noto Sans KR',sans-serif;fill:#fff}.h3{font:700 26px 'Pretendard','Noto Sans KR',sans-serif;fill:#0b1d27}.h3w{font:700 26px 'Pretendard','Noto Sans KR',sans-serif;fill:#fff}.body{font:400 19px 'Pretendard','Noto Sans KR',sans-serif;fill:#344a56}.bodyw{font:400 19px 'Pretendard','Noto Sans KR',sans-serif;fill:#d9e4e9}.meta{font:600 17px 'Pretendard','Noto Sans KR',sans-serif;fill:#1583ff}.note{font:500 16px 'Pretendard','Noto Sans KR',sans-serif;fill:#627781}.notew{font:500 16px 'Pretendard','Noto Sans KR',sans-serif;fill:#9fb4bf}.num{font:700 30px 'Pretendard','Noto Sans KR',sans-serif;fill:#1583ff}
+    </style>
+  </defs>
+
+  <rect class="bg" width="1440" height="6000"/>
+  <rect class="surface" x="70" y="55" width="1300" height="5885" rx="16"/>
+
+  <!-- Header / legend -->
+  <rect class="dark" x="70" y="55" width="1300" height="100" rx="16"/>
+  <text class="h3w" x="130" y="118">해외소송 지원(LPO) — 실제 원문 분량 기반 레이아웃</text>
+  <text class="notew" x="1030" y="115">내용 변경 없음 · Desktop</text>
+
+  <!-- Hero -->
+  <rect class="dark" x="70" y="155" width="1300" height="560"/>
+  <text class="meta" x="145" y="255">eDiscovery</text>
+  <text class="h1" x="145" y="335">해외소송 지원</text>
+  <text class="h1" x="145" y="405">(Legal Process Outsourcing)</text>
+  <rect class="lineDark" x="145" y="460" width="490" height="12" rx="6"/>
+  <rect class="lineDark" x="145" y="490" width="390" height="12" rx="6"/>
+  <rect class="accent" x="145" y="545" width="190" height="58" rx="29"/>
+  <text class="bodyw" x="180" y="582">전문가 자문 받기</text>
+  <rect class="strokeDark" x="790" y="215" width="490" height="390" rx="12"/>
+  <text class="bodyw" x="885" y="385">해외소송·글로벌 법률 업무 이미지</text>
+  <text class="notew" x="915" y="420">현재 추상 이미지 교체 권장</text>
+
+  <!-- Intro -->
+  <rect class="soft" x="70" y="715" width="1300" height="630"/>
+  <text class="meta" x="145" y="815">INTRO · 458자 / 2문단</text>
+  <text class="h2" x="145" y="875">해외소송 전반을 아우르는</text>
+  <text class="h2" x="145" y="925">전략적 법률 지원</text>
+  <text class="note" x="145" y="975">제목 4열 + 본문 7열 분리</text>
+  <g transform="translate(600 805)">
+    <text class="h3" x="0" y="0">고객 원문 1문단 · 150자</text>
+    <rect class="line" x="0" y="38" width="650" height="12" rx="6"/><rect class="line" x="0" y="70" width="630" height="12" rx="6"/><rect class="line" x="0" y="102" width="645" height="12" rx="6"/><rect class="line" x="0" y="134" width="520" height="12" rx="6"/>
+    <text class="h3" x="0" y="205">고객 원문 2문단 · 306자</text>
+    <rect class="line" x="0" y="243" width="650" height="12" rx="6"/><rect class="line" x="0" y="275" width="640" height="12" rx="6"/><rect class="line" x="0" y="307" width="650" height="12" rx="6"/><rect class="line" x="0" y="339" width="620" height="12" rx="6"/><rect class="line" x="0" y="371" width="645" height="12" rx="6"/><rect class="line" x="0" y="403" width="610" height="12" rx="6"/><rect class="line" x="0" y="435" width="470" height="12" rx="6"/>
+  </g>
+
+  <!-- Proof -->
+  <rect class="dark" x="70" y="1345" width="1300" height="2020"/>
+  <text class="meta" x="145" y="1450">STRENGTHS · 같은 높이 카드 사용 금지</text>
+  <text class="h2w" x="145" y="1510">검증된 전문성과 체계로 완성하는 해외소송 LPO</text>
+  <text class="bodyw" x="145" y="1555">분량 차이가 커서 항목별 가변 높이의 에디토리얼 행으로 구성</text>
+
+  <!-- Proof 1 featured -->
+  <rect class="panel" x="145" y="1625" width="1150" height="890" rx="12"/>
+  <rect class="strokeDark" x="180" y="1660" width="405" height="510" rx="10"/>
+  <text class="bodyw" x="245" y="1900">글로벌 법률 전문팀 이미지</text>
+  <text class="notew" x="260" y="1935">세로형 또는 4:5 비율</text>
+  <text class="num" x="630" y="1705">01</text>
+  <text class="h3w" x="630" y="1760">검증된 전문 인력</text>
+  <text class="notew" x="630" y="1800">901자 / 4문단 · 가장 긴 핵심 콘텐츠</text>
+  <g transform="translate(630 1840)">
+    <text class="bodyw" x="0" y="0">원문 1문단 · 237자</text><rect class="lineDark" x="0" y="25" width="600" height="10" rx="5"/><rect class="lineDark" x="0" y="50" width="585" height="10" rx="5"/><rect class="lineDark" x="0" y="75" width="600" height="10" rx="5"/><rect class="lineDark" x="0" y="100" width="540" height="10" rx="5"/>
+    <text class="bodyw" x="0" y="155">원문 2문단 · 247자</text><rect class="lineDark" x="0" y="180" width="600" height="10" rx="5"/><rect class="lineDark" x="0" y="205" width="590" height="10" rx="5"/><rect class="lineDark" x="0" y="230" width="600" height="10" rx="5"/><rect class="lineDark" x="0" y="255" width="560" height="10" rx="5"/>
+    <text class="bodyw" x="0" y="310">원문 3문단 · 140자</text><rect class="lineDark" x="0" y="335" width="600" height="10" rx="5"/><rect class="lineDark" x="0" y="360" width="570" height="10" rx="5"/><rect class="lineDark" x="0" y="385" width="430" height="10" rx="5"/>
+    <text class="bodyw" x="0" y="440">원문 4문단 · 271자</text><rect class="lineDark" x="0" y="465" width="600" height="10" rx="5"/><rect class="lineDark" x="0" y="490" width="585" height="10" rx="5"/><rect class="lineDark" x="0" y="515" width="600" height="10" rx="5"/><rect class="lineDark" x="0" y="540" width="590" height="10" rx="5"/><rect class="lineDark" x="0" y="565" width="470" height="10" rx="5"/>
+  </g>
+  <text class="notew" x="180" y="2225">이미지는 본문 전체 높이에 억지로 늘리지 않고 상단 고정</text>
+
+  <!-- Proof 2 -->
+  <rect class="panel" x="145" y="2550" width="1150" height="330" rx="12"/>
+  <text class="num" x="190" y="2625">02</text><text class="h3w" x="190" y="2680">프로젝트 팀 통합 관리</text><text class="notew" x="190" y="2720">157자 / 1문단</text>
+  <g transform="translate(590 2620)"><rect class="lineDark" x="0" y="0" width="620" height="12" rx="6"/><rect class="lineDark" x="0" y="35" width="600" height="12" rx="6"/><rect class="lineDark" x="0" y="70" width="620" height="12" rx="6"/><rect class="lineDark" x="0" y="105" width="500" height="12" rx="6"/></g>
+  <rect class="strokeDark" x="590" y="2780" width="620" height="60" rx="8"/><text class="notew" x="735" y="2818">국가·로펌 간 협업 이미지 또는 다이어그램</text>
+
+  <!-- Proof 3 -->
+  <rect class="panel" x="145" y="2915" width="1150" height="390" rx="12"/>
+  <rect class="strokeDark" x="190" y="2960" width="400" height="300" rx="10"/><text class="bodyw" x="265" y="3115">보안 리뷰 시설 이미지</text>
+  <text class="num" x="635" y="3005">03</text><text class="h3w" x="635" y="3060">검증된 보안 및 컴플라이언스 체계</text><text class="notew" x="635" y="3100">267자 / 2문단</text>
+  <rect class="lineDark" x="635" y="3140" width="580" height="11" rx="6"/><rect class="lineDark" x="635" y="3170" width="560" height="11" rx="6"/><rect class="lineDark" x="635" y="3200" width="580" height="11" rx="6"/><rect class="lineDark" x="635" y="3230" width="430" height="11" rx="6"/>
+
+  <!-- Services -->
+  <rect class="surface" x="70" y="3365" width="1300" height="1790"/>
+  <text class="meta" x="145" y="3470">SERVICES · 전 항목 펼침 · 1열 챕터형</text>
+  <text class="h2" x="145" y="3530">인텔렉추얼데이터가 제공하는 해외소송 LPO 서비스</text>
+  <text class="note" x="145" y="3575">2열 카드 금지: 원문이 353~573자로 길어 열 폭이 좁아지면 페이지가 지나치게 길어짐</text>
+
+  <g transform="translate(145 3640)">
+    <rect class="soft" width="1150" height="385" rx="10"/><text class="num" x="40" y="72">01</text><text class="h3" x="130" y="72">통역</text><text class="note" x="130" y="112">573자 / 5문단 · 가장 긴 서비스</text>
+    <g transform="translate(520 55)"><text class="body" x="0" y="0">원문 문단 구조 유지</text><rect class="line" x="0" y="35" width="570" height="10" rx="5"/><rect class="line" x="0" y="62" width="550" height="10" rx="5"/><rect class="line" x="0" y="89" width="570" height="10" rx="5"/><rect class="line" x="0" y="135" width="480" height="10" rx="5"/><rect class="line" x="0" y="162" width="570" height="10" rx="5"/><rect class="line" x="0" y="189" width="555" height="10" rx="5"/><rect class="line" x="0" y="235" width="570" height="10" rx="5"/><rect class="line" x="0" y="262" width="540" height="10" rx="5"/></g>
+  </g>
+  <g transform="translate(145 4050)">
+    <rect class="soft" width="1150" height="335" rx="10"/><text class="num" x="40" y="72">02</text><text class="h3" x="130" y="72">번역</text><text class="note" x="130" y="112">492자 / 5문단</text>
+    <g transform="translate(520 55)"><rect class="line" x="0" y="0" width="570" height="10" rx="5"/><rect class="line" x="0" y="27" width="550" height="10" rx="5"/><rect class="line" x="0" y="54" width="570" height="10" rx="5"/><rect class="line" x="0" y="100" width="500" height="10" rx="5"/><rect class="line" x="0" y="127" width="570" height="10" rx="5"/><rect class="line" x="0" y="173" width="560" height="10" rx="5"/><rect class="line" x="0" y="200" width="530" height="10" rx="5"/></g>
+  </g>
+  <g transform="translate(145 4410)">
+    <rect class="soft" width="1150" height="355" rx="10"/><text class="num" x="40" y="72">03</text><text class="h3" x="130" y="72">문서 리뷰</text><text class="note" x="130" y="112">531자 / 5문단</text>
+    <g transform="translate(520 55)"><rect class="line" x="0" y="0" width="570" height="10" rx="5"/><rect class="line" x="0" y="27" width="540" height="10" rx="5"/><rect class="line" x="0" y="73" width="490" height="10" rx="5"/><rect class="line" x="0" y="100" width="570" height="10" rx="5"/><rect class="line" x="0" y="127" width="555" height="10" rx="5"/><rect class="line" x="0" y="173" width="570" height="10" rx="5"/><rect class="line" x="0" y="200" width="550" height="10" rx="5"/><rect class="line" x="0" y="227" width="430" height="10" rx="5"/></g>
+  </g>
+  <g transform="translate(145 4790)">
+    <rect class="soft" width="1150" height="305" rx="10"/><text class="num" x="40" y="72">04</text><text class="h3" x="130" y="72">포렌식 리포트 및 전문가 증언</text><text class="note" x="130" y="112">353자 / 3문단</text>
+    <g transform="translate(520 55)"><rect class="line" x="0" y="0" width="570" height="10" rx="5"/><rect class="line" x="0" y="27" width="520" height="10" rx="5"/><rect class="line" x="0" y="73" width="570" height="10" rx="5"/><rect class="line" x="0" y="100" width="550" height="10" rx="5"/><rect class="line" x="0" y="127" width="565" height="10" rx="5"/><rect class="line" x="0" y="154" width="450" height="10" rx="5"/></g>
+  </g>
+
+  <!-- Facilities -->
+  <rect class="dark" x="70" y="5155" width="1300" height="590"/>
+  <text class="meta" x="145" y="5255">FACILITIES · 소개 234자 + 카드 158자 / 149자</text>
+  <text class="h2w" x="145" y="5315">해외소송 실무를 뒷받침하는 전용 인프라</text>
+  <rect class="lineDark" x="145" y="5355" width="900" height="10" rx="5"/><rect class="lineDark" x="145" y="5382" width="850" height="10" rx="5"/><rect class="lineDark" x="145" y="5409" width="700" height="10" rx="5"/>
+  <rect class="panel" x="145" y="5460" width="555" height="225" rx="10"/><rect class="strokeDark" x="170" y="5485" width="180" height="120" rx="8"/><text class="h3w" x="380" y="5535">데포지션 룸</text><text class="notew" x="380" y="5575">158자 · 실제 공간 사진 권장</text><rect class="lineDark" x="380" y="5610" width="270" height="9" rx="5"/><rect class="lineDark" x="380" y="5635" width="230" height="9" rx="5"/>
+  <rect class="panel" x="740" y="5460" width="555" height="225" rx="10"/><rect class="strokeDark" x="765" y="5485" width="180" height="120" rx="8"/><text class="h3w" x="975" y="5535">리뷰 룸</text><text class="notew" x="975" y="5575">149자 · 실제 공간 사진 권장</text><rect class="lineDark" x="975" y="5610" width="270" height="9" rx="5"/><rect class="lineDark" x="975" y="5635" width="230" height="9" rx="5"/>
+
+  <!-- CTA -->
+  <rect class="accent" x="70" y="5745" width="1300" height="195" rx="0 0 16 16"/>
+  <text class="h2w" x="255" y="5830">해외소송 대응을 위한 전문적인 지원이 필요하다면, 지금 바로 전문가와 상담하세요.</text>
+  <rect x="610" y="5865" width="220" height="48" rx="24" fill="#fff"/>
+  <text class="body" x="660" y="5897">전문가 상담하기</text>
+</svg>
