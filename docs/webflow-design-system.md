@@ -657,6 +657,34 @@ main-services__media
 
 단독 전역 `item`, `list`, `link`, `txt`, `cnt`, `left`, `mid`, `right`는 만들지 않는다.
 
+## Responsive Line Break Rule
+
+반응형 줄바꿈은 데스크톱 원문을 기준으로 관리한다. 모바일 최적화를 위해 공용 `title`, `description`, `body` 값을 덮어쓰지 않는다.
+
+### 결정 순서
+
+1. 데스크톱과 767px 이하의 줄바꿈 위치가 같으면 값 하나에 BR을 저장한다.
+2. `banner`처럼 `title`과 `titleMobile` prop이 모두 있으면 두 prop을 사용한다.
+3. 정적 텍스트에서 BR 하나의 표시 여부만 다르면 BR 자체만 `span.is-br-only-mobile` 또는 `span.is-br-only-desktop`으로 감싼다.
+4. Plain Text component prop처럼 생성된 BR에 클래스를 붙일 수 없고 breakpoint별 개행 위치가 다르면 desktop/mobile 표시 래퍼를 분리한다. 표시 래퍼 안에 기존 layout wrapper와 같은 컴포넌트 인스턴스를 둔다.
+
+### 표시와 텍스트 경계
+
+- `is-br-only-mobile`: desktop `display: none`, 767px 이하 `display: contents`
+- `is-br-only-desktop`: desktop `display: contents`, 767px 이하 `display: none`
+- 표시 유틸리티는 BR span 또는 전용 visibility wrapper에만 붙인다. 제목, `strong`, 문단, layout wrapper 전체에 붙이지 않는다.
+- layout, padding, gap을 가진 요소와 visibility 역할을 같은 요소에서 관리하지 않는다.
+- 조건부 BR 양쪽에는 BR이 숨겨져도 정상 문장이 되도록 일반 공백을 보존한다.
+- 모바일 전용 span에는 BR만 두고 뒤 텍스트를 함께 넣지 않는다.
+- KO와 EN의 BR 위치는 각 언어 문법과 기존 데스크톱 기준으로 결정한다.
+
+### 금지
+
+- 모바일 요구를 공용 desktop prop에 합쳐 저장
+- `!important`, page ID selector, `nth-child`로 BR 표시 보정
+- `display: contents`를 padding 또는 layout 소유 요소에 직접 적용
+- 저장 재조회 없이 완료 처리
+
 ## Scope-Specific Class Rule
 
 일부 클래스는 특정 섹션 전용이다. 다른 섹션에서 재사용하지 않는다.

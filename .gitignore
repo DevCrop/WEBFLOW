@@ -37,3 +37,15 @@ CLAUDE.local.md
 
 # Brand assets — too large for GitHub (kept locally only)
 .claude/docs/
+
+# Local Webflow verification output
+artifacts/
+outputs/
+runtime/edge-cdp-*/
+runtime/video-review-frames/
+runtime/video-review-tools/
+runtime/current-webflow.css
+runtime/*.png
+runtime/*.jpg
+runtime/__pycache__/
+runtime/*.pyc

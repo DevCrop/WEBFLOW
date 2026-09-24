@@ -1,0 +1,39 @@
+/* Shared CMS prose; content authors do not need spacer paragraphs. */
+.cms-detail__body > * { margin-block: 0; }
+.cms-detail__body > * + * { margin-top: var(--space--md); }
+.cms-detail__body :is(h1,h2,h3,h4,h5,h6) {
+  color: inherit;
+  font-family: inherit;
+  line-height: var(--_typography---type--section--content--title--line-height);
+  font-weight: var(--weight--bold);
+  overflow-wrap: anywhere;
+}
+.cms-detail__body :is(h1,h2) { font-size: var(--_typography---type--section--content--title--font-size); }
+.cms-detail__body h3 { font-size: var(--_typography---type--section--micro--title--font-size); }
+.cms-detail__body :is(h4,h5,h6) { font-size: var(--_typography---type--section--micro--subtitle--font-size); }
+.cms-detail__body > :is(h1,h2,h3,h4,h5,h6):not(:first-child) { margin-top: var(--space--2xl); }
+.cms-detail__body > :is(h1,h2,h3,h4,h5,h6) + * { margin-top: var(--space--sm); }
+.cms-detail__body :is(p,li) { overflow-wrap: anywhere; }
+.cms-detail__body :is(ul,ol) { padding-left: var(--space--lg); }
+.cms-detail__body ul { list-style-type: disc; }
+.cms-detail__body ol { list-style-type: decimal; }
+.cms-detail__body li + li { margin-top: var(--space--xs); }
+.cms-detail__body li > :is(ul,ol) { margin-top: var(--space--xs); }
+.cms-detail__body img { max-width: 100%; height: auto; }
+.cms-detail__body a { text-decoration: underline; text-underline-offset: .18em; }
+.cms-detail__body > :first-child { margin-top: 0; }
+.cms-detail__body > :last-child { margin-bottom: 0; }
+/* The career wrapper owns the gap; shared content wrappers add no second gap. */
+.sub-careers-detail .cms-detail__content { padding-top: 0; margin-top: 0; }
+
+/* Reuse board-back geometry on the light careers surface. */
+.sub-careers-detail__actions .button[data-wf--button--variant="board-back"] {
+  color: var(--color--base--black);
+  border-color: var(--color--base--black);
+  background-color: transparent;
+}
+.sub-careers-detail__actions .button[data-wf--button--variant="board-back"]:is(:hover,:focus-visible) {
+  color: var(--color--base--white);
+  border-color: var(--color--base--black);
+  background-color: var(--color--base--black);
+}

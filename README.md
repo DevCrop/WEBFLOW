@@ -14,6 +14,9 @@ site source tree.
 - `docs/official-workflow.md` - official Codex + Webflow operating workflow.
 - `docs/webflow-design-system.md` - target class/variable/component rules (지향점).
 - `docs/webflow-implementation-status.md` - **measured current site state (현재 사실). AI 에이전트가 먼저 읽을 문서.**
+- `docs/current-webflow-state-2026-09-25.md` - latest KO/EN responsive BR and component typography handoff.
+- `docs/README.md` - index for current guidance and historical audits.
+- `runtime/README.md` - reproducible local verification scripts.
 - `vendor/webflow-skills` - official Webflow skills repository as a submodule.
 - `.gitattributes` - UTF-8 text handling for durable instruction files.
 
@@ -23,6 +26,14 @@ site source tree.
 2. Codex reads `AGENTS.md`; Claude Code reads `CLAUDE.md`, which imports `AGENTS.md`.
 3. For Webflow work, use Webflow MCP and the Webflow skills.
 4. Confirm before CMS bulk changes, destructive actions, or publishing.
+5. For the latest unpublished Designer state, read `docs/current-webflow-state-2026-09-25.md`.
+
+## Current Handoff
+
+- KO·EN responsive BR and the latest component typography changes are saved in Webflow Designer.
+- The latest changes are not published. The public `webflow.io` site can differ from Designer state.
+- Detailed element IDs and 390/1440px evidence are in `docs/ko-responsive-br-checklist-2026-09-24.md`.
+- Local captures, browser profiles, generated CSS and other large evidence are intentionally excluded from Git.
 
 ## Current Webflow Conventions
 

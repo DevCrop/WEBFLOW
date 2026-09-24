@@ -102,6 +102,20 @@ Custom code, HtmlEmbed, or hand-built interactions are fallback paths. When a
 fallback is used, document the reason, target page/element ID, and verification
 path in `docs/webflow-implementation-status.md`.
 
+### Responsive BR Change Gate
+
+줄바꿈 변경은 텍스트 수정과 반응형 표시 구조를 함께 검증한다.
+
+1. 변경 전 desktop 저장값을 기록한다. 모바일 요청이 desktop 값의 기준을 바꾸지 않는다.
+2. `titleMobile` prop, BR span, desktop/mobile visibility wrapper 순서로 가장 작은 native 구조를 선택한다.
+3. 조건부 클래스가 BR만 감싸는지 확인한다. 클래스가 `strong`, 제목, 문단이나 뒤 텍스트까지 감싸면 구조를 바로잡는다.
+4. 숨겨지는 BR의 앞뒤에 일반 공백이 남는지 확인한다.
+5. 인스턴스를 복제하면 KO props와 모든 secondary locale overrides를 복사한 뒤 기존 인스턴스를 breakpoint 전용으로 전환한다.
+6. MCP로 element tree, prop 값, locale override, `is-br-only-mobile`/`is-br-only-desktop`의 main/small display 값을 다시 읽는다.
+7. 390, 767, 768, 1440px에서 desktop 원본, mobile 목표, 가로 넘침을 확인한다. 미게시 상태에서 화면 검증이 불가능하면 저장 검증과 게시 후 화면 검증을 구분해 기록한다.
+
+공통 `is-br-*` 정의, 컴포넌트 정의, 페이지별 custom code는 단일 페이지의 줄바꿈 요청으로 변경하지 않는다. 공통 변경이 필요하면 모든 사용처를 먼저 조회한다.
+
 ## Recommended Skill Routing
 
 - Site inventory or structure review: `webflow-mcp:site-audit`.

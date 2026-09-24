@@ -1,0 +1,4 @@
+/* Rich-text emphasis inside eyebrow roles inherits the role weight. */
+:is(.section-head-eyebrow, .section-lead-eyebrow, .section-normal-eyebrow, .section-content-eyebrow, .section-micro-eyebrow, .section-ui-eyebrow) :is(strong, b) {
+  font-weight: inherit;
+}

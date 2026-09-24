@@ -1,0 +1,15 @@
+.lpo-service-card,
+.lpo-service-card.w-variant-2b7e2998-4217-b71b-d0d1-2d347c0cd9df {
+  padding-top: var(--space--card--standard--padding-y);
+  padding-bottom: var(--space--card--standard--padding-y);
+  padding-left: var(--space--card--standard--padding-x);
+  padding-right: var(--space--card--standard--padding-x);
+  background-color: var(--color--bg--secondary);
+  border-top-left-radius: var(--radius--card--small);
+  border-top-right-radius: var(--radius--card--small);
+  border-bottom-left-radius: var(--radius--card--small);
+  border-bottom-right-radius: var(--radius--card--small);
+}
+.card-heading-group.is-lpo-service {
+  background-color: var(--color--base--white);
+}

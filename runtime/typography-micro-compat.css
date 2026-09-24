@@ -1,0 +1,6 @@
+/* Existing aliases inherit the canonical responsive token values. */
+.section-micro-body-copy, .section-micro-body-copy-copy, .section-micro-body-1, .section-micro-body-1-2, .section-micro-body-1-2-3, [class*="section-micro-body--legacy-"], [class*="section-micro-body--context-"] {
+  font-size: var(--_typography---type--section--micro--body--font-size);
+  line-height: var(--_typography---type--section--micro--body--line-height);
+  letter-spacing: var(--_typography---type--section--micro--body--letter-spacing);
+}

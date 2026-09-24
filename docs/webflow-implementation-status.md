@@ -18,6 +18,14 @@
 | 섹션 최대 폭 | `no-container-xl` = 1664px |
 | publish | 별도 승인 전까지 금지 |
 
+## 2026-09-25 KO·EN Responsive BR / Garamond Handoff
+
+- 최신 작업의 현재 상태와 재개 순서는 [current-webflow-state-2026-09-25.md](current-webflow-state-2026-09-25.md)를 따른다. 요소별 저장·렌더 증거는 [ko-responsive-br-checklist-2026-09-24.md](ko-responsive-br-checklist-2026-09-24.md)에 보존했다.
+- EB Garamond 전용 desktop 변수는 sub-visual 88px, banner 80px, intro-title 72px, section-title 46px이다. KO/base 변수는 변경하지 않았다.
+- MCP variant style 재조회로 sub-visual EN, banner EN, intro-title English, section-title English가 각각 해당 Garamond 변수 ID를 참조함을 확인했다.
+- `stats-band` 제목은 공통 `section-head-title bold section-title__title-text` 조합을 사용한다. 1440px KO 42px / EN 46px, 390px KO·EN 20px로 검증했다.
+- 이 변경들은 저장됐지만 publish하지 않았다. 공개 URL의 최종 확인은 게시 후 수행한다.
+
 ## Latest Rules
 
 - Container source of truth를 `Layout/Container` 1440px과 `Layout/Gutter` Desktop/Tablet 24px, Mobile L 20px, Mobile 16px로 통일했다. Global `no-container`(`20ca2548-3170-5c68-4c95-7c7616a049e6`)와 레거시 alias `u-no-container`(`fae42e56-6005-d7f7-18b7-d13758cce53c`)는 동일 변수, width/height 100%, auto margin, position relative를 사용한다. Header wrapper는 `header__container` 단일 class만 남겼다.
