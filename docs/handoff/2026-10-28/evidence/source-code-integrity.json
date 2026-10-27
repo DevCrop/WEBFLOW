@@ -1,0 +1,42 @@
+[
+  {
+    "path": "scripts/tracking/report-newsroom-modal.js",
+    "sha256": "95280e2cd3bf58c296a85b9b4b7f6a256cff10d3a47fd982872053af74d4234d",
+    "matchesSource": true
+  },
+  {
+    "path": "scripts/tracking/report-newsroom-modal.test.cjs",
+    "sha256": "6f56dd94f4fe06b6a8632b47027af01f8d3d8ef0c6c8ee11d4c0007718f4ed6d",
+    "matchesSource": true
+  },
+  {
+    "path": "scripts/tracking/report-modal-inline-download.js",
+    "sha256": "78e1cdae7c412bfe655c19044e4f549dea2e54494479b23aa71e8388ab75fb3a",
+    "matchesSource": true
+  },
+  {
+    "path": "scripts/tracking/report-modal-inline-download.test.cjs",
+    "sha256": "9f677f9fe509d9e18c8c742ecb6612a2c7a8b83ea8bfdcc5aaa3946a05cfa1f6",
+    "matchesSource": true
+  },
+  {
+    "path": "scripts/tracking/report-modal-native.js",
+    "sha256": "691283af128938d845bab320585c7b2273cb50414d07efbc1401d52354e459fb",
+    "matchesSource": true
+  },
+  {
+    "path": "scripts/tracking/report-modal-native.test.cjs",
+    "sha256": "13f924ee02508d8a6db22b2c01aff7c598c5e49f91444e2231459a023f3ede23",
+    "matchesSource": true
+  },
+  {
+    "path": "docs/webflow/report-form-metadata-2026-10-23.js",
+    "sha256": "37588c0e899955dc5b21a6f52d9997763aa8b33318230c4a3c09d57a16a7180e",
+    "matchesSource": true
+  },
+  {
+    "path": "scripts/qa/report-form-metadata-2026-10-23.cjs",
+    "sha256": "61c5de9347badff73842e2e41f4bb737405875034746adc7f15aa6c448613b34",
+    "matchesSource": true
+  }
+]

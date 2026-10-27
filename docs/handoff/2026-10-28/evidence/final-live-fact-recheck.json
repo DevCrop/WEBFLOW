@@ -1,0 +1,29 @@
+[
+  {
+    "page": "home-ko",
+    "url": "https://www.intellectualdata.com/",
+    "status": 200,
+    "addedCodeIds": [],
+    "removedCodeIds": [],
+    "hasGtm": true,
+    "hasFormMetadata": true
+  },
+  {
+    "page": "report-ko",
+    "url": "https://www.intellectualdata.com/newsroom/2026-korean-companies-ediscovery-survey-report",
+    "status": 200,
+    "addedCodeIds": [],
+    "removedCodeIds": [],
+    "hasGtm": true,
+    "hasFormMetadata": true
+  },
+  {
+    "page": "report-en",
+    "url": "https://www.intellectualdata.com/en/newsroom/2026-korean-companies-ediscovery-survey-report",
+    "status": 200,
+    "addedCodeIds": [],
+    "removedCodeIds": [],
+    "hasGtm": true,
+    "hasFormMetadata": true
+  }
+]

@@ -1,0 +1,69 @@
+{
+  "sectionId": "1764:938",
+  "sectionName": "03 · 기능·기술 인수인계 · 24장",
+  "pages": [
+    {
+      "id": "1761:3427",
+      "name": "10 / 산출물·후속 확인표",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-08 · 구현 담당자 참고\n산출물·후속 확인표\n요건정의서 7-1~7-6과 연결되는 자료를 정리합니다.\n항목\n관리 내용\n참조\n사이트·디자인\nWebflow 프로젝트 / Figma 원본 파일\n7-1 / 7-2\n스타일 정의\nVOLUME 01 · 브랜드·타이포·컴포넌트·에셋\n7-3\n인수인계·매뉴얼\nVOLUME 03 + VOLUME 02 / PDF 최종본\n7-4 / 7-5\n운영 교육\n동일 PDF를 보며 관리자 화면 안내 / 교육 기록\n7-6\n최종 전달 전\n문서 정비·PDF 출력, Figma 원본 전달, 소유권 이전, 운영 교육, 고객 최종 확인은 각각 별도 상태로 기록합니다. 실제 원본 수신·이전·교육은 현재 문서만으로 완료 처리하지 않습니다. 전달·인수 대장은 기술 20쪽을 사용합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n10 / 24"
+    },
+    {
+      "id": "1761:3480",
+      "name": "11 / 사이트 기능·데이터 흐름",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-01A · 구현 담당자 참고\n사이트 기능·데이터 흐름\n콘텐츠·접수·측정의 데이터 경로를 구분합니다.\n항목\n관리 내용\n참조\n콘텐츠\nCMS 저장 → 템플릿 → 사이트 게시 → 방문자 화면\n게시 과정\n접수\n양식 정상 제출 → Webflow Forms → 관리자 이메일 알림\n접수 과정\n자료 다운로드\n뉴스룸 버튼 → 모달 폼 → 정상 접수 → PDF 다운로드\n자료 흐름\n측정\n방문자 동의 → GTM → GA4 또는 광고 매체\n동의별 실행\n흐름 분리\nPDF 다운로드 기능과 전환 이벤트 추가는 별도 설정입니다. 현재 이벤트 범위는 HO-06A를 참조합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n11 / 24"
+    },
+    {
+      "id": "1761:3533",
+      "name": "12 / 공통·리포트 코드 목록",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-04A · 구현 담당자 참고\n공통·리포트 코드 목록\n구현 담당자가 현재 코드와 적용 위치를 찾을 수 있도록 ID를 정리했습니다.\n분류\n코드 ID · 검색할 이름\n관리 위치\n태그·이벤트\nid-gtm-consent\nid-site-events\n사이트 Head\n헤더 상태\nid-header-dropdown-layer\nid-header-open-surface-state\nid-header-overlay-states\n사이트 Head\n텍스트 기본\nid-text-element-reset-v2026-09-08-1\nid-legacy-micro-body-compat\nid-inline-flex-paragraph-normalize\nid-intro-description-paragraphs\n사이트 Head\n제목·언어 보정\nsub-visual-eyebrow-weight\nid-typography-eyebrow\nid-en-type-review-refinement\n사이트 Head\n게시글 표시\nid-cms-list-clamp-static\nid-cms-rich-text\nid-editorial-author-visibility\nid-auto-excerpt\n사이트 Head\n동작·UI\nid-motion-enhancements\nproduct-tabs-scrollbar-hide\ncheckbox-checked-state\nid-cookie-feedback-layout\nid-youtube-lifecycle\nid-subnav-current\n사이트 Head\n접근성·미디어\nid-basic-accessibility\nid-basic-accessibility-runtime\nid-mobile-mp4-image\nHead / Footer\n공통 페이지 보정\nid-board-reading\nid-text-element-reset-designer-v2026-09-18-1\nid-language-state\nid-en-home-mobile-display-size\n페이지 코드\n리포트 모달\nreport-modal-native-behavior\nreport-modal-native-scroll\nreport-modal-pdf-download\nreport-newsroom-modal\n템플릿 / 모달\n접수 부가정보\nid-report-form-metadata\n사이트 Footer\n찾는 방법과 변경 기록\n사이트 공통 코드는 Site settings → Custom Code의 Head/Footer에서 ID로 검색합니다. 페이지 코드는 Designer → 해당 페이지 설정 또는 Code Embed에서 찾습니다. 변경 시 코드 ID·위치·변경값·일자·작업자·이전 원본을 함께 기록합니다. 외부 Webflow 번들 전체를 수정 대상 코드로 취급하지 않습니다.\n기준: 2026-10-27 운영 HTML과 사이트 Head/Footer 저장본 · 페이지·컴포넌트별 적용 범위는 서로 다릅니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n12 / 24"
+    },
+    {
+      "id": "1761:3586",
+      "name": "13 / 현재 적용된 이벤트 범위",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-06A · 구현 담당자 참고\n현재 적용된 이벤트 범위\n현재 운영 중인 이벤트와 향후 별도 설정할 항목을 구분합니다.\n항목\n설정·확인 방법\n확인 기준\n문의 페이지 도달\ncontactus_page_view\n동의 조건 적용\n문의 정상 접수\ncontactus_form_submit\n성공 표시 기준\n뉴스레터 정상 접수\nnewsletter_form_submit\n성공 표시 기준\n리포트 단계 추적\n모달 열기·접수·다운로드 전용 이벤트는 이번에 추가하지 않음\n현 범위 제외\n재사용 시\n새 자료의 추가 전환 측정이 필요해지면 이벤트 이름과 발생 조건을 먼저 정한 뒤 별도로 연결합니다. 리포트 디자인·폼 재사용과 이벤트 추가는 구분합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n13 / 24"
+    },
+    {
+      "id": "1761:3639",
+      "name": "14 / 쿠키 선택 저장·변경 정책",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-06B · 구현 담당자 참고\n쿠키 선택 저장·변경 정책\n운영자가 알아야 할 저장 방식과 실제 확인 범위를 정리합니다.\n항목\n설정·확인 방법\n확인 기준\n저장 단위\n방문자 기기·브라우저·프로필별\n서로 자동 동기화 안 됨\n동의 쿠키\nid_cookie_consent · 보관 기간 365일\n선택 저장\n브라우저 저장소\nid_cookie_consent_v1 · localStorage 자동 만료 없음\n선택이 더 유지될 수 있음\n철회 이후\n새 수집·실행 제어 · 이미 전송된 데이터는 회수하지 않음\n광고 해제 시 새로고침\n목록의 범위\n직접 구현한 동의 선택 저장용 두 항목입니다. 호스팅·폼 보안 공급자의 전체 필수 목록과 다릅니다. 기술 21쪽의 이름·공급자·목적·도메인·유형·수명·분류·확인일 기준으로 추가 대조합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n14 / 24"
+    },
+    {
+      "id": "1761:3692",
+      "name": "15 / 교육 진행 순서",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nED-01\n교육 진행 순서\n운영 매뉴얼을 보며 실제 관리자 화면을 안내합니다.\n항목\n관리 내용\n참조\n1. 콘텐츠\n초안 작성·슬러그·국영문·본문 이미지·링크\nOP-01~05A\n2. 노출·자료\nFeatured·배너·PDF 교체·리포트 재사용\nOP-04~07A\n3. 접수·동의\n접수 확인·메일 수신처·CSV·쿠키 정책\nOP-08~09A / 13\n4. 반영\n미리보기·게시 대상 선택·게시 후 검수\nOP-14\n5. 운영 기반\n소유자·운영 권한, 플랜·갱신, 도메인·DNS·SSL, 협업 접근권 정리 절차\n운영 33–35쪽\n교육 결과\n안내 후 운영자가 직접 수행한 항목과 추가 질문을 다음 페이지의 확인표에 기록합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n15 / 24"
+    },
+    {
+      "id": "1761:3745",
+      "name": "16 / 실습·확인표",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nED-02\n실습·확인표\n교육 중 실제 수행 여부를 표시하는 기록 양식입니다.\n항목\n관리 내용\n참조\n□ 콘텐츠\n초안 글 작성·국영문 대응·Featured 선택\nOP-02~04\n□ 이미지·PDF\n이미지 또는 PDF 교체 후 링크 확인\nOP-05~07A\n□ 폼·CSV\n접수 내역 위치 확인·CSV UTF-8 불러오기\nOP-08~09A\n□ 게시\n미리보기·게시 대상·운영 검수 절차 설명\nOP-14\n□ 계정·운영 기반\n권한·구독 확인 위치·도메인 담당·갱신·SSL·개발사 접근 정리 절차를 직접 확인\n운영 33–35쪽\n실습 기록\n운영 게시 또는 실제 폼 제출을 수행했는지 별도 기록합니다. 설명만 들은 항목을 수행 완료로 표시하지 않습니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n16 / 24"
+    },
+    {
+      "id": "1761:3798",
+      "name": "17 / 교육 기록",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nED-03\n교육 기록\n교육 완료 후 일자·참석자·안내 범위와 후속 내용을 작성합니다.\n항목\n관리 내용\n참조\n교육 일자\n교육 후 입력\n일시 / 방식\n참석자\n교육 후 입력\n담당자\n안내 범위\n완료한 실습·설명 항목 기록\n관련 OP 번호\n질문·후속\n추가 질문·보완 내용·담당·예정일 기록\n후속 확인\n기록 용도\n현재 페이지는 교육 기록 양식입니다. 교육 완료 여부와 고객 확인은 실제 교육 이후 작성합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n17 / 24"
+    },
+    {
+      "id": "1761:3851",
+      "name": "18 / Private Resources · 운영 결정",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nPR-01 / 기능·기술 인수인계\nPrivate Resources · 운영 결정\n운영 여부·접근 대상·자료 범위를 먼저 합의하고 적용 결과를 기록합니다.\n논의 후 반영\nPrivate Resources\n운영 여부 / 접근 대상 / 비밀번호·배포 담당 / 자료 목록·권리 / 자료 링크 보호 범위 / 적용일 / 검수자. 발주사와 확인 후 기입하며, 미결정 상태를 운영 완료로 표시하지 않습니다.\n현재 범위\n현재는 결정·확인 항목을 제공한 상태입니다. 운영 방식과 완료 여부는 확정하지 않았으며, 승인·적용·실제 접근 검수 후 기술20쪽 전달 대장과 함께 갱신합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n18 / 24"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "sectionId": "1764:882",
+  "sectionName": "01 · 스타일·에셋 가이드 · 38장",
+  "pages": [
+    {
+      "id": "1761:46",
+      "name": "01 / 01 · 스타일·에셋 가이드",
+      "width": 842,
+      "height": 595,
+      "text": "VOLUME 01 / INTELLECTUAL DATA\n스타일·에셋\n가이드\nDesign foundations\n& asset library\n시각적 기준과 실제 사용 에셋의 관리\n인텔렉추얼데이터 · 운영 인수인계 문서 · 2026.10.28 · v1.3"
+    },
+    {
+      "id": "1761:94",
+      "name": "CONTENTS · 목차 · 1/2",
+      "width": 842,
+      "height": 595,
+      "text": "VOLUME 01 / 스타일·에셋 가이드\nCONTENTS\n목차 · 1/2\n장과 절을 선택하면 해당 페이지로 이동합니다.\n1. 브랜드 기본\n1.1 브랜드 로고\n04\n1.2 대표 컬러 팔레트\n05\n1.3 사이트의 세 가지 서체\n06\n2. 타이포그래피\n2.1 타이포 스케일 · Head와 Lead\n07\n2.2 타이포 스케일 · Normal과 Content\n08\n2.3 타이포 스케일 · Micro와 UI\n09\n2.4 국영문 제목 · 컴포넌트 견본\n10\n2.5 Display & Number\n11\n2.6 Weight · Line Height · Letter Spacing\n12\n3. 레이아웃과 UI\n3.1 레이아웃·간격\n13\n3.2 UI 조작 아이콘\n14\n3.3 버튼·링크\n15\n3.4 폼 구성요소\n16\n3.5 콘텐츠 컴포넌트\n17\n3.6 공통 인터페이스\n18\n3.7 반응형 적용 예시\n19\n3.8 이미지·파일 교체 기준\n20\n인텔렉추얼데이터 · 스타일·에셋 가이드\n02 / 38"
+    },
+    {
+      "id": "1789:6446",
+      "name": "CONTENTS · 목차 · 2/2",
+      "width": 842,
+      "height": 595,
+      "text": "VOLUME 01 / 스타일·에셋 가이드\nCONTENTS\n목차 · 2/2\n장과 절을 선택하면 해당 페이지로 이동합니다.\n4. 이미지와 파일\n4.1 자사 브랜드 에셋\n21\n4.2 아이콘 형식과 크기 변경\n22\n4.3 아이콘 라이브러리 구성\n23\n4.4 페이지 이미지\n24\n4.5 게시판 이미지\n25\n4.6 리포트 에셋\n26\n4.7 아이콘 원본 찾기\n27\n4.8 이전·테스트 파일 관리\n28\n5. 아이콘 라이브러리\n5.1 공통 UI 이미지 · 1/1\n29\n5.2 서비스·기능 아이콘 · 1/7\n30\n5.3 서비스·기능 아이콘 · 2/7\n31\n5.4 서비스·기능 아이콘 · 3/7\n32\n5.5 서비스·기능 아이콘 · 4/7\n33\n5.6 서비스·기능 아이콘 · 5/7\n34\n5.7 서비스·기능 아이콘 · 6/7\n35\n5.8 서비스·기능 아이콘 · 7/7\n36\n6. 활용과 전달\n6.1 브랜드 가이드 적용 순서\n37\n6.2 에셋 전달·내보내기 기준\n38\n인텔렉추얼데이터 · 스타일·에셋 가이드\n03 / 38"
+    },
+    {
+      "id": "1761:212",
+      "name": "04 / 브랜드 로고",
+      "width": 842,
+      "height": 595,
+      "text": "VOLUME 01 / 스타일·에셋 가이드\n1. 브랜드 기본\n1.1 브랜드 로고\n사이트 헤더·푸터에서 사용하는 공식 SVG 원본과 반전 표현입니다.\n원본 · 어두운 배경\n네이비 반전 · 밝은 배경\n사용 원칙\n로고의 원본 비율 190:32와 여백을 유지합니다. 문구·서체·심볼을 따로 재조합하지 않고 배경과 충분한 대비를 확보합니다.\n사이트 로고 SVG 원본 ↗\n인텔렉추얼데이터 · 스타일·에셋 가이드\n04 / 38"
+    },
+    {
+      "id": "1761:265",
+      "name": "05 / 대표 컬러 팔레트",
+      "width": 842,
+      "height": 595,
+      "text": "VOLUME 01 / 스타일·에셋 가이드\n1. 브랜드 기본\n1.2 대표 컬러 팔레트\n실제 사이트에서 사용하는 대표 6색과 사용 역할을 한 페이지에 정리했습니다.\n브랜드 네이비\n#002539\n브랜드·주요 버튼\n딥 네이비\n#011926\n페이지의 기본 어두운 배경\n화이트\n#FFFFFF\n어두운 면의 제목·텍스트\n라이트 그레이\n#EEF1F2\n보조 배경·밝은 구획\n차콜\n#222222\n밝은 면의 본문 텍스트\n보더 블루\n#24495C\n어두운 면의 경계선\n사용 기준\n어두운 배경에는 흰색 계열, 밝은 배경에는 검정 계열 텍스트를 사용합니다. 세부 투명도·상태색은 기존 Webflow 변수와 컴포넌트를 유지하며 임의로 새 색을 추가하지 않습니다.\n인텔렉추얼데이터 · 스타일·에셋 가이드\n05 / 38"
+    },
+    {
+      "id": "1761:327",
+      "name": "06 / 사이트의 세 가지 서체",
+      "width": 842,
+      "height": 595,
+      "text": "VOLUME 01 / 스타일·에셋 가이드\n1. 브랜드 기본\n1.3 사이트의 세 가지 서체\n기본 UI·본문과 국영문 제목의 서체를 구분합니다.\nPretendard  /  Font/Base · 기본 UI·본문\n정보를 명확하게 전달하는 일관된 기준\nNoto Serif KR  /  Font/Ko · 국문 제목 적용부\n인텔렉추얼데이터의 전문성과 신뢰\nEB Garamond  /  Font/En · 영문 제목 적용부\nThe eDiscovery Standard\n상세 위계\nDS-03A~F에서 25개 섹션 역할, 국영문 제목 컴포넌트, 디스플레이·번호와 굵기 조합을 확인합니다. 사이트 참조 변수는 4개 기기 모드로 별도 등록했습니다.\n인텔렉추얼데이터 · 스타일·에셋 가이드\n06 / 38"
+    },
+    {
+      "id": "1785:3480",
+      "name": "07 / 타이포 스케일 · Head와 Lead",
+      "width": 842,
+      "height": 595,
+      "text": "VOLUME 01 / 스타일·에셋 가이드\n2. 타이포그래피\n2.1 타이포 스케일 · Head와 Lead\nDesktop 실제 크기 견본 · 표기 순서 D / T / ML / MP · 사이트 참조값\nHEAD\nTITLE  700  ·  60 / 52 / 27 / 25px\n가나다 Aa\nSUBTITLE  600  ·  32 / 28 / 22 / 20px\n명확한 정보 전달\nBODY  500  ·  24 / 22 / 18 / 17px\n정보를 명확하게 전달합니다.\nEYEBROW  400  ·  21 / 20 / 17 / 16px\nINTELLECTUAL DATA\nLEAD\nTITLE  700  ·  52 / 46 / 25 / 23px\n가나다 Aa\nSUBTITLE  600  ·  30 / 27 / 21 / 19px\n명확한 정보 전달\nBODY  500  ·  22 / 20 / 17 / 16px\n정보를 명확하게 전달합니다.\nEYEBROW  600  ·  20 / 19 / 16 / 15px\nINTELLECTUAL DATA\nD / T / ML / MP = PC / 태블릿 / 모바일 가로 / 모바일 세로 · 견본은 실제 크기 · LH·LS는 사이트 설정 유지\n인텔렉추얼데이터 · 스타일·에셋 가이드\n07 / 38"
+    },
+    {
+      "id": "1785:3657",
+      "name": "08 / 타이포 스케일 · Normal과 Content",
+      "width": 842,
+      "height": 595,
+      "text": "VOLUME 01 / 스타일·에셋 가이드\n2. 타이포그래피\n2.2 타이포 스케일 · Normal과 Content\nDesktop 실제 크기 견본 · 표기 순서 D / T / ML / MP · 사이트 참조값\nNORMAL\nTITLE  700  ·  44 / 40 / 23 / 21px\n가나다 Aa\nSUBTITLE  600  ·  28 / 25 / 20 / 18px\n명확한 정보 전달\nBODY  400  ·  20 / 18 / 16 / 15px\n정보를 명확하게 전달합니다.\nEYEBROW  600  ·  19 / 18 / 15 / 14px\nINTELLECTUAL DATA\nCONTENT\nTITLE  600  ·  34 / 32 / 22 / 20px\n가나다 Aa\nSUBTITLE  600  ·  26 / 24 / 18 / 16px\n명확한 정보 전달\nBODY  500  ·  18 / 16 / 15 / 14px\n정보를 명확하게 전달합니다.\nEYEBROW  600  ·  18 / 17 / 14 / 14px\nINTELLECTUAL DATA\nD / T / ML / MP = PC / 태블릿 / 모바일 가로 / 모바일 세로 · 견본은 실제 크기 · LH·LS는 사이트 설정 유지\n인텔렉추얼데이터 · 스타일·에셋 가이드\n08 / 38"
+    },
+    {
+      "id": "1785:3834",
+      "name": "09 / 타이포 스케일 · Micro와 UI",
+      "width": 842,
+      "height": 595,
+      "text": "VOLUME 01 / 스타일·에셋 가이드\n2. 타이포그래피\n2.3 타이포 스케일 · Micro와 UI\nDesktop 실제 크기 견본 · 표기 순서 D / T / ML / MP · 사이트 참조값\nMICRO\nTITLE  700  ·  28 / 26 / 20 / 18px\n가나다 Aa\nSUBTITLE  500  ·  24 / 22 / 16 / 15px\n명확한 정보 전달\nBODY  400  ·  16 / 15 / 14 / 14px\n정보를 명확하게 전달합니다.\nEYEBROW  600  ·  17 / 16 / 14 / 13px\nINTELLECTUAL DATA\nUI\nTITLE  600  ·  20 / 18 / 17 / 16px\n가나다 Aa\nSUBTITLE  600  ·  18 / 16 / 15 / 14px\n명확한 정보 전달\nBODY  400  ·  16 / 15 / 14 / 13px\n확인하고 다음 단계로 이동\nEYEBROW  600  ·  14 / 14 / 13 / 12px\nINTELLECTUAL DATA\nLABEL  400  ·  16 / 15 / 14 / 13px\n다운로드 / Download\nD / T / ML / MP = PC / 태블릿 / 모바일 가로 / 모바일 세로 · 견본은 실제 크기 · LH·LS는 사이트 설정 유지\n인텔렉추얼데이터 · 스타일·에셋 가이드\n09 / 38"
+    },
+    {
+      "id": "1785:4026",
+      "name": "10 / 국영문 제목 · 컴포넌트 견본",
+      "width": 842,
+      "height": 595,
+      "text": "VOLUME 01 / 스타일·에셋 가이드\n2. 타이포그래피\n2.4 국영문 제목 · 컴포넌트 견본\nMobile Portrait 실제 크기 · D / T / ML / MP 순서로 함께 표기합니다.\nKOREAN\nSub-visual · Noto Serif KR 400 · 64 / 52 / 32 / 29px\n전문성과 신뢰\nBanner · Pretendard 700 · 52 / 42 / 20 / 20px\n새로운 가능성을 만나다\nIntro title · Pretendard 600 · 52 / 42 / 24 / 24px\n정보를 명확하게 전달합니다\nSection title · Pretendard 700 · 42 / 34 / 21 / 20px\n핵심을 읽는 인사이트\nENGLISH\nSub-visual · EB Garamond 400 · 88 / 57 / 35 / 32px\nThe eDiscovery Standard\nBanner · Pretendard 700 · 80 / 46 / 25 / 25px\nExplore new possibilities\nIntro title · Pretendard 600 · 72 / 46 / 26 / 26px\nClarity in every detail\nSection title · Pretendard 700 · 46 / 37 / 23 / 22px\nInsights that matter\n서체와 크기를 직접 비교하는 견본입니다. 섹션 제목의 줄 높이 등 컴포넌트별 예외는 실제 적용 클래스에 따릅니다.\n인텔렉추얼데이터 · 스타일·에셋 가이드\n10 / 38"
+    },
+    {
+      "id": "1785:4203",
+      "name": "11 / Display & Number",
+      "width": 842,
+      "height": 595,
+      "text": "VOLUME 01 / 스타일·에셋 가이드\n2. 타이포그래피\n2.5 Display & Number\n대형 타이포와 번호의 실제 Desktop 크기를 비교합니다.\nMAIN HERO · 164 / 124 / 88 / 42px · LH 100%\nAa\nDISPLAY · 108 / 64 / 44 / 32px · LH 111%\nAa\n01\nDefault\n28 / 28 / 24 / 20px\n01\nMedium\n20 / 20 / 20 / 20px\n01\nExtra large\n32 / 30 / 28 / 26px\n01\nResponsive\n28 / 26 / 22 / 20px\n01\nIcon number card\n28 / 26 / 24 / 20px\n인텔렉추얼데이터 · 스타일·에셋 가이드\n11 / 38"
+    },
+    {
+      "id": "1785:4365",
+      "name": "12 / Weight · Line Height · Letter Spacing",
+      "width": 842,
+      "height": 595,
+      "text": "VOLUME 01 / 스타일·에셋 가이드\n2. 타이포그래피\n2.6 Weight · Line Height · Letter Spacing\n동일한 문장을 굵기·줄 높이·자간만 바꿔 직접 비교합니다.\nRegular / 400\n가Aa\nMedium / 500\n가Aa\nSemiBold / 600\n가Aa\nBold / 700\n가Aa\nLINE HEIGHT 141%\n정보를 명확하게\n전달하는 타이포\n일관된 읽기 흐름\nLINE HEIGHT 151%\n정보를 명확하게\n전달하는 타이포\n일관된 읽기 흐름\nLINE HEIGHT 161.8%\n정보를 명확하게\n전달하는 타이포\n일관된 읽기 흐름\nLETTER SPACING 0%\n명확한 정보 · Clear communication\nLETTER SPACING -2%\n명확한 정보 · Clear communication\n인텔렉추얼데이터 · 스타일·에셋 가이드\n12 / 38"
+    }
+  ]
+}
