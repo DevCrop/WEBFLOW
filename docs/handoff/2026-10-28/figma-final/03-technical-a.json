@@ -1,0 +1,83 @@
+{
+  "sectionId": "1764:938",
+  "sectionName": "03 · 기능·기술 인수인계 · 23장",
+  "pages": [
+    {
+      "id": "1761:2942",
+      "name": "01 / 03 · 기능·기술 인수인계",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / INTELLECTUAL DATA\n기능·기술\n인수인계\nSystem reference\n& handover\n구현 구조·코드·연동·검수·교육 기록\n인텔렉추얼데이터 · 운영 인수인계 문서 · 2026.10.28 · v1.2"
+    },
+    {
+      "id": "1761:2970",
+      "name": "02 / 목차",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nCONTENTS\n목차\n기능·기술 인수인계 · 항목명이나 페이지 번호를 눌러 해당 페이지로 이동합니다.\n03 / 기능 목록\n04 / CMS 구조\n05 / 컴포넌트·스타일 관리 위치\n06 / 리포트 재사용 시 연결 코드\n07 / 현재 폼·알림 설정표\n08 / 이벤트·외부 연동표\n09 / 에셋·라이선스 정보\n10 / 산출물·후속 확인표\n11 / 사이트 기능·데이터 흐름\n12 / 공통·리포트 코드 목록\n13 / 현재 적용된 이벤트 범위\n14 / 쿠키 선택 저장·변경 정책\n15 / 교육 진행 순서\n16 / 실습·확인표\n17 / 교육 기록\n18 / Private Resources · 운영 결정\n19 / 외부 연동 서비스 관리 위치\n20 / 산출물 전달·인수 확인\n21 / 필수 쿠키·저장소 확인표\n22 / 사용 에셋과 원본 관리\n23 / 새 전환 이벤트 추가 방법\n인텔렉추얼데이터 · 기능·기술 인수인계\n02 / 23"
+    },
+    {
+      "id": "1761:3056",
+      "name": "03 / 기능 목록",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-01 · 구현 담당자 참고\n기능 목록\n사이트의 주요 기능과 관리 위치를 정리합니다.\n항목\n관리 내용\n참조\n게시판\nNewsroom·Insights·Release Notes의 글·날짜·이미지·분류 관리\nCMS\n다국어\n국영문 콘텐츠와 대응 URL·언어 전환 관리\nDesigner / CMS\n폼·다운로드\n문의·뉴스레터·자료 신청과 접수 알림·PDF 다운로드\nForms / 모달\n검색·동의\n사이트 검색·SEO·쿠키 설정과 태그 동의 연동\n설정 / GTM\n문서 사용\n일반 운영 방법은 VOLUME 02, 시각 요소와 에셋 기준은 VOLUME 01을 참조합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n03 / 23"
+    },
+    {
+      "id": "1761:3109",
+      "name": "04 / CMS 구조",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-02 · 구현 담당자 참고\nCMS 구조\n콘텐츠 종류에 맞는 컬렉션에서 항목을 관리합니다.\n항목\n관리 내용\n참조\nNewsroom\n보도자료·소식·리포트 안내 / 제목·슬러그·본문·날짜·썸네일\n국영문\nInsights\n인사이트 콘텐츠 / 분류·본문·이미지·날짜\n국문 운영\nRelease Notes\n업데이트 기록 / 목록 요약·상세 본문·날짜\n국문 운영\n상단 공지\n배너 문구·링크·노출 여부·정렬\n국영문\n필드 관리\nCMS 필드·참조 관계를 삭제하거나 이름을 바꾸기 전 템플릿과 Custom Code 사용 여부를 확인합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n04 / 23"
+    },
+    {
+      "id": "1761:3162",
+      "name": "05 / 컴포넌트·스타일 관리 위치",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-03 · 구현 담당자 참고\n컴포넌트·스타일 관리 위치\n문서와 실제 사이트의 관리 범위를 구분합니다.\n항목\n관리 내용\n참조\n사이트 UI\nWebflow Designer → Components / Styles / Variables\n운영 화면 원본\n콘텐츠\nCMS 항목·언어별 텍스트·이미지·링크\n내용 편집\n문서 스타일\nFigma Draft → 재사용 컴포넌트 원본 / 문서 토큰\nPDF 편집\n공통 수정\n헤더·푸터·모달·폼의 여러 페이지 사용 여부 확인\n영향 범위 확인\n스타일 변경\n콘텐츠 수정 시 기존 클래스·폰트·변수를 유지합니다. 새 구조나 스타일은 기존 디자인 시스템과 연결해 관리합니다.\n운영 HTML에서 확인한 파일형 코드\nid_top_button-1.0.1.js ↗\nid_ui_behaviors-1.1.2.js ↗\nid_header_dropdown_boundary-1.0.7.js ↗\nid_contact_consent_sync-1.1.4.js ↗\nid_mobile_background_video_init-1.0.2.js ↗\ncustomer-board-ui-1.3.3.js ↗\ncustomer-board-navigation-2.0.4.js ↗\nid_cms_richtext_runtime-1.0.0.js ↗\n파일 원본과 적용 위치를 함께 보관\n위 링크는 현재 배포된 원본 파일입니다. 수정할 때는 사이트 Head/Footer 또는 페이지 Code Embed의 script src와 연결을 대조합니다. 파일 업로드만으로 적용되지는 않습니다. 인라인 ID 목록은 12쪽을 참고합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n05 / 23"
+    },
+    {
+      "id": "1761:3215",
+      "name": "06 / 리포트 재사용 시 연결 코드",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-04 · 구현 담당자 참고\n리포트 재사용 시 연결 코드\n디자인 수정과 연결 로직 변경의 위치를 구분해 기록합니다.\n코드 식별자\n관리 위치 · 변경 시 확인할 값\n담당\nreport-newsroom-modal\nDesigner → Newsroom Template → 모달 바깥 Code Embed. 대상 뉴스룸 slug, 국영문 제목 판별, 버튼의 기존 /ediscovery-survey-2026 목적지를 함께 확인합니다.\n구현 담당자\nreport-modal-pdf-download\nNewsroom Template → Report request modal → Edit component → Code Embed. 성공 영역 a[data-report-pdf=\"ready\"]의 링크와 코드 안 다운로드 filename을 함께 확인합니다.\n구현 담당자\nid-report-form-metadata\nSite settings → Custom Code → Footer. 리포트 폼을 이름으로 찾고 Language·Page URL 숨김 필드를 추가합니다. 새 폼 이름을 바꾸면 대상 조건도 맞춥니다.\n구현 담당자\nnative-behavior / native-scroll\nReport request modal 내부 Embed의 report-modal-native-behavior와 report-modal-native-scroll. 배경·중앙 정렬·스크롤 잠금·닫기를 담당하므로 일반 문구 수정 때 변경하지 않습니다.\n구조 유지\n현재 2026 리포트 연결값\n항목\n현재 기준값\n확인\n뉴스룸 경로\n/newsroom/2026-korean-companies-ediscovery-survey-report\n영문: /en + 같은 경로\nKR / EN\n버튼 기본 목적지\n/ediscovery-survey-2026\n영문: /en/ediscovery-survey-2026\n대체 이동 주소\n폼 Name / ID\n2026 eDiscovery Survey Report Request\nwf-form-2026-eDiscovery-Survey-Report-Request\n연결 코드와 일치\n다운로드 파일명\nIntellectual_Data_2026_eDiscovery_Survey_Report_Korean_Companies_KR.pdf / _EN.pdf\n언어·연도 확인\n새 리포트는 복제만으로 연결되지 않습니다\n운영자는 최종 원고·이미지·PDF와 수신처를 준비합니다. 구현 담당자가 기존 리포트와의 분리, URL·폼·PDF 연결, 필요한 이벤트를 설정한 뒤 테스트합니다. 코드 전체 교체보다 해당 값의 변경 범위를 먼저 확인합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n06 / 23"
+    },
+    {
+      "id": "1761:3268",
+      "name": "07 / 현재 폼·알림 설정표",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-05 · 구현 담당자 참고\n현재 폼·알림 설정표\n폼별 관리 이름과 저장·알림 구성을 인수인계합니다.\n항목\n설정·확인 방법\n확인 기준\nContact Form\n문의 페이지의 공통 문의 폼\nWebflow + 알림\nFooter Newsletter\n페이지 푸터의 공통 뉴스레터 폼\nWebflow + 알림\n리포트 신청 폼\n2026 eDiscovery Survey Report Request\nWebflow + 알림\n공통 수신처\ninfo@intellectualdata.com\n폼별 설정 확인\n알림 본문\n문의·뉴스레터는 표형 HTML, 리포트는 formName·siteName·formData를 포함한 본문입니다. 수신처를 바꿀 때 폼별 설정과 공통 컴포넌트 영향을 함께 확인합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n07 / 23"
+    },
+    {
+      "id": "1761:3321",
+      "name": "08 / 이벤트·외부 연동표",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-06 · 구현 담당자 참고\n이벤트·외부 연동표\n계정에서 관리하는 태그와 사이트 동의 연결을 구분합니다.\n컨테이너 · GTM-52VQ4ZL5\n플랫폼 / 태그\n설정된 ID · 실행 태그 이름\n실행 조건\nGA4\nG-D0DYTC3BMS\nGA4 | Google tag | Analytics consent\n분석 동의\nGA4 이벤트 3개\nGA4 | Event | contactus_form_submit\nGA4 | Event | contactus_page_view\nGA4 | Event | newsletter_form_submit\n분석 동의 + 해당 행동\nGoogle Ads\nAW-443791280\nAds | Google tag | Marketing consent\n광고 동의\nMeta / LinkedIn\nMeta Pixel: 299152338334930\nLinkedIn Partner: 5680204\nMarketing | Meta and LinkedIn | Consent gated\n광고 동의\nNaver\n공통키: s_35d2ba51e3c9\nMarketing | Naver | Consent gated\n광고 동의\n행동별 연결 · 현재 설치 설정 기준\n사이트 / GA 이벤트\nMeta · Naver\nLinkedIn\ncontactus_form_submit\nMeta: 같은 이름의 custom event\nNaver: lead\n전환 ID\n29594012\ncontactus_page_view\nMeta: 같은 이름의 custom event\nNaver: view_content\n기본 방문 태그\n별도 전환 없음\nnewsletter_form_submit\nMeta: 같은 이름의 custom event\nNaver: subscribe\n전환 ID\n29594020\n설치 설정과 계정 전환 등록을 구분합니다\nGoogle Ads는 기본 Google 태그가 설정돼 있습니다. GA 주요 이벤트 지정·Google Ads 전환 가져오기는 고객 계정에서 별도로 관리합니다. 리포트 모달 열기·제출·PDF 다운로드의 전용 이벤트는 위 3개 이벤트에 포함되지 않습니다. 각 매체 계정의 실제 수신·집계 결과는 계정에서 확인합니다.\n화면 동작 의존성: jQuery 3.5.1 · GSAP 3.15.0 / ScrollTrigger · Swiper 11.2.10 · Webflow 런타임. 일반 콘텐츠 편집 시 버전과 로딩 순서를 변경하지 않습니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n08 / 23"
+    },
+    {
+      "id": "1761:3374",
+      "name": "09 / 에셋·라이선스 정보",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-07 · 구현 담당자 참고\n에셋·라이선스 정보\n파일의 출처와 사용 위치를 구분해 기록합니다.\n파일·폰트\n사용 위치 · 원본 관리\n출처 / 조건\nPretendard\n사이트 기본 본문·UI, 문서 본문. 원본 배포본과 라이선스 문서를 함께 보관합니다.\nSIL OFL 1.1\nNoto Serif KR\n사이트 국문 세리프 제목. 사이트에서 Google WebFont 로딩을 확인했습니다.\nSIL OFL 1.1\nEB Garamond\n사이트 영문 세리프 제목. 사이트에서 Google WebFont 로딩을 확인했습니다.\nSIL OFL 1.1\n리포트 PDF·썸네일\n국영문 고객 최종 전달본 → Webflow Assets. PDF는 내용·언어·파일명과 실제 연결을 함께 관리합니다.\n고객 제공\n로고·사이트 아이콘\n실제 사이트의 로고·SVG/PNG 원본을 사용합니다. 문서의 아이콘 라이브러리는 참고용이며 웹사이트 Assets를 자동 변경하지 않습니다.\nWebflow Assets\nPretendard 라이선스 ↗\nNoto Serif 라이선스 ↗\nEB Garamond 라이선스 ↗\n현재 확인한 범위\n서체 3종은 공식 라이선스 링크 기준입니다. 그 외 이미지·로고의 구매 증빙·사용 범위·재배포 및 고객 전달 가능 여부는 항목별 확인 대상이며, 유료 에셋이 없다고도 단정하지 않습니다. 기술 22쪽의 에셋 대장에 출처·권리·증빙·확인자를 기록합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n09 / 23"
+    },
+    {
+      "id": "1761:3427",
+      "name": "10 / 산출물·후속 확인표",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-08 · 구현 담당자 참고\n산출물·후속 확인표\n요건정의서 7-1~7-6과 연결되는 자료를 정리합니다.\n항목\n관리 내용\n참조\n사이트·디자인\nWebflow 프로젝트 / Figma 원본 파일\n7-1 / 7-2\n스타일 정의\nVOLUME 01 · 브랜드·타이포·컴포넌트·에셋\n7-3\n인수인계·매뉴얼\nVOLUME 03 + VOLUME 02 / PDF 최종본\n7-4 / 7-5\n운영 교육\n동일 PDF를 보며 관리자 화면 안내 / 교육 기록\n7-6\n최종 전달 전\n문서 정비·PDF 출력, Figma 원본 전달, 소유권 이전, 운영 교육, 고객 최종 확인은 각각 별도 상태로 기록합니다. 실제 원본 수신·이전·교육은 현재 문서만으로 완료 처리하지 않습니다. 전달·인수 대장은 기술 20쪽을 사용합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n10 / 23"
+    },
+    {
+      "id": "1761:3480",
+      "name": "11 / 사이트 기능·데이터 흐름",
+      "width": 842,
+      "height": 1191,
+      "text": "VOLUME 03 / 기능·기술 인수인계\nHO-01A · 구현 담당자 참고\n사이트 기능·데이터 흐름\n콘텐츠·접수·측정의 데이터 경로를 구분합니다.\n항목\n관리 내용\n참조\n콘텐츠\nCMS 저장 → 템플릿 → 사이트 게시 → 방문자 화면\n게시 과정\n접수\n양식 정상 제출 → Webflow Forms → 관리자 이메일 알림\n접수 과정\n자료 다운로드\n뉴스룸 버튼 → 모달 폼 → 정상 접수 → PDF 다운로드\n자료 흐름\n측정\n방문자 동의 → GTM → GA4 또는 광고 매체\n동의별 실행\n흐름 분리\nPDF 다운로드 기능과 전환 이벤트 추가는 별도 설정입니다. 현재 이벤트 범위는 HO-06A를 참조합니다.\n인텔렉추얼데이터 · 기능·기술 인수인계\n11 / 23"
+    }
+  ]
+}

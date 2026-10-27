@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-28",
+  "version": "v1.3",
+  "nativeExports": true,
+  "combinedInternalLinks": 281,
+  "standaloneLinks": [
+    {
+      "file": "IntellectualData_01_StyleAssets_v1.3_20261028.pdf",
+      "internalLinks": 107
+    },
+    {
+      "file": "IntellectualData_02_Operations_v1.3_20261028.pdf",
+      "internalLinks": 103
+    },
+    {
+      "file": "IntellectualData_03_TechnicalHandover_v1.3_20261028.pdf",
+      "internalLinks": 64
+    }
+  ],
+  "files": [
+    {
+      "file": "IntellectualData_01_StyleAssets_v1.3_20261028.pdf",
+      "pages": 38,
+      "bytes": 19562265,
+      "sha256": "83d03a1563ca6afbc35863092e65f42ee49f953e3830452a856feb304980ff88",
+      "textCharacters": 18496,
+      "pageSizes": [
+        [
+          842.0,
+          595.0
+        ]
+      ],
+      "excludedHeadings": []
+    },
+    {
+      "file": "IntellectualData_02_Operations_v1.3_20261028.pdf",
+      "pages": 33,
+      "bytes": 10611278,
+      "sha256": "d1ef6bb704f9cb23d1944d89e23f1ba763196ca4009401742bb5e1a4b9a20099",
+      "textCharacters": 20586,
+      "pageSizes": [
+        [
+          842.0,
+          1191.0
+        ]
+      ],
+      "excludedHeadings": []
+    },
+    {
+      "file": "IntellectualData_03_TechnicalHandover_v1.3_20261028.pdf",
+      "pages": 23,
+      "bytes": 4155927,
+      "sha256": "01f3660bdc0f5aebb05a4e74404351c49d29d3e691845513691cf314d6323aa4",
+      "textCharacters": 15256,
+      "pageSizes": [
+        [
+          842.0,
+          1191.0
+        ]
+      ],
+      "excludedHeadings": []
+    },
+    {
+      "file": "IntellectualData_CompleteGuide_v1.3_20261028.pdf",
+      "pages": 96,
+      "bytes": 34530812,
+      "sha256": "0c69ccc6e1dfeab487c8e0efd3f5ad09eea7fe542a73e4ba574ea43e77d81e73",
+      "textCharacters": 54715,
+      "pageSizes": [
+        [
+          842.0,
+          595.0
+        ],
+        [
+          842.0,
+          1191.0
+        ]
+      ],
+      "excludedHeadings": []
+    }
+  ],
+  "visualReview": {
+    "allPagesRendered": 96,
+    "contactSheetsReviewed": 12,
+    "directChildOverflow": 0,
+    "tocScreensReviewed": [
+      "style",
+      "operations",
+      "technical"
+    ],
+    "result": "pass",
+    "limitations": "No live form submission, mail receipt, ad account conversion or education completion was claimed."
+  }
+}
